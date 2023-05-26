@@ -3,7 +3,7 @@
         <v-row class="row">
         <v-col>
             <v-img src="../assets/welcome.png" class="logo"></v-img>
-        <h3>¡Bienvenido ha esta Nueva plataforma, con una mejor experiencia de usuario! 
+        <h3>¡Bienvenido a la Nueva plataforma, con una mejor experiencia de usuario! 
             Biblioteca Sena, una herramienta segura y fácil de usar que
             ayuda a los educadores y aprendices a administrar, medir
             y enriquecer las experiencias de aprendizaje.    
