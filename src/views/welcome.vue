@@ -3,14 +3,14 @@
         <v-row class="row">
         <v-col>
             <v-img src="../assets/welcome.png" class="logo"></v-img>
-        <h3>¡Nueva plataforma, con una mejor experiencia de usuario! 
-            TrackApp, una herramienta segura y fácil de usar que
+        <h3>¡Bienvenido ha esta Nueva plataforma, con una mejor experiencia de usuario! 
+            Biblioteca Sena, una herramienta segura y fácil de usar que
             ayuda a los educadores y aprendices a administrar, medir
             y enriquecer las experiencias de aprendizaje.    
         </h3>
         </v-col>
         <v-col>
-            <v-img src="../assets/DashboardImg.svg" class="img"/>
+            <v-img width="500px" src="https://cloudfront-us-east-1.images.arcpublishing.com/semana/SMWU75HKVJASJNDKTGRDEZVF7E.JPG"/>
         </v-col>
     </v-row>
     </v-container>
@@ -32,7 +32,7 @@ h3{
 }
 .logo{
     height: 100px;
-    width: 400px;
+    width: 700px;
     margin: 0;
     padding: 0;
 }
