@@ -13,7 +13,7 @@
                         <v-list-item
                             v-for="item in menu"
                             :key="item.title"
-                            link @click="prestamo">
+                            link @click="inicio">
                             <v-list-item-icon>
                                 <v-icon>{{ item.icon }}</v-icon>
                             </v-list-item-icon>
@@ -136,6 +136,9 @@ export default {
     methods: {
         prestamo(){
             this.$router.push('/dashboard/ManagerView');
+        },
+        inicio(){
+            this.$router.push('/');
         }
     },
 }
