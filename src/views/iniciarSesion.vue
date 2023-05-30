@@ -75,7 +75,7 @@
             </v-card-item>
             <v-card-text>
               <div>
-                La Biblioteca SENA garantiza la recuperación, preservación y
+                La Biblioteca SENAAAA garantiza la recuperación, preservación y
                 acceso a la memoria colectiva del país, representada por el
                 patrimonio bibliográfico y hemerográfico en cualquier soporte
                 físico. En su trabajo, se guía por el reconocimiento de la
