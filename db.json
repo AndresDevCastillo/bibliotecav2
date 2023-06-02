@@ -1,0 +1,52 @@
+{
+  "dispositivo": [
+    {
+      "codigo": "1111",
+      "referencia": "1111",
+      "serial": "11111",
+      "estado": "Nuevo",
+      "tipo": "Video Beam",
+      "id": 1
+    }
+  ],
+  "dispositivo2": [
+    {
+      "codigo": "21221",
+      "referencia": "121222",
+      "serial": "1212321",
+      "estado": "Prestado",
+      "tipo": "Portatil",
+      "id": 1
+    }
+  ],
+  "dispositivo3": [
+    {
+      "codigo": "1212121",
+      "referencia": "212212",
+      "serial": "2121321",
+      "estado": "Dañado",
+      "tipo": "Mouse",
+      "id": 1
+    }
+  ],
+  "dispositivo4": [
+    {
+      "codigo": "111",
+      "referencia": "111",
+      "serial": "111",
+      "estado": "Dañado",
+      "tipo": "Teclado",
+      "id": 1
+    }
+  ],
+  "dispositivo5": [
+    {
+      "codigo": "111",
+      "referencia": "1111",
+      "serial": "1111",
+      "estado": "En reparacion",
+      "tipo": "Cable HDMI",
+      "id": 1
+    }
+  ]
+}

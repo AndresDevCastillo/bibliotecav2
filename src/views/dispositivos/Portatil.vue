@@ -1,104 +1,90 @@
 <template>
- <v-card height="600px" width="500px" class="mx-auto">
-    <v-card-title>
-    Portatil
-    </v-card-title>
-    <v-img
-          height="200px"
-          src="../../assets/cursos.png"
-        ></v-img>
+  <v-card height="710px" width="500px" class="mx-auto">
+    <v-card-title> Portatil </v-card-title>
+    <v-img height="300px" src="../../assets/images/Portatil.png"></v-img>
     <v-card-text>
-  <v-form 
-    ref="form"
-    v-model="valid"
-    lazy-validation
-  >
-    <v-text-field
-      v-model="codigo"
-      :rules="campoRules"
-      label="Codigo"
-      required
-    ></v-text-field>
-    
-    <v-text-field
-      v-model="referencia"
-      :counter="7"
-      :rules="campoRules"
-      label="Referencia"
-      required
-    ></v-text-field> 
-    
-    <v-text-field
-      v-model="serial"
-      label="Serial"
-      required
-    ></v-text-field>
+      <v-form ref="form" v-model="valid" lazy-validation>
+        <v-text-field
+          v-model="paquete.codigo"
+          :rules="campoRules"
+          label="Codigo"
+          required
+        ></v-text-field>
 
-    <v-select
-      v-model="select"
-      :items="items"
-      :rules="[v => !!v || 'Item is required']"
-      label="Estado"
-      required
-    ></v-select>
+        <v-text-field
+          v-model="paquete.referencia"
+          :counter="7"
+          :rules="campoRules"
+          label="Referencia"
+          required
+        ></v-text-field>
 
-    <v-btn
-      :disabled="!valid"
-      color="success"
-      class="mr-4"
-      @click="validate"
-    >
-      Validar
-    </v-btn>
+        <v-text-field v-model="paquete.serial" label="Serial" required></v-text-field>
 
-    <v-btn
-      color="error"
-      class="mr-4"
-      @click="reset"
-    >Limpiar
-    </v-btn>
+        <v-select
+          v-model="paquete.estado"
+          :items="items"
+          :rules="[(v) => !!v || 'Item is required']"
+          label="Estado"
+          required
+        ></v-select>
 
-  </v-form>
-  </v-card-text>
+        <v-btn
+          :disabled="!valid"
+          color="success"
+          class="mr-4"
+          @click="guardar()"
+        >
+          Guardar
+        </v-btn>
+
+        <v-btn color="error" class="mr-4" @click="reset">Limpiar </v-btn>
+      </v-form>
+    </v-card-text>
   </v-card>
 </template>
 
 <script>
-  export default {
-    data: () => ({
-      valid: true,
-      codigo: '',
-      campoRules: [
-        v => !!v || 'Campo requerido',
-        v => (v && v.length >= 7) || 'El campo debe tener minimo 7 caracteres',
-      ],
-      referencia: '',
-      
-      serial: '',
-      emailRules: [
-        v => !!v || 'E-mail is required',
-        v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
-      ],
-      select: null,
-      items: [
-        'Nuevo',
-        'En reparacion',
-        'Dañado',
-        'Prestado',
-      ],
-      checkbox: false,
-    }),
+import axios from "axios";
+export default {
+  data: () => ({
+    valid: true,
 
-    methods: {
-      validate () {
-        this.$refs.form.validate()
-      },
-      reset () {
-        this.$refs.form.reset()
-      },
-      resetValidation () {
-        this.$refs.form.resetValidation()
-      },
+    paquete: {
+      codigo: null,
+      referencia: null,
+      serial: null,
+      estado: null,
+      tipo: "Portatil",
     },
-  }
+    campoRules: [
+      (v) => !!v || "Campo requerido",
+    ],
+    select: null,
+    items: ["Nuevo", "En reparacion", "Dañado", "Prestado"],
+  }),
+
+  methods: {
+    guardar() {
+      var vm = this;
+      if (this.$refs.form.validate()){
+        axios
+          .post("http://localhost:3000/dispositivo2", this.paquete)
+          .then(function (response) {
+            // handle success
+            console.log(response);
+            alert("guardado");
+          })
+          .catch(function (error) {
+            // handle error
+            console.log(error);
+          })
+          .finally(function () {
+            vm.$refs.form.reset();
+            // always executed
+          });
+      }
+    },
+  },
+};
 </script>
