@@ -13,7 +13,7 @@
                         <v-list-item
                             v-for="item in menu"
                             :key="item.title"
-                            link @click="inicio">
+                            link @click="navegar(item.title)">
                             <v-list-item-icon>
                                 <v-icon>{{ item.icon }}</v-icon>
                             </v-list-item-icon>
@@ -115,7 +115,7 @@ export default {
         ],
 
         menu: [
-            { title: 'Inicio', icon: 'mdi-view-dashboard' },
+            { title: 'Inicio', icon: 'mdi-view-dashboard', ruta: 'djhfbcjdfsc' },
             { title: 'Cuenta', icon: 'mdi-account-box' },
             { title: 'Admin', icon: 'mdi-gavel' },
             { title: 'Prestamo', icon: ''}
@@ -137,8 +137,18 @@ export default {
         prestamo(){
             this.$router.push('/dashboard/ManagerView');
         },
-        inicio(){
-            this.$router.push('/');
+        navegar(title){
+            switch (title) {
+                case 'Inicio': 
+                    this.$router.push('/');
+                    break;
+                case 'Prestamo': 
+                    this.$router.push('/dashboard/ManagerView');
+                    break;
+                default:
+                    break;
+            }
+           
         }
     },
 }
