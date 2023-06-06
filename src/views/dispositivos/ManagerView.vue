@@ -21,6 +21,9 @@
             <router-view></router-view>
         </div>
     </v-row>
+
+    
+
 </template>
 
 <script>
@@ -35,6 +38,18 @@ export default {
             {
                 texto: 'Portátil',
                 ruta: '/dashboard/ManagerView/Portatil'
+            },
+             {
+                texto: 'Mouse',
+                ruta: '/dashboard/ManagerView/Mouse'
+            },
+             {
+                texto: 'Teclado',
+                ruta: '/dashboard/ManagerView/Teclado'
+            },
+             {
+                texto: 'Cable HDMI',
+                ruta: '/dashboard/ManagerView/CableHdmi'
             }
 
         ],

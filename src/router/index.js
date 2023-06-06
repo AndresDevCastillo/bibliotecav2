@@ -24,7 +24,44 @@ const routes = [{
                 component: () =>
                     import ('../views/welcome.vue'),
             },
-          
+            {
+                name: 'ManagerView',
+                path: '/dashboard/ManagerView',
+                component: ()=>
+                    import ('../views/dispositivos/ManagerView'),
+                    children:[
+                        {
+                            name: 'VideoBeam',
+                            path: '/dashboard/ManagerView/VideoBeam',
+                            component: () =>
+                                import ('../views/dispositivos/VideoBeam'),
+                        },
+                        {     
+                            name: 'Portatil',
+                            path: '/dashboard/ManagerView/Portatil',
+                            component: () =>
+                                import ('../views/dispositivos/Portatil')
+                        },
+                        {     
+                            name: 'Mouse',
+                            path: '/dashboard/ManagerView/Mouse',
+                            component: () =>
+                                import ('../views/dispositivos/Mouse')
+                        },
+                        {     
+                            name: 'Teclado',
+                            path: '/dashboard/ManagerView/Teclado',
+                            component: () =>
+                                import ('../views/dispositivos/Teclado')
+                        },
+                        {     
+                            name: 'Cable HDMI',
+                            path: '/dashboard/ManagerView/CableHdmi',
+                            component: () =>
+                                import ('../views/dispositivos/CableHdmi')
+                        }
+                    ]
+            }
         ],
     },
     
