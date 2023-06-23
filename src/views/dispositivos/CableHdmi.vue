@@ -61,7 +61,7 @@ export default {
       (v) => !!v || "Campo requerido",
     ],
     select: null,
-    items: ["Nuevo", "En reparacion", "Dañado", "Prestado"],
+    items: ["Bueno", "En reparacion", "Dañado", "Prestado"],
   }),
 
   methods: {
@@ -69,7 +69,7 @@ export default {
       var vm = this;
       if (this.$refs.form.validate()){
         axios
-          .post("http://localhost:3000/dispositivo5", this.paquete)
+          .post("http://localhost:3000/dispositivo", this.paquete)
           .then(function (response) {
             // handle success
             console.log(response);

@@ -61,7 +61,7 @@ export default {
       tipo: "Video Beam",
     },
     campoRules: [(v) => !!v || "Campo requerido"],
-    items: ["Nuevo", "En reparacion", "Dañado", "Prestado"],
+    items: ["Bueno", "En reparacion", "Dañado", "Prestado"],
   }),
   methods: {
     guardar() {

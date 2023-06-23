@@ -61,7 +61,13 @@ const routes = [{
                                 import ('../views/dispositivos/CableHdmi')
                         }
                     ]
-            }
+            },
+            {
+                name: 'DashboarListarDispositivo',
+                path: '/dashboard/listardispositivios',
+                component: () =>
+                    import ('../views/dispositivos/ListarDispositivo'),
+            },
         ],
     },
     
