@@ -68,7 +68,7 @@ export default {
       var vm = this;
       if (this.$refs.form.validate()) {
         axios
-          .post("http://localhost:3000/dispositivo", this.paquete)
+          .post("http://localhost:3000/dispositivos", this.paquete)
           .then(function (response) {
             // handle success
             console.log(response);

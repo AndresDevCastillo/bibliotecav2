@@ -1,5 +1,5 @@
 {
-  "dispositivo": [
+  "dispositivos": [
     {
       "codigo": "1111",
       "referencia": "1111",
@@ -7,45 +7,54 @@
       "estado": "Nuevo",
       "tipo": "Video Beam",
       "id": 1
-    }
-  ],
-  "dispositivo2": [
+    },
     {
       "codigo": "21221",
       "referencia": "121222",
       "serial": "1212321",
-      "estado": "Prestado",
+      "estado": "Nuevo",
       "tipo": "Portatil",
-      "id": 1
-    }
-  ],
-  "dispositivo3": [
+      "id": 2
+    },
+    {
+      "codigo": "123",
+      "referencia": "123",
+      "serial": "123",
+      "estado": "Nuevo",
+      "tipo": "Portatil",
+      "id": 3
+    },
     {
       "codigo": "1212121",
       "referencia": "212212",
       "serial": "2121321",
       "estado": "Dañado",
       "tipo": "Mouse",
-      "id": 1
-    }
-  ],
-  "dispositivo4": [
+      "id": 4
+    },
     {
       "codigo": "111",
       "referencia": "111",
       "serial": "111",
       "estado": "Dañado",
       "tipo": "Teclado",
-      "id": 1
-    }
-  ],
-  "dispositivo5": [
+      "id": 5
+    },
     {
       "codigo": "111",
       "referencia": "1111",
       "serial": "1111",
       "estado": "En reparacion",
       "tipo": "Cable HDMI",
+      "id": 6
+    }
+  ],
+  "prestamos": [
+    {
+      "dispositivo": "1111",
+      "fechaInicio": "2023-06-09T22:03",
+      "fechaFin": "2023-06-17T22:03",
+      "estado": 1,
       "id": 1
     }
   ]

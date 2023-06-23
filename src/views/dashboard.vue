@@ -6,7 +6,7 @@
 
     <v-main>
       <v-container
-        class="py-2 "
+        class="py-5 "
         fluid
       >
         <v-row>

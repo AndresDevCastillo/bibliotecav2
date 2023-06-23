@@ -17,8 +17,7 @@ const routes = [{
         name: 'Dashboard',
         component: () =>
             import ('../views/dashboard'),
-        children: [
-            {
+        children: [{
                 name: 'DashboardWelcome',
                 path: '/dashboard/welcome',
                 component: () =>
@@ -27,45 +26,49 @@ const routes = [{
             {
                 name: 'ManagerView',
                 path: '/dashboard/ManagerView',
-                component: ()=>
+                component: () =>
                     import ('../views/dispositivos/ManagerView'),
-                    children:[
-                        {
-                            name: 'VideoBeam',
-                            path: '/dashboard/ManagerView/VideoBeam',
-                            component: () =>
-                                import ('../views/dispositivos/VideoBeam'),
-                        },
-                        {     
-                            name: 'Portatil',
-                            path: '/dashboard/ManagerView/Portatil',
-                            component: () =>
-                                import ('../views/dispositivos/Portatil')
-                        },
-                        {     
-                            name: 'Mouse',
-                            path: '/dashboard/ManagerView/Mouse',
-                            component: () =>
-                                import ('../views/dispositivos/Mouse')
-                        },
-                        {     
-                            name: 'Teclado',
-                            path: '/dashboard/ManagerView/Teclado',
-                            component: () =>
-                                import ('../views/dispositivos/Teclado')
-                        },
-                        {     
-                            name: 'Cable HDMI',
-                            path: '/dashboard/ManagerView/CableHdmi',
-                            component: () =>
-                                import ('../views/dispositivos/CableHdmi')
-                        }
-                    ]
+                children: [{
+                        name: 'VideoBeam',
+                        path: '/dashboard/ManagerView/VideoBeam',
+                        component: () =>
+                            import ('../views/dispositivos/VideoBeam'),
+                    },
+                    {
+                        name: 'Portatil',
+                        path: '/dashboard/ManagerView/Portatil',
+                        component: () =>
+                            import ('../views/dispositivos/Portatil')
+                    },
+                    {
+                        name: 'Mouse',
+                        path: '/dashboard/ManagerView/Mouse',
+                        component: () =>
+                            import ('../views/dispositivos/Mouse')
+                    },
+                    {
+                        name: 'Teclado',
+                        path: '/dashboard/ManagerView/Teclado',
+                        component: () =>
+                            import ('../views/dispositivos/Teclado')
+                    },
+                    {
+                        name: 'Cable HDMI',
+                        path: '/dashboard/ManagerView/CableHdmi',
+                        component: () =>
+                            import ('../views/dispositivos/CableHdmi')
+                    }
+                ]
             }
         ],
     },
-    
-    
+    {
+        path: '/prestamo',
+        name: 'Prestamo',
+        component: () =>
+            import ('../views/prestamo.vue')
+
+    }
 ]
 
 const router = new VueRouter({

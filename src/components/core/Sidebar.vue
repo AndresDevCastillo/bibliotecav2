@@ -118,7 +118,8 @@ export default {
             { title: 'Inicio', icon: 'mdi-view-dashboard', ruta: 'djhfbcjdfsc' },
             { title: 'Cuenta', icon: 'mdi-account-box' },
             { title: 'Admin', icon: 'mdi-gavel' },
-            { title: 'Prestamo', icon: ''}
+            { title: 'Prestamo', icon: '' },
+            { title: 'Préstamo p', icon: 'mdi-person' }
         ], admins: [
             ['Management', 'mdi-account-multiple-outline'],
             ['Settings', 'mdi-cog-outline'],
@@ -134,21 +135,24 @@ export default {
         this.menu = this.$store.state.userData.menu
     },
     methods: {
-        prestamo(){
+        prestamo() {
             this.$router.push('/dashboard/ManagerView');
         },
-        navegar(title){
+        navegar(title) {
             switch (title) {
-                case 'Inicio': 
+                case 'Inicio':
                     this.$router.push('/');
                     break;
-                case 'Prestamo': 
+                case 'Prestamo':
                     this.$router.push('/dashboard/ManagerView');
+                    break;
+                case 'Préstamo p':
+                    this.$router.push('/prestamo');
                     break;
                 default:
                     break;
             }
-           
+
         }
     },
 }
