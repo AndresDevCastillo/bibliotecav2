@@ -68,6 +68,13 @@ const routes = [{
                 component: () =>
                     import ('../views/dispositivos/ListarDispositivo'),
             },
+            {
+                name: 'registrarprestamo',
+                path: '/dashboard/registrarprestamo',
+                component: () =>
+                import ('../views/Prestamo'),
+
+            }
         ],
     },
     

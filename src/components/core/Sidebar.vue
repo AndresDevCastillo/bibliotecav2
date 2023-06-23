@@ -92,6 +92,10 @@ export default {
             href: "/dashboard/listardispositivios",
             title: "Listar prestamo",
           },
+          {
+            href:"/dashboard/registrarprestamo",
+            title:"Registrar Prestamo"
+          }
         ],
       },
     ],
