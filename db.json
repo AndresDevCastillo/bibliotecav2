@@ -56,6 +56,27 @@
       "fechaFin": "2023-06-17T22:03",
       "estado": 1,
       "id": 1
+    },
+    {
+      "dispositivo": "21221",
+      "fechaInicio": "2023-06-09T09:42",
+      "fechaFin": "2023-06-02T09:42",
+      "estado": 1,
+      "id": 2
+    },
+    {
+      "dispositivo": null,
+      "fechaInicio": null,
+      "fechaFin": null,
+      "estado": 1,
+      "id": 3
+    },
+    {
+      "dispositivo": null,
+      "fechaInicio": null,
+      "fechaFin": null,
+      "estado": 1,
+      "id": 4
     }
   ]
 }
