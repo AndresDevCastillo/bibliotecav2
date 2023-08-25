@@ -7,68 +7,75 @@ Vue.use(VueRouter)
 
 //rutas de elementos del sidebar
 const routes = [{
-        path: '/',
-        name: 'Login',
+    path: '/',
+    name: 'Login',
+    component: () =>
+        import('../views/iniciarSesion.vue')
+},
+{
+    path: '/dashboard',
+    name: 'Dashboard',
+    component: () =>
+        import('../views/dashboard'),
+    children: [{
+        name: 'DashboardWelcome',
+        path: '/dashboard/welcome',
         component: () =>
-            import ('../views/iniciarSesion.vue')
+            import('../views/welcome.vue'),
     },
     {
-        path: '/dashboard',
-        name: 'Dashboard',
+        name: 'ManagerView',
+        path: '/dashboard/ManagerView',
         component: () =>
-            import ('../views/dashboard'),
-        children: [{
-                name: 'DashboardWelcome',
-                path: '/dashboard/welcome',
+            import('../views/dispositivos/ManagerView'),
+        children: [
+            {
+                name: 'VideoBeam',
+                path: '/dashboard/ManagerView/VideoBeam',
                 component: () =>
-                    import ('../views/welcome.vue'),
+                    import('../views/dispositivos/VideoBeam'),
             },
             {
-                name: 'ManagerView',
-                path: '/dashboard/ManagerView',
+                name: 'Portatil',
+                path: '/dashboard/ManagerView/Portatil',
                 component: () =>
-                    import ('../views/dispositivos/ManagerView'),
-                children: [{
-                        name: 'VideoBeam',
-                        path: '/dashboard/ManagerView/VideoBeam',
-                        component: () =>
-                            import ('../views/dispositivos/VideoBeam'),
-                    },
-                    {
-                        name: 'Portatil',
-                        path: '/dashboard/ManagerView/Portatil',
-                        component: () =>
-                            import ('../views/dispositivos/Portatil')
-                    },
-                    {
-                        name: 'Mouse',
-                        path: '/dashboard/ManagerView/Mouse',
-                        component: () =>
-                            import ('../views/dispositivos/Mouse')
-                    },
-                    {
-                        name: 'Teclado',
-                        path: '/dashboard/ManagerView/Teclado',
-                        component: () =>
-                            import ('../views/dispositivos/Teclado')
-                    },
-                    {
-                        name: 'Cable HDMI',
-                        path: '/dashboard/ManagerView/CableHdmi',
-                        component: () =>
-                            import ('../views/dispositivos/CableHdmi')
-                    }
-                ]
+                    import('../views/dispositivos/Portatil')
+            },
+            {
+                name: 'Mouse',
+                path: '/dashboard/ManagerView/Mouse',
+                component: () =>
+                    import('../views/dispositivos/Mouse')
+            },
+            {
+                name: 'Teclado',
+                path: '/dashboard/ManagerView/Teclado',
+                component: () =>
+                    import('../views/dispositivos/Teclado')
+            },
+            {
+                name: 'Cable HDMI',
+                path: '/dashboard/ManagerView/CableHdmi',
+                component: () =>
+                    import('../views/dispositivos/CableHdmi')
             }
-        ],
+        ]
     },
     {
-        path: '/prestamo',
-        name: 'Prestamo',
+        name: 'estadoEquipo',
+        path: '/dashboard/estadoEquipo',
         component: () =>
-            import ('../views/prestamo.vue')
+            import('../views/dispositivos/EstadoEquipo')
+    },
+    ],
+},
+{
+    path: '/prestamo',
+    name: 'Prestamo',
+    component: () =>
+        import('../views/prestamo.vue')
 
-    }
+}
 ]
 
 const router = new VueRouter({

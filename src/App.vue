@@ -1,64 +1,80 @@
-  <template >
-      <v-app id="inspire">
-        <div class="app-container">
-               
-          <router-view/>
-    
-        </div>
-      </v-app>
-    </template>
-  
+<template >
+  <v-app id="inspire">
+    <div class="app-container">
 
+      <router-view />
 
-
+    </div>
+  </v-app>
+</template>
 <script>
-  const default_layout = "default";
+const default_layout = "default";
 
-  export default {
-    computed: {
-      layout() {
-        return (this.$route.meta.layout || default_layout) + '-layout';
-      }
+export default {
+  computed: {
+    layout() {
+      return (this.$route.meta.layout || default_layout) + '-layout';
     }
   }
+}
 </script>
 
 <style lang="scss">
 @import "assets/base.scss";
 @import "scss/_dashboard.scss";
 
-.v-sidebar-menu .vsm-header{
-    color: rgb(255, 255, 255);
+.v-sidebar-menu .vsm-header {
+  color: rgb(0, 0, 0);
 }
 
-.v-sidebar-menu .vsm-title{
-    color: #FFFFFF;
-}
-.v-sidebar-menu .vsm-icon{
-    color: #FFFFFF;
+.v-sidebar-menu .vsm-link {
+  background-color: orange !important;
 }
 
-.v-sidebar-menu .vsm-link:hover{
-    background-color: #ffffff70;;
+.v-sidebar-menu .vsm-title {
+  color: #FFFFFF;
+}
+
+.v-sidebar-menu .vsm-icon {
+  color: #FFFFFF;
+}
+
+.v-sidebar-menu .vsm-arrow {
+  color: #FFFFFF;
+  opacity: 1;
+}
+
+.v-sidebar-menu .vsm-link:hover {
+  background-color: #ffffff70;
 }
 
 
-.v-sidebar-menu .vsm-item.active-item > .vsm-link {
-  background-color: #ffffff70;;
+.v-sidebar-menu .vsm-item.active-item>.vsm-link>.vsm-icon+.vsm-title {
+  color: #000;
 
 }
-.btn-app-bar{
-    border-radius: 50px;
-    padding: 6px;
-    background-color: #a299a3c5;
-   }
-   .btn-app-bar:hover{
-    border-radius: 50px;
-    padding: 6px;
-    background-color: #a299a3 !important;
-   }
 
-   
+.v-sidebar-menu .vsm-dropdown .vsm-item .vsm-link {
+  padding: 0 2rem;
+}
+
+.v-sidebar-menu .vsm-dropdown::before {
+  background-color: orange !important;
+}
+
+.btn-app-bar {
+  border-radius: 50px;
+  padding: 6px;
+  background-color: #a299a3c5;
+}
+
+.btn-app-bar:hover {
+  border-radius: 50px;
+  padding: 6px;
+  background-color: #a299a3 !important;
+}
+
+
 
 /*    .body-component{
     background-image: url("./assets/fondo.png");
@@ -70,9 +86,7 @@
   } */
 
 
-  .button-text{
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 500;
-  }
-
-</style>
+.button-text {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+}</style>
