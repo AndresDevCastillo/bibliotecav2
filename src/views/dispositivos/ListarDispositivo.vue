@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <v-card>
+    <div >
+        <v-card >
     <v-card-title>
       <v-text-field
         v-model="search"
@@ -59,3 +59,10 @@ export default {
     
 }
 </script>
+<style >
+.cartac
+{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    background-color: rgba(255, 255, 255, 0) !important;
+}
+</style>

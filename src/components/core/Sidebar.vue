@@ -95,6 +95,10 @@ export default {
           {
             href:"/dashboard/registrarprestamo",
             title:"Registrar Prestamo"
+          },
+          {
+            href:"",
+            title:"Registrar equipo"
           }
         ],
       },

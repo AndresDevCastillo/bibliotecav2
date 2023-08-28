@@ -4,44 +4,13 @@
     <v-img height="300px" src="../../assets/images/Vdbeam.jpeg"></v-img>
     <v-card-text>
       <v-form ref="form" v-model="valid" lazy-validation>
-        <v-text-field
-          v-model="paquete.codigo"
-          :rules="campoRules"
-          label="Codigo"
-          required
-        ></v-text-field>
-
-        <v-text-field
-          v-model="paquete.referencia"
-          :rules="campoRules"
-          label="Referencia"
-          required
-        ></v-text-field>
-
-        <v-text-field
-          v-model="paquete.serial"
-          label="Serial"
-          required
-        ></v-text-field>
-
-        <v-select
-          v-model="paquete.estado"
-          :items="items"
-          :rules="[(v) => !!v || 'Item is required']"
-          label="Estado"
-          required
-        ></v-select>
-
-        <v-btn
-          :disabled="!valid"
-          color="success"
-          class="mr-4"
-          @click="guardar()"
-        >
+        <v-text-field v-model="paquete.estado" :counter="20" :rules="campoRules" label="Ingrese estado Equipo"
+          required></v-text-field>
+        <v-btn :disabled="!valid" color="success" class="mr-4" @click="guardar()">
           Guardar
         </v-btn>
-
-        <v-btn color="error" class="mr-4" @click="reset">Eliminar</v-btn>
+        <v-btn color="error" class="mr-4" @click="reset()">Limpiar </v-btn>
+        <v-p>{{ paquete }}</v-p>
       </v-form>
     </v-card-text>
   </v-card>

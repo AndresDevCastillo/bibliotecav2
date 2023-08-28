@@ -4,41 +4,13 @@
     <v-img height="350px" src="../../assets/images/Mouse.png"></v-img>
     <v-card-text>
       <v-form ref="form" v-model="valid" lazy-validation>
-        <v-text-field
-          v-model="paquete.codigo"
-          :rules="campoRules"
-          label="Codigo"
-          required
-        ></v-text-field>
-
-        <v-text-field
-          v-model="paquete.referencia"
-          :counter="7"
-          :rules="campoRules"
-          label="Referencia"
-          required
-        ></v-text-field>
-
-        <v-text-field v-model="paquete.serial" label="Serial" required></v-text-field>
-
-        <v-select
-          v-model="paquete.estado"
-          :items="items"
-          :rules="[(v) => !!v || 'Item is required']"
-          label="Estado"
-          required
-        ></v-select>
-
-        <v-btn
-          :disabled="!valid"
-          color="success"
-          class="mr-4"
-          @click="guardar()"
-        >
+        <v-text-field v-model="paquete.estado" :counter="20" :rules="campoRules" label="Ingrese estado Equipo"
+          required></v-text-field>
+        <v-btn :disabled="!valid" color="success" class="mr-4" @click="guardar()">
           Guardar
         </v-btn>
-
-        <v-btn color="error" class="mr-4" @click="reset">Limpiar </v-btn>
+        <v-btn color="error" class="mr-4" @click="reset()">Limpiar </v-btn>
+        <v-p>{{ paquete }}</v-p>
       </v-form>
     </v-card-text>
   </v-card>
@@ -51,17 +23,11 @@ export default {
     valid: true,
 
     paquete: {
-      codigo: null,
-      referencia: null,
-      serial: null,
       estado: null,
-      tipo: "Mouse",
     },
     campoRules: [
       (v) => !!v || "Campo requerido",
-    ],
-    select: null,
-    items: ["Bueno", "En reparacion", "Dañado", "Prestado"],
+    ]
   }),
 
   methods: {
@@ -85,6 +51,12 @@ export default {
           });
       }
     },
+    reset() {
+      this.$refs.form.reset();
+    }
   },
+  mounted() {
+    axios.get('http://localhost:3000/estado-equipo').then((response) => console.log(response.data));
+  }
 };
 </script>

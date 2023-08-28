@@ -1,8 +1,8 @@
 <template>
     <v-row col="2">
-        <v-card width="300px" height="300px" class="mx-auto">
+        <v-card width="500px" height="200px" class="carta" >
             <v-card-title>
-                Seleccione equipo a registrar
+                SELECCIONE UN EQUIPO
             </v-card-title>
             <v-card-text>
                 <v-select
@@ -13,7 +13,7 @@
                     item-value="ruta"
                     label="Estado"
                     return-object
-                    single-line
+                    single-line  
                     required></v-select>
             </v-card-text>
         </v-card>
@@ -27,6 +27,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
     data: () => ({
         select: { texto: '', ruta: '' },
@@ -53,12 +55,26 @@ export default {
             }
 
         ],
+        miBody : {
+            estado: "dañado"
+        }
     }),
 
     methods: {
         registrar() {
             this.$router.push(this.select.ruta);
+        },
+        async registrarEstado() {
+            await axios.get('http://localhost:3000/estado-equipo/3', );
         }
     },
 }
+
 </script>
+
+<style>
+.carta{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    background-color: rgba(255, 255, 255, 0) !important;
+}
+</style>
