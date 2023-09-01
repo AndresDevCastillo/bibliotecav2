@@ -79,10 +79,12 @@ export default {
       { title: "Inicio", icon: "mdi-view-dashboard", href: "/" },
       { title: "Cuenta", icon: "mdi-account-box" },
       { title: "Admin", icon: "mdi-gavel" },
+      { title: "Crear equipo", icon: "mdi-gavel", href:"/dashboard/CrearEquipo" },
       {
         title: "Prestamo",
         icon: "fa fa-chart-area",
         child: [
+        
           {
             href: "/dashboard/ManagerView",
             title: "Crear prestamo",
