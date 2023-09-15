@@ -76,19 +76,21 @@ export default {
     ],
 
     menu: [
-      { title: "Inicio", icon: "mdi-view-dashboard", href: "/" },
-      { title: "Cuenta", icon: "mdi-account-box" },
-      { title: "Admin", icon: "mdi-gavel" },
-      { title: "Crear equipo", icon: "mdi-gavel", href:"/dashboard/CrearEquipo" },
+      { title: "Inicio", icon: "fas fa-house-user"},
+      { title: "Cuenta", icon: "fas fa-user-circle" },
+      { title: "Admin", icon:"fas fa-user-lock" },
+      { title: "Crear equipo", icon:"fas fa-plus-circle", href:"/dashboard/CrearEquipo" },
       {
         title: "Prestamo",
-        icon: "fa fa-chart-area",
+        icon:"far fa-calendar-plus",
         child: [
         
           {
             href: "/dashboard/ManagerView",
             title: "Crear prestamo",
             color: "red",
+            
+            
           },
           {
             href: "/dashboard/listardispositivios",
