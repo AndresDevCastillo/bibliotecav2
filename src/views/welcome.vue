@@ -29,6 +29,7 @@
 
 h3{
     padding-top: 0px;
+    font-family: 'Staatliches', cursive;
 }
 .logo{
     height: 100px;

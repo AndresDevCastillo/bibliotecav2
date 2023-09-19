@@ -26,27 +26,15 @@
 <style lang="scss">
 @import "assets/base.scss";
 @import "scss/_dashboard.scss";
+@font-face {
+    font-family: Staatliches;
+    src: url('./assets/fonts/Staatliches-Regular.ttf');
+   }
 
 .v-sidebar-menu .vsm-header{
-    color: rgb(255, 255, 255);
+    color: black;
 }
 
-.v-sidebar-menu .vsm-title{
-    color: #FFFFFF;
-}
-.v-sidebar-menu .vsm-icon{
-    color: #FFFFFF;
-}
-
-.v-sidebar-menu .vsm-link:hover{
-    background-color: #ffffff70;;
-}
-
-
-.v-sidebar-menu .vsm-item.active-item > .vsm-link {
-  background-color: #ffffff70;;
-
-}
 .btn-app-bar{
     border-radius: 50px;
     padding: 6px;

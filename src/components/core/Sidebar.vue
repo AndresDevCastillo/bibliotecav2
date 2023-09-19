@@ -161,6 +161,22 @@ export default {
 }
 
 .v-sidebar-menu .vsm-title {
-  color: #935e13;
+  color: #F9A21F;
+  font-family: 'Staatliches', cursive;
+  font-size: 20px !important;
+  text-shadow: -2px -2px 1px #FFFFFF;
 }
+.v-sidebar-menu .vsm-icon{
+    color: #FFFFFF;
+}
+
+.v-sidebar-menu .vsm-link:hover{
+    background-color: #ffffff70;;
+}
+
+.v-sidebar-menu .vsm-item.active-item > .vsm-link {
+  background-color: #ffffff70;;
+
+}
+
 </style>
