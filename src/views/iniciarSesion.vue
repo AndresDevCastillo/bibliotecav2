@@ -48,7 +48,7 @@
               src="https://thumbs.dreamstime.com/b/computadora-port%C3%A1til-de-la-biblioteca-de-universidad-26745944.jpg"
             ></v-img>
             <v-card-item>
-              <v-card-title>¿Quienes Somos?</v-card-title>
+              <v-card-title>¿Quiénes Somos?</v-card-title>
             </v-card-item>
             <v-card-text>
               <div>
@@ -64,7 +64,12 @@
           </v-card>
         </v-col>
         <v-col cols="4">
-          <v-card :loading="loading" class="mx-auto my-12" max-width="374" height="550">
+          <v-card
+            :loading="loading"
+            class="mx-auto my-12"
+            max-width="374"
+            height="550"
+          >
             <v-img
               cover
               height="250"
@@ -180,7 +185,7 @@
 
               <div class="mt-4">
                 <div class="d-flex justify-content-center links">
-                  <a href="#" style="color: black">¿olvidaste tu contraseña?</a>
+                  <a href="#" style="color: black">¿Olvidaste tu contraseña?</a>
                 </div>
               </div>
             </div>
@@ -188,8 +193,14 @@
         </div>
       </v-dialog>
     </v-main>
-    <v-footer padless >
-      <v-card flat tile height="100%" width="100%" class="mt-0 orange  lighten-1 white--text text-center">
+    <v-footer padless>
+      <v-card
+        flat
+        tile
+        height="100%"
+        width="100%"
+        class="mt-0 orange lighten-1 white--text text-center"
+      >
         <v-card-text>
           <v-btn
             v-for="icon in icons"
@@ -206,7 +217,7 @@
         <v-card-text class="white--text pt-0">
           El Sistema Nacional de Bibliotecas - (SBS) proporciona recursos de
           información a la comunidad SENA y a los empresarios innovadores,
-          aportando conocimiento para todos los colombianos.
+          aportando conocimiento para todos los Colombianos.
         </v-card-text>
 
         <v-card-text class="white--text">

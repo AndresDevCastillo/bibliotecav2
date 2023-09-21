@@ -76,34 +76,35 @@ export default {
     ],
 
     menu: [
-      { title: "Inicio", icon: "fas fa-house-user"},
+      { title: "Inicio", icon: "fas fa-house-user" },
       { title: "Cuenta", icon: "fas fa-user-circle" },
-      { title: "Admin", icon:"fas fa-user-lock" },
-      { title: "Crear equipo", icon:"fas fa-plus-circle", href:"/dashboard/CrearEquipo" },
+      { title: "Admin", icon: "fas fa-user-lock" },
+      {
+        title: "Crear equipo",
+        icon: "fas fa-plus-circle",
+        href: "/dashboard/CrearEquipo",
+      },
       {
         title: "Prestamo",
-        icon:"far fa-calendar-plus",
+        icon: "far fa-calendar-plus",
         child: [
-        
           {
             href: "/dashboard/ManagerView",
             title: "Crear prestamo",
             color: "red",
-            
-            
           },
           {
             href: "/dashboard/listardispositivios",
             title: "Listar prestamo",
           },
           {
-            href:"/dashboard/registrarprestamo",
-            title:"Registrar Prestamo"
+            href: "/dashboard/registrarprestamo",
+            title: "Registrar Prestamo",
           },
           {
-            href:"",
-            title:"Registrar equipo"
-          }
+            href: "",
+            title: "Registrar equipo",
+          },
         ],
       },
     ],
@@ -161,22 +162,20 @@ export default {
 }
 
 .v-sidebar-menu .vsm-title {
-  color: #F9A21F;
-  font-family: 'Staatliches', cursive;
+  color: #f9a21f;
+  font-family: "Staatliches", cursive;
   font-size: 20px !important;
-  text-shadow: -2px -2px 1px #FFFFFF;
+  text-shadow: -2px -2px 1px #ffffff;
 }
-.v-sidebar-menu .vsm-icon{
-    color: #FFFFFF;
+.v-sidebar-menu .vsm-icon {
+  color: #ffffff;
 }
 
-.v-sidebar-menu .vsm-link:hover{
-    background-color: #ffffff70;;
+.v-sidebar-menu .vsm-link:hover {
+  background-color: #ffffff70;
 }
 
 .v-sidebar-menu .vsm-item.active-item > .vsm-link {
-  background-color: #ffffff70;;
-
+  background-color: #ffffff70;
 }
-
 </style>

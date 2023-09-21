@@ -41,10 +41,7 @@
 export default {
   data() {
     return {
-      items: [
-        { text: "Perfil", icon: "mdi-clock" },
-        { text: "Salir", icon: "mdi-account" },
-      ],
+      items: [{ text: "Salir", icon: "fas fa-power-off" }],
     };
   },
   methods: {
@@ -62,10 +59,10 @@ export default {
   font-family: "montserrat";
   font-weight: 500;
 }
-.letra{
-  font-family: 'Staatliches', cursive;
-  color: #F57025;
+.letra {
+  font-family: "Staatliches", cursive;
+  color: #f57025;
   font-size: 40px;
-  text-shadow: -2px -2px 1px #FFFF;
+  text-shadow: -2px -2px 1px #ffff;
 }
 </style>
