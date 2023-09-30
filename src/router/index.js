@@ -65,7 +65,7 @@ const routes = [{
         name: 'estadoEquipo',
         path: '/dashboard/estadoEquipo',
         component: () =>
-            import('../views/dispositivos/EstadoEquipo')
+            import('../views/EstadoEquipo')
     },
     ],
 },

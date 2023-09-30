@@ -23,6 +23,52 @@ export default {
 @import "assets/base.scss";
 @import "scss/_dashboard.scss";
 
+:root {
+  --c-orange: orange;
+}
+
+.bc-orange {
+  background-color: orange;
+}
+
+.c-orange {
+  color: orange;
+}
+
+.btn-tabla {
+  background-color: var(--c-orange) !important;
+  color: white !important;
+}
+
+.btn-cancelar:hover::before,
+.btn-cancelar:focus::before {
+  transition: all .3s ease;
+  opacity: 0.4 !important;
+  background-color: var(--c-orange) !important;
+}
+
+.btn-cancelar:hover>.v-btn__content,
+.btn-cancelar:focus>.v-btn__content {
+  color: #FFFFFF;
+}
+
+.v-text-field.v-input--is-focused>.v-input__control>.v-input__slot:after {
+  border-color: var(--c-orange) !important;
+}
+
+.v-text-field__slot>.v-label.primary--text {
+  color: var(--c-orange) !important;
+}
+
+.v-progress-linear>.v-progress-linear__background.primary {
+  background-color: var(--c-orange) !important;
+}
+
+.v-progress-linear .v-progress-linear__indeterminate .long,
+.v-progress-linear .v-progress-linear__indeterminate .short {
+  background-color: var(--c-orange) !important;
+}
+
 .v-sidebar-menu .vsm-header {
   color: rgb(0, 0, 0);
 }
