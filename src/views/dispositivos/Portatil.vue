@@ -26,12 +26,7 @@
               required></v-text-field>
           </v-col>
           <v-col cols="6">
-            <v-select
-              v-model="paquete.estado"
-              :items="items"
-              :rules="[(v) => !!v || 'Estado es requerido']"
-              label="Estado"
-              required></v-select>
+            <EstadoEquipo @selectEstado="guardarEstadoSeleccionado" />
           </v-col>
         </v-row>
         <v-btn
@@ -41,7 +36,6 @@
           @click="guardar">
           Guardar
         </v-btn>
-        <v-btn color="error" class="mr-4" @click="reset">Eliminar</v-btn>
       </v-form>
     </v-card-text>
   </v-card>
@@ -49,7 +43,9 @@
 
 <script>
 import axios from "axios";
+import EstadoEquipo from "../../components/EstadoEquipo.vue";
 export default {
+  components: { EstadoEquipo },
   data: () => ({
     rutaBackend: `${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}`,
     valid: true,
@@ -57,7 +53,7 @@ export default {
       codigo: null,
       referencia: null,
       serial: null,
-      estado: null,
+      estado: null,//Aquí va el id del estado de equipo, valor emitido desde EstadoEquipoComponent
       tipo: "Portatil", //Aquí va el id del tipo de equipo, se carga automático
     },
     campoRules: [
@@ -68,11 +64,15 @@ export default {
   }),
 
   methods: {
-    guardar() {
-      var vm = this;
+    guardarEstadoSeleccionado(estado) {
+      if (typeof estado == 'object') {
+        this.paquete.estado = estado.id;
+      }
+    },
+    async guardar() {
       if (this.$refs.form.validate()) {
-        axios
-          .post("http://localhost:3000/dispositivos", this.paquete)
+        this.axios
+          .post(`${this.rutaBackend}/equipo/crear`, this.paquete)
           .then(function (response) {
             // handle success
             console.log(response);
@@ -83,7 +83,7 @@ export default {
             console.log(error);
           })
           .finally(function () {
-            vm.$refs.form.reset();
+            this.$refs.form.reset();
             // always executed
           });
       }

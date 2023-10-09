@@ -8,11 +8,10 @@
                     <div>
                         <h4 class="word-break">Seleccione equipo a registrar</h4>
                         <v-select
-                            @change="registrar"
                             v-model="select"
-                            :items="items"
-                            item-text="texto"
-                            item-value="ruta"
+                            :items="itemsSelect"
+                            item-text="tipo"
+                            item-value="id"
                             label="Tipo de equipo"
                             return-object
                             single-line
@@ -37,29 +36,32 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
     data: () => ({
+        rutaBackend: `${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}`,
         value: 1,
-        select: { texto: '', ruta: '' },
+        select: { tipo: null, ruta: null },
+        itemsSelect: [],
         items: [
             {
-                texto: 'VideoBeam',
+                tipo: 'VideoBeam',
                 ruta: '/dashboard/ManagerView/VideoBeam',
             },
             {
-                texto: 'Portátil',
+                tipo: 'Portátil',
                 ruta: '/dashboard/ManagerView/Portatil'
             },
             {
-                texto: 'Mouse',
+                tipo: 'Mouse',
                 ruta: '/dashboard/ManagerView/Mouse'
             },
             {
-                texto: 'Teclado',
+                tipo: 'Teclado',
                 ruta: '/dashboard/ManagerView/Teclado'
             },
             {
-                texto: 'Cable HDMI',
+                tipo: 'Cable HDMI',
                 ruta: '/dashboard/ManagerView/CableHdmi'
             }
 
@@ -67,9 +69,26 @@ export default {
     }),
 
     methods: {
-        registrar() {
-            this.$router.push(this.select.ruta);
+        async obtenerTiposEquipo() {
+            await axios.get(`${this.rutaBackend}/tipo-equipo`).then(response => {
+                this.itemsSelect = response.data;
+            });
         }
     },
+    watch: {
+        select() {
+            let comparar1, comparar2;
+            this.items.filter(item => {
+                comparar1 = item.tipo.toLocaleLowerCase();
+                comparar2 = this.select.tipo.toLocaleLowerCase();
+                if (comparar1 === comparar2) {
+                    this.$router.push(item.ruta);
+                }
+            });
+        }
+    },
+    created() {
+        this.obtenerTiposEquipo();
+    }
 }
 </script>

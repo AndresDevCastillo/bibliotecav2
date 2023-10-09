@@ -272,7 +272,7 @@ export default {
                 this.dialogError = true;
                 this.tiempoDialog();
                 console.log(`Error: ${error}`);
-            })
+            });
             this.loadTabla = false;
         },
         async obtenerTiposEquipo() {
