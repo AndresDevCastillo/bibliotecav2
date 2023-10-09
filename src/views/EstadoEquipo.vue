@@ -1,7 +1,25 @@
 <template>
     <v-card class="py-4">
-        <v-row no-gutters>
-            <v-card class="mx-auto">
+        <v-row no-gutters class="justify-content-evenly">
+            <v-card>
+                <v-card-title>
+                    Registrar tipo de equipo
+                </v-card-title>
+                <v-card-text>
+                    <v-form ref="formTipo" v-model="validTipo" lazy-validation>
+                        <v-text-field
+                            v-model="paqueteTipo.tipo"
+                            :rules="campoRules"
+                            label="Tipo de equipo"
+                            placeholder="Ej: Portátil"
+                            required></v-text-field>
+                    </v-form>
+                </v-card-text>
+                <v-card-actions class="justify-center">
+                    <v-btn @click="guardarTipoEquipo" class="btn-tabla">Guardar</v-btn>
+                </v-card-actions>
+            </v-card>
+            <v-card>
                 <v-card-title>
                     Registrar estado de equipo
                 </v-card-title>
@@ -20,60 +38,117 @@
                 </v-card-actions>
             </v-card>
         </v-row>
-        <v-row no-gutters justify="center" class="mt-3">
-            <v-card width="550">
-                <v-card-title primary-title>
-                    <div>
-                        <h3 class="headline mb-0">Estados de equipo</h3>
-                    </div>
-                </v-card-title>
-                <v-card-text>
-                    <v-data-table
-                        :headers="headers"
-                        :items="items"
-                        :loading="loadTabla"
-                        loading-text="Cargando, por favor espere..."
-                        :footer-props="{
-                            'show-current-page': true,
-                            'items-per-page-options': [5, 10, 15],
-                            itemsPerPageText: 'Registros mostrados',
-                            pageText: '{0}-{1} de {2}',
-                            showFirstLastPage: true,
-                            firstIcon: 'mdi-arrow-collapse-left',
-                            lastIcon: 'mdi-arrow-collapse-right',
-                            prevIcon: 'mdi-minus',
-                            nextIcon: 'mdi-plus'
-                        }"
-                        class="elevation-1">
-                        <template v-slot:item.actions="{ item, index }">
-                            <v-tooltip top>
-                                <template v-slot:activator="{ on, attrs }">
-                                    <v-icon
-                                        color="var(--c-orange)"
-                                        class="mr-2" @click="editarEstado(index)"
-                                        v-bind="attrs" v-on="on">
-                                        mdi-pencil
-                                    </v-icon>
-                                </template>
-                                <span>Editar estado equipo</span>
-                            </v-tooltip>
-                            <v-tooltip top color="error">
-                                <template v-slot:activator="{ on, attrs }">
-                                    <v-icon
-                                        color="var(--c-orange)" v-bind="attrs" v-on="on" @click="deleteItem(item.id)">
-                                        mdi-delete
-                                    </v-icon>
-                                </template>
-                                <span>Eliminar estado equipo</span>
-                            </v-tooltip>
-                        </template>
-                        <template slot="no-data">
-                            <p class="text-dark">Sin datos</p>
-                            <v-btn color="var(--c-orange)" class="mb-2 btn-tabla" @click="obtenerEstadosEquipo()">Recargar</v-btn>
-                        </template>
-                    </v-data-table>
-                </v-card-text>
-            </v-card>
+        <v-row class="mt-3" justify="center">
+            <v-col cols="6">
+                <v-card>
+                    <v-card-title primary-title>
+                        <div>
+                            <h3 class="headline mb-0">Tipos de equipo</h3>
+                        </div>
+                    </v-card-title>
+                    <v-card-text>
+                        <v-data-table
+                            :headers="headersTipo"
+                            :items="itemsTipo"
+                            :loading="loadTablaTipo"
+                            loading-text="Cargando, por favor espere..."
+                            :footer-props="{
+                                'show-current-page': true,
+                                'items-per-page-options': [5, 10, 15],
+                                itemsPerPageText: 'Registros mostrados',
+                                pageText: '{0}-{1} de {2}',
+                                showFirstLastPage: true,
+                                firstIcon: 'mdi-arrow-collapse-left',
+                                lastIcon: 'mdi-arrow-collapse-right',
+                                prevIcon: 'mdi-minus',
+                                nextIcon: 'mdi-plus'
+                            }"
+                            class="elevation-1">
+                            <template v-slot:item.actions="{ item, index }">
+                                <v-tooltip top>
+                                    <template v-slot:activator="{ on, attrs }">
+                                        <v-icon
+                                            color="var(--c-orange)"
+                                            class="mr-2" @click="editarEstado(index)"
+                                            v-bind="attrs" v-on="on">
+                                            mdi-pencil
+                                        </v-icon>
+                                    </template>
+                                    <span>Editar estado equipo</span>
+                                </v-tooltip>
+                                <v-tooltip top color="error">
+                                    <template v-slot:activator="{ on, attrs }">
+                                        <v-icon
+                                            color="var(--c-orange)" v-bind="attrs" v-on="on" @click="deleteItem(item.id)">
+                                            mdi-delete
+                                        </v-icon>
+                                    </template>
+                                    <span>Eliminar estado equipo</span>
+                                </v-tooltip>
+                            </template>
+                            <template slot="no-data">
+                                <p class="text-dark">Sin datos</p>
+                                <v-btn color="var(--c-orange)" class="mb-2 btn-tabla" @click="obtenerTiposEquipo">Recargar</v-btn>
+                            </template>
+                        </v-data-table>
+                    </v-card-text>
+                </v-card>
+            </v-col>
+            <v-col cols="6">
+                <v-card>
+                    <v-card-title primary-title>
+                        <div>
+                            <h3 class="headline mb-0">Estados de equipo</h3>
+                        </div>
+                    </v-card-title>
+                    <v-card-text>
+                        <v-data-table
+                            :headers="headers"
+                            :items="items"
+                            :loading="loadTabla"
+                            loading-text="Cargando, por favor espere..."
+                            :footer-props="{
+                                'show-current-page': true,
+                                'items-per-page-options': [5, 10, 15],
+                                itemsPerPageText: 'Registros mostrados',
+                                pageText: '{0}-{1} de {2}',
+                                showFirstLastPage: true,
+                                firstIcon: 'mdi-arrow-collapse-left',
+                                lastIcon: 'mdi-arrow-collapse-right',
+                                prevIcon: 'mdi-minus',
+                                nextIcon: 'mdi-plus'
+                            }"
+                            class="elevation-1">
+                            <template v-slot:item.actions="{ item, index }">
+                                <v-tooltip top>
+                                    <template v-slot:activator="{ on, attrs }">
+                                        <v-icon
+                                            color="var(--c-orange)"
+                                            class="mr-2" @click="editarEstado(index)"
+                                            v-bind="attrs" v-on="on">
+                                            mdi-pencil
+                                        </v-icon>
+                                    </template>
+                                    <span>Editar estado equipo</span>
+                                </v-tooltip>
+                                <v-tooltip top color="error">
+                                    <template v-slot:activator="{ on, attrs }">
+                                        <v-icon
+                                            color="var(--c-orange)" v-bind="attrs" v-on="on" @click="deleteItem(item.id)">
+                                            mdi-delete
+                                        </v-icon>
+                                    </template>
+                                    <span>Eliminar estado equipo</span>
+                                </v-tooltip>
+                            </template>
+                            <template slot="no-data">
+                                <p class="text-dark">Sin datos</p>
+                                <v-btn color="var(--c-orange)" class="mb-2 btn-tabla" @click="obtenerEstadosEquipo()">Recargar</v-btn>
+                            </template>
+                        </v-data-table>
+                    </v-card-text>
+                </v-card>
+            </v-col>
         </v-row>
         <!--Dialog editar-->
         <v-row justify="space-around">
@@ -138,6 +213,7 @@ export default {
     data: () => ({
         rutaBackend: `${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}`,
         valid: true,
+        validTipo: true,
         validEditar: true,
         campoRules: [
             (v) => !!v || "Campo requerido",
@@ -145,22 +221,30 @@ export default {
         paquete: {
             estado: null,
         },
+        paqueteTipo: {
+            tipo: null,
+        },
         paqueteEditar: {
             id: null, estado: null
         },
         headers: [
             { text: 'Estado', value: 'estado' },
             { text: 'Acciones', value: 'actions', sortable: false }
+        ], headersTipo: [
+            { text: 'Tipo', value: 'tipo' },
+            { text: 'Acciones', value: 'actions', sortable: false }
         ],
         items: [],
+        itemsTipo: [],
         dialogEditar: false,
         dialogError: false,
-        dialogEliminar:false,
+        dialogEliminar: false,
         detalleError: {
             title: null,
             body: null
         },
         loadTabla: false,
+        loadTablaTipo: false,
     }),
 
     computed: {
@@ -168,12 +252,15 @@ export default {
 
     watch: {
     },
-
-    created() {
-        this.obtenerEstadosEquipo();
-    },
-
     methods: {
+        tiempoDialog() {
+            setTimeout(() => {
+                this.dialogError = false;
+                this.detalleError.title = null;
+                this.detalleError.body = null;
+            }, 1700);
+
+        },
         async obtenerEstadosEquipo() {
             this.loadTabla = true;
             await axios.get(`${this.rutaBackend}/estado-equipo`).then(response => {
@@ -183,14 +270,24 @@ export default {
                 this.detalleError.title = "Obtener estados de equipo";
                 this.detalleError.body = "No se pudo obtener los estados de equipo, contacta con soporte";
                 this.dialogError = true;
-                setTimeout(() => {
-                    this.dialogError = false;
-                    this.detalleError.title = null;
-                    this.detalleError.body = null;
-                }, 1700);
+                this.tiempoDialog();
                 console.log(`Error: ${error}`);
             })
             this.loadTabla = false;
+        },
+        async obtenerTiposEquipo() {
+            this.loadTablaTipo = true;
+            await axios.get(`${this.rutaBackend}/tipo-equipo`).then(response => {
+                this.itemsTipo = response.data;
+                console.log(response.data);
+            }).catch(error => {
+                this.detalleError.title = "Obtener tipos de equipo";
+                this.detalleError.body = "No se pudo obtener los tipos de equipo, contacta con soporte";
+                this.dialogError = true;
+                this.tiempoDialog();
+                console.log(`Error: ${error}`);
+            })
+            this.loadTablaTipo = false;
         },
         editarEstado(item) {
             this.paqueteEditar.id = this.items[item].id;
@@ -233,8 +330,29 @@ export default {
                     console.log(`Error creando: ${error}`);
                 });
             }
+        },async guardarTipoEquipo() {
+            if (this.$refs.formTipo.validate()) {
+                await axios.post(`${this.rutaBackend}/tipo-equipo/crear`, this.paqueteTipo).then(response => {
+                    console.log(response.data);
+                    this.obtenerTiposEquipo();
+                    this.$refs.formTipo.reset();
+                }).catch(error => {
+                    this.detalleError.title = "Guardar tipo de equipo";
+                    this.detalleError.body = "No se pudo guardar el tipo de equipo, contacta con soporte";
+                    this.dialogError = true;
+                    this.tiempoDialog();
+                    console.log(`Error creando tipo: ${error}`);
+                });
+            }
         }
+    }, created() {
+        this.obtenerTiposEquipo();
+        this.obtenerEstadosEquipo();
     }
 }
 </script>
-<style></style>
+<style>
+.mitad>* {
+    width: 49% !important;
+}
+</style>

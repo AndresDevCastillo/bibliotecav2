@@ -31,6 +31,10 @@ export default {
   background-color: orange;
 }
 
+.justify-content-evenly {
+  justify-content: space-evenly;
+}
+
 .c-orange {
   color: orange;
 }

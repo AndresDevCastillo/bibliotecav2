@@ -1,46 +1,46 @@
 <template>
-  <v-card height="710px" width="500px" class="mx-auto">
+  <v-card width="500px" class="mx-auto">
     <v-card-title> Video Beam </v-card-title>
-    <v-img height="300px" src="../../assets/images/Vdbeam.jpeg"></v-img>
+    <v-img height="297px" lazy-src="../../assets/images/Vdbeam.jpeg" src="../../assets/images/Vdbeam.jpeg"></v-img>
     <v-card-text>
       <v-form ref="form" v-model="valid" lazy-validation>
-        <v-text-field
-          v-model="paquete.codigo"
-          :rules="campoRules"
-          label="Codigo"
-          required
-        ></v-text-field>
-
-        <v-text-field
-          v-model="paquete.referencia"
-          :rules="campoRules"
-          label="Referencia"
-          required
-        ></v-text-field>
-
-        <v-text-field
-          v-model="paquete.serial"
-          label="Serial"
-          required
-        ></v-text-field>
-
-        <v-select
-          v-model="paquete.estado"
-          :items="items"
-          :rules="[(v) => !!v || 'Item is required']"
-          label="Estado"
-          required
-        ></v-select>
-
+        <v-row>
+          <v-col cols="6">
+            <v-text-field
+              v-model="paquete.codigo"
+              :rules="campoRules"
+              label="Código"
+              required></v-text-field>
+          </v-col>
+          <v-col cols="6">
+            <v-text-field
+              v-model="paquete.referencia"
+              :rules="campoRules"
+              label="Referencia"
+              required></v-text-field>
+          </v-col>
+          <v-col cols="6">
+            <v-text-field
+              v-model="paquete.serial"
+              label="Serial"
+              required></v-text-field>
+          </v-col>
+          <v-col cols="6">
+            <v-select
+              v-model="paquete.estado"
+              :items="items"
+              :rules="[(v) => !!v || 'Estado es requerido']"
+              label="Estado"
+              required></v-select>
+          </v-col>
+        </v-row>
         <v-btn
           :disabled="!valid"
           color="success"
           class="mr-4"
-          @click="guardar()"
-        >
+          @click="guardar">
           Guardar
         </v-btn>
-
         <v-btn color="error" class="mr-4" @click="reset">Eliminar</v-btn>
       </v-form>
     </v-card-text>

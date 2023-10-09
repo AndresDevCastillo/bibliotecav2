@@ -87,11 +87,11 @@ export default {
                     {
                         href: '/dashboard/ManagerView',
                         title: 'Administrar equipos',
-                        icon: 'mdi mdi-wrench-cog'
+                        icon: 'mdi mdi-plus'
                     },
                     {
                         href: '/dashboard/estadoEquipo',
-                        title: 'Administrar estados',
+                        title: 'Configuración para equipos',
                         icon: 'mdi mdi-wrench-cog'
                     }
                 ]
