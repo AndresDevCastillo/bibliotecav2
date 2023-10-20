@@ -31,6 +31,11 @@ const routes = [
         component: () => import("../views/CrearEquipo"),
       },
       {
+        name: "DashboarConfiguraciones",
+        path: "/dashboard/Configuraciones",
+        component: () => import("../views/Configuraciones"),
+      },
+      {
         name: "DashboarListarDispositivo",
         path: "/dashboard/listardispositivios",
         component: () => import("../views/dispositivos/ListarDispositivo"),

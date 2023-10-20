@@ -80,6 +80,11 @@ export default {
       { title: "Cuenta", icon: "fas fa-user-circle" },
       { title: "Admin", icon: "fas fa-user-lock" },
       {
+        title: "Configuracion",
+        icon: "fas fa-user-cog",
+        href: "/dashboard/Configuraciones",
+      },
+      {
         title: "Crear equipo",
         icon: "fas fa-plus-circle",
         href: "/dashboard/CrearEquipo",
@@ -90,7 +95,7 @@ export default {
         child: [
           {
             href: "/dashboard/ManagerView",
-            title: "Crear prestamo",
+            title: "Estado Equipo",
             color: "red",
           },
           {

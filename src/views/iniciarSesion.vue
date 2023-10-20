@@ -80,7 +80,7 @@
             </v-card-item>
             <v-card-text>
               <div>
-                La Biblioteca SENAAAA garantiza la recuperación, preservación y
+                La Biblioteca SENA garantiza la recuperación, preservación y
                 acceso a la memoria colectiva del país, representada por el
                 patrimonio bibliográfico y hemerográfico en cualquier soporte
                 físico. En su trabajo, se guía por el reconocimiento de la
@@ -100,7 +100,7 @@
             </v-card-item>
             <v-card-text>
               <div>
-                Nuestra visión para el año 2022 es lograr contar en el futuro
+                Nuestra visión para el año 2025 es lograr contar en el futuro
                 con la infraestructura necesaria para la conservación a largo
                 plazo de las colecciones, con tecnología de punta para el
                 desarrollo de nuestros procesos misionales y mantener una red de

@@ -19,7 +19,11 @@
           required
         ></v-text-field>
 
-        <v-text-field v-model="paquete.serial" label="Serial" required></v-text-field>
+        <v-text-field
+          v-model="paquete.serial"
+          label="Serial"
+          required
+        ></v-text-field>
 
         <v-select
           v-model="paquete.estado"
@@ -57,9 +61,7 @@ export default {
       estado: null,
       tipo: "Cable HDMI",
     },
-    campoRules: [
-      (v) => !!v || "Campo requerido",
-    ],
+    campoRules: [(v) => !!v || "Campo requerido"],
     select: null,
     items: ["Bueno", "En reparacion", "Dañado", "Prestado"],
   }),
@@ -67,7 +69,7 @@ export default {
   methods: {
     guardar() {
       var vm = this;
-      if (this.$refs.form.validate()){
+      if (this.$refs.form.validate()) {
         axios
           .post("http://localhost:3000/dispositivo", this.paquete)
           .then(function (response) {
