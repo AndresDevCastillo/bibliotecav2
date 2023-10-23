@@ -1,6 +1,6 @@
 <template>
     <v-card class="py-4">
-        <v-row no-gutters class="justify-content-evenly">
+        <v-row class="justify-content-evenly">
             <v-card>
                 <v-card-title>
                     Registrar tipo de equipo
@@ -184,32 +184,14 @@
             </v-col>
         </v-row>
         <!--Dialog para mensajes temporales-->
-        <v-row justify="space-around">
-            <v-col cols="auto">
-                <v-dialog
-                    transition="dialog-bottom-transition"
-                    max-width="600" v-model="dialogError">
-                    <v-card>
-                        <v-toolbar
-                            color="info"
-                            dark class="elevation-0 primary-title">
-                            <div>
-                                <h3 class="headline mb-0">{{ detalleError.title }}</h3>
-                            </div>
-                        </v-toolbar>
-                        <v-card-text>
-                            <p class="text-dark my-3">{{ detalleError.body }}</p>
-                        </v-card-text>
-                    </v-card>
-                </v-dialog>
-            </v-col>
-        </v-row>
+        <dialogMensaje :mostrar="dialogMsj" :title="detalleMsj.title" :body="detalleMsj.body" :classTitle="detalleMsj.classTitle" @cerrado="dialogMsj = false" />
     </v-card>
 </template>
 <script>
 import axios from 'axios'
-
+import dialogMensaje from '../components/dialogMensaje.vue';
 export default {
+    components: { dialogMensaje },
     data: () => ({
         rutaBackend: `${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}`,
         valid: true,
@@ -237,9 +219,10 @@ export default {
         items: [],
         itemsTipo: [],
         dialogEditar: false,
-        dialogError: false,
         dialogEliminar: false,
-        detalleError: {
+        dialogMsj: false,
+        detalleMsj: {
+            classTitle: 'error',
             title: null,
             body: null
         },
@@ -253,24 +236,15 @@ export default {
     watch: {
     },
     methods: {
-        tiempoDialog() {
-            setTimeout(() => {
-                this.dialogError = false;
-                this.detalleError.title = null;
-                this.detalleError.body = null;
-            }, 1700);
-
-        },
         async obtenerEstadosEquipo() {
             this.loadTabla = true;
             await axios.get(`${this.rutaBackend}/estado-equipo`).then(response => {
                 this.items = response.data;
                 console.log(response.data);
             }).catch(error => {
-                this.detalleError.title = "Obtener estados de equipo";
-                this.detalleError.body = "No se pudo obtener los estados de equipo, contacta con soporte";
-                this.dialogError = true;
-                this.tiempoDialog();
+                this.detalleMsj.title = "Obtener estados de equipo";
+                this.detalleMsj.body = "No se pudo obtener los estados de equipo, contacta con soporte";
+                this.dialogMsj = true;
                 console.log(`Error: ${error}`);
             });
             this.loadTabla = false;
@@ -281,10 +255,9 @@ export default {
                 this.itemsTipo = response.data;
                 console.log(response.data);
             }).catch(error => {
-                this.detalleError.title = "Obtener tipos de equipo";
-                this.detalleError.body = "No se pudo obtener los tipos de equipo, contacta con soporte";
-                this.dialogError = true;
-                this.tiempoDialog();
+                this.detalleMsj.title = "Obtener tipos de equipo";
+                this.detalleMsj.body = "No se pudo obtener los tipos de equipo, contacta con soporte";
+                this.dialogMsj = true;
                 console.log(`Error: ${error}`);
             })
             this.loadTablaTipo = false;
@@ -319,28 +292,23 @@ export default {
                     this.obtenerEstadosEquipo();
                     this.$refs.form.reset();
                 }).catch(error => {
-                    this.detalleError.title = "Guardar estado de equipo";
-                    this.detalleError.body = "No se pudo guardar el estado de equipo, contacta con soporte";
-                    this.dialogError = true;
-                    setTimeout(() => {
-                        this.dialogError = false;
-                        this.detalleError.title = null;
-                        this.detalleError.body = null;
-                    }, 1700);
+                   
+                    this.detalleMsj.title = "Guardar estado de equipo";
+                    this.detalleMsj.body = "No se pudo guardar el estado de equipo, contacta con soporte";
+                    this.dialogMsj = true;
                     console.log(`Error creando: ${error}`);
                 });
             }
-        },async guardarTipoEquipo() {
+        }, async guardarTipoEquipo() {
             if (this.$refs.formTipo.validate()) {
                 await axios.post(`${this.rutaBackend}/tipo-equipo/crear`, this.paqueteTipo).then(response => {
                     console.log(response.data);
                     this.obtenerTiposEquipo();
                     this.$refs.formTipo.reset();
                 }).catch(error => {
-                    this.detalleError.title = "Guardar tipo de equipo";
-                    this.detalleError.body = "No se pudo guardar el tipo de equipo, contacta con soporte";
-                    this.dialogError = true;
-                    this.tiempoDialog();
+                    this.detalleMsj.title = "Guardar tipo de equipo";
+                    this.detalleMsj.body = "No se pudo guardar el tipo de equipo, contacta con soporte";
+                    this.dialogMsj = true;
                     console.log(`Error creando tipo: ${error}`);
                 });
             }

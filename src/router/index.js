@@ -72,15 +72,27 @@ const routes = [{
                 component: () =>
                     import ('../views/EstadoEquipo')
             },
+            {
+                path: '/dashboard/prestamo',
+                name: 'Prestamo',
+                component: () =>
+                    import ('../views/prestamo.vue')
+            },
+            {
+                path: '/dashboard/miprestamo',
+                name: 'Miprestamo',
+                component: () =>
+                    import ('../views/misprestamos.vue')
+            },
+            {
+                path: '/dashboard/configprestamo',
+                name: 'Configprestamo',
+                component: () =>
+                    import ('../views/configPrestamo.vue')
+            }
         ],
     },
-    {
-        path: '/prestamo',
-        name: 'Prestamo',
-        component: () =>
-            import ('../views/prestamo.vue')
 
-    }
 ]
 
 const router = new VueRouter({

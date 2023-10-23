@@ -92,19 +92,28 @@ export default {
                     {
                         href: '/dashboard/estadoEquipo',
                         title: 'Configuración para equipos',
-                        icon: 'mdi mdi-wrench-cog'
+                        icon: 'mdi mdi-format-list-bulleted-type'
                     }
                 ]
             },
             {
-                title: 'Tipo de equipo',
-                icon: 'mdi mdi-format-list-bulleted-type',
+                title: 'Préstamo',
+                icon: 'mdi mdi-package-variant-closed-check',
                 child: [
                     {
-                        title: 'Administrar tipos de equipo',
-                         icon: 'mdi mdi-wrench-cog'
+                        title: 'Nuevo préstamo',
+                        icon: 'mdi mdi-book-plus-multiple',
+                        href: '/dashboard/prestamo'
+                    }, {
+                        title: 'Mis préstamos',
+                        icon: 'mdi mdi-file-eye-outline',
+                        href: '/dashboard/miprestamo'
+                    },
+                    {
+                        title: 'Configurar préstamo',
+                        icon: 'mdi mdi-format-list-bulleted-type',
+                        href: '/dashboard/configprestamo'
                     }
-
                 ]
             }
         ],

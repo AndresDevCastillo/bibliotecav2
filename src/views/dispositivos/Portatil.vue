@@ -23,7 +23,7 @@
             <v-text-field
               v-model="paquete.serial"
               label="Serial"
-              required></v-text-field>
+              required :rules="campoRules"></v-text-field>
           </v-col>
           <v-col cols="6">
             <EstadoEquipo @selectEstado="guardarEstadoSeleccionado" />
@@ -38,14 +38,17 @@
         </v-btn>
       </v-form>
     </v-card-text>
+    <!--Dialog para mensajes temporales-->
+    <dialogMensaje :mostrar="dialogMsj" :title="detalleMsj.title" :body="detalleMsj.body" :classTitle="detalleMsj.classTitle" @cerrado="dialogMsj = false" />
   </v-card>
 </template>
 
 <script>
 import axios from "axios";
 import EstadoEquipo from "../../components/EstadoEquipo.vue";
+import dialogMensaje from '../../components/dialogMensaje.vue';
 export default {
-  components: { EstadoEquipo },
+  components: { EstadoEquipo, dialogMensaje },
   data: () => ({
     rutaBackend: `${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}`,
     valid: true,
@@ -53,39 +56,50 @@ export default {
       codigo: null,
       referencia: null,
       serial: null,
-      estado: null,//Aquí va el id del estado de equipo, valor emitido desde EstadoEquipoComponent
-      tipo: "Portatil", //Aquí va el id del tipo de equipo, se carga automático
+      estado_equipo: null,//Aquí va el id del estado de equipo, valor emitido desde EstadoEquipoComponent
+      tipo_equipo: "Portatil", //Aquí va el id del tipo de equipo, se carga automático
     },
     campoRules: [
       (v) => !!v || "Campo requerido",
     ],
     select: null,
     items: ["Nuevo", "En reparacion", "Dañado", "Prestado"],
+    dialogMsj: false,
+    detalleMsj: {
+      classTitle: 'error',
+      title: null,
+      body: null
+    },
   }),
 
   methods: {
     guardarEstadoSeleccionado(estado) {
-      if (typeof estado == 'object') {
-        this.paquete.estado = estado.id;
+      if (typeof estado == 'object' && estado) {
+        this.paquete.estado_equipo = estado.id;
       }
     },
     async guardar() {
       if (this.$refs.form.validate()) {
-        this.axios
-          .post(`${this.rutaBackend}/equipo/crear`, this.paquete)
-          .then(function (response) {
-            // handle success
+        this.valid = false;
+        await axios.post(`${this.rutaBackend}/equipo/crear`, this.paquete)
+          .then(response => {
+            this.detalleMsj.classTitle = 'success';
+            this.detalleMsj.title = "Crear equipo";
+            this.detalleMsj.body = "Equipo creado";
+            this.dialogMsj = true;
             console.log(response);
-            alert("guardado");
+            this.paquete.estado_equipo = null;
+            this.$refs.form.reset();
           })
-          .catch(function (error) {
+          .catch(error => {
+            this.detalleMsj.classTitle = 'error';
+            this.detalleMsj.title = "Crear equipo";
+            this.detalleMsj.body = "No se pudo guardar el equipo";
+            this.dialogMsj = true;
             // handle error
             console.log(error);
-          })
-          .finally(function () {
-            this.$refs.form.reset();
-            // always executed
           });
+        this.valid = true;
       }
     },
   },
@@ -93,7 +107,7 @@ export default {
     //Buscar el id del tipo de equipo Portatil
     await axios.get(`${this.rutaBackend}/tipo-equipo/tipo/Portatil`).then(response => {
       if (response.data.length == 1) {
-        this.paquete.tipo = response.data[0].id;
+        this.paquete.tipo_equipo = response.data[0].id;
       }
     });
   }

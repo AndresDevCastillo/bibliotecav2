@@ -1,7 +1,7 @@
 <template>
   <v-card width="500px" class="mx-auto">
     <v-card-title>Cable HDMI</v-card-title>
-    <v-img height="297px" lazy-src="../../assets/images/Vdbeam.jpeg" src="../../assets/images/cable.png"></v-img>
+    <v-img height="297px" lazy-src="../../assets/images/cable.png" src="../../assets/images/cable.png"></v-img>
     <v-card-text>
       <v-form ref="form" v-model="valid" lazy-validation>
         <v-row>
@@ -26,12 +26,7 @@
               required></v-text-field>
           </v-col>
           <v-col cols="6">
-            <v-select
-              v-model="paquete.estado"
-              :items="items"
-              :rules="[(v) => !!v || 'Estado es requerido']"
-              label="Estado"
-              required></v-select>
+            <EstadoEquipo @selectEstado="guardarEstadoSeleccionado" />
           </v-col>
         </v-row>
         <v-btn
@@ -41,7 +36,6 @@
           @click="guardar">
           Guardar
         </v-btn>
-        <v-btn color="error" class="mr-4" @click="reset">Eliminar</v-btn>
       </v-form>
     </v-card-text>
   </v-card>
@@ -49,16 +43,18 @@
 
 <script>
 import axios from "axios";
+import EstadoEquipo from "../../components/EstadoEquipo.vue";
 export default {
+  components: { EstadoEquipo },
   data: () => ({
+    rutaBackend: `${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}`,
     valid: true,
-
     paquete: {
       codigo: null,
       referencia: null,
       serial: null,
-      estado: null,
-      tipo: "Cable HDMI",
+      estado_equipo: null, //Aquí va el id del estado de equipo, valor emitido desde EstadoEquipoComponent
+      tipo_equipo: "Cable HDMI",//Aquí va el id del tipo de equipo, se carga automático
     },
     campoRules: [
       (v) => !!v || "Campo requerido",
@@ -68,26 +64,36 @@ export default {
   }),
 
   methods: {
-    guardar() {
-      var vm = this;
-      if (this.$refs.form.validate()){
-        axios
-          .post("http://localhost:3000/dispositivos", this.paquete)
-          .then(function (response) {
-            // handle success
+    guardarEstadoSeleccionado(estado) {
+      if (typeof estado == 'object' && estado) {
+        this.paquete.estado_equipo = estado.id;
+      }
+    },
+    async guardar() {
+      if (this.$refs.form.validate()) {
+        this.valid = false;
+        await axios.post(`${this.rutaBackend}/equipo/crear`, this.paquete)
+          .then(response => {
             console.log(response);
-            alert("guardado");
+            this.paquete.estado_equipo = null;
+            this.$refs.form.reset();
           })
-          .catch(function (error) {
+          .catch(error => {
             // handle error
             console.log(error);
-          })
-          .finally(function () {
-            vm.$refs.form.reset();
-            // always executed
+            alert('No se pudo guardar');
           });
+        this.valid = true;
       }
     },
   },
+  async created() {
+    //Buscar el id del tipo de equipo Cable HDMI
+    await axios.get(`${this.rutaBackend}/tipo-equipo/tipo/Cable HDMI`).then(response => {
+      if (response.data.length == 1) {
+        this.paquete.tipo_equipo = response.data[0].id;
+      }
+    });
+  }
 };
 </script>

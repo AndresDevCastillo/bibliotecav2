@@ -26,12 +26,7 @@
               required></v-text-field>
           </v-col>
           <v-col cols="6">
-            <v-select
-              v-model="paquete.estado"
-              :items="items"
-              :rules="[(v) => !!v || 'Estado es requerido']"
-              label="Estado"
-              required></v-select>
+            <EstadoEquipo @selectEstado="guardarEstadoSeleccionado" />
           </v-col>
         </v-row>
         <v-btn
@@ -41,7 +36,6 @@
           @click="guardar">
           Guardar
         </v-btn>
-        <v-btn color="error" class="mr-4" @click="reset">Eliminar</v-btn>
       </v-form>
     </v-card-text>
   </v-card>
@@ -49,41 +43,54 @@
 
 <script>
 import axios from "axios";
-export default {
-  data: () => ({
-    valid: true,
+import EstadoEquipo from "../../components/EstadoEquipo.vue";
 
+export default {
+  components: { EstadoEquipo },
+  data: () => ({
+    rutaBackend: `${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}`,
+    valid: true,
     paquete: {
       codigo: null,
       referencia: null,
       serial: null,
-      estado: null,
-      tipo: "Video Beam",
+      estado_equipo: null,
+      tipo_equipo: "Video Beam",
     },
     campoRules: [(v) => !!v || "Campo requerido"],
     items: ["Nuevo", "En reparacion", "Dañado", "Prestado"],
   }),
   methods: {
-    guardar() {
-      var vm = this;
-      if (this.$refs.form.validate()) {
-        axios
-          .post("http://localhost:3000/dispositivos", this.paquete)
-          .then(function (response) {
-            // handle success
-            console.log(response);
-            alert("guardado");
-          })
-          .catch(function (error) {
-            // handle error
-            console.log(error);
-          })
-          .finally(function () {
-            vm.$refs.form.reset();
-            // always executed
-          });
+    guardarEstadoSeleccionado(estado) {
+      if (typeof estado == 'object' && estado) {
+        this.paquete.estado_equipo = estado.id;
       }
     },
+    async guardar() {
+      if (this.$refs.form.validate()) {
+        this.valid = false;
+        await axios.post(`${this.rutaBackend}/equipo/crear`, this.paquete)
+          .then(response => {
+            console.log(response);
+            this.paquete.estado_equipo = null;
+            this.$refs.form.reset();
+          })
+          .catch(error => {
+            // handle error
+            console.log(error);
+            alert('No se pudo guardar');
+          });
+        this.valid = true;
+      }
+    },
+  },
+  async created() {
+    //Buscar el id del tipo de equipo VideoBeam
+    await axios.get(`${this.rutaBackend}/tipo-equipo/tipo/VideoBeam`).then(response => {
+      if (response.data.length == 1) {
+        this.paquete.tipo_equipo = response.data[0].id;
+      }
+    });
   },
 };
 </script>

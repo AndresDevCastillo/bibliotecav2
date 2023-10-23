@@ -15,7 +15,7 @@
                             label="Tipo de equipo"
                             return-object
                             single-line
-                            required></v-select>
+                            required no-data-text="Sin tipos de equipo"></v-select>
                     </div>
                 </v-bottom-navigation>
             </v-card-title>

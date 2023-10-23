@@ -105,7 +105,7 @@ export default {
 }
 
 .v-sidebar-menu .vsm-dropdown .vsm-item .vsm-link {
-  padding: 0 2rem;
+  padding: 0 2.4rem;
 }
 
 .v-sidebar-menu .vsm-dropdown::before {
@@ -139,4 +139,12 @@ export default {
 .button-text {
   font-family: 'Montserrat', sans-serif;
   font-weight: 500;
-}</style>
+}
+
+.text-error {
+  color: #E539 !important;
+}
+.text-success{
+  color: #43A0 !important;
+}
+</style>

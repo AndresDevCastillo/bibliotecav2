@@ -1,15 +1,16 @@
 <template>
-    <v-app id="inspire">
-        <Header @handrawer="actualiza()" />
-        <Sidebar :drawer="drawer" />
-        <v-main>
-            <v-container
-                class="py-5 "
-                fluid>
+    <v-container
+        class="py-5"
+        fluid>
+        <v-card>
+            <v-card-title class="pb-0">
+                <h3 class="headline mb-0">Nuevo préstamo</h3>
+            </v-card-title>
+            <v-card-text>
                 <v-row class="justify-center">
                     <v-col
                         cols="8">
-                        <v-bottom-navigation v-model="value" height="auto" class="flex-column">
+                        <!-- <v-bottom-navigation v-model="value" height="auto" class="flex-column">
                             <v-row>
                                 <v-col cols="6" class="pr-1 pb-0">
                                     <v-autocomplete
@@ -121,294 +122,444 @@
                                     </v-icon>
                                 </v-btn>
                             </v-row>
-                        </v-bottom-navigation>
+                        </v-bottom-navigation> -->
                         <v-card width="500px" class="mx-auto mt-2">
-                            <v-card-title> Prestar dispositivo </v-card-title>
+                            <v-card-title> Prestar equipo </v-card-title>
                             <v-card-text>
-                                <v-row>
-                                    <v-col cols="6" class="pr-1 pb-0">
-                                        <v-autocomplete
-                                            v-model="paquete.dispositivo"
-                                            :items="dispositivosDisponibles"
-                                            :item-text="(dispositivo) => { return `${dispositivo.tipo} - ${dispositivo.serial}`; }"
-                                            item-value="codigo"
-                                            label="Dispositivos disponibles"
-                                            filled
-                                            required
-                                            append-icon="mdi-devices">
-                                        </v-autocomplete>
-                                    </v-col>
-                                    <v-col cols="6" class="pl-1 pb-0">
-                                        <v-text-field
-                                            type="number"
-                                            min="1"
-                                            filled
-                                            label="Cantidad"
-                                            append-icon="mdi-plus"></v-text-field>
-                                    </v-col>
-                                </v-row>
-                                <v-row no-gutters>
-                                    <v-col cols="6" class="pr-1">
-                                        <v-menu
-                                            v-model="menu2"
-                                            :close-on-content-click="false"
-                                            :nudge-right="40"
-                                            transition="scale-transition"
-                                            offset-y
-                                            min-width="auto">
+                                <v-form ref="form" v-model="valid" lazy-validation>
+                                    <v-row no-gutters>
+                                        <v-col cols="12" class="pr-0 pb-0">
+                                            <v-autocomplete
+                                                v-model="paquete.usuario"
+                                                :items="usuarios"
+                                                :item-text="(usuario) => { return `${usuario.nombre} ${usuario.apellido}` }"
+                                                item-value="id"
+                                                label="Usuario"
+                                                filled
+                                                required
+                                                no-data-text="Sin usuarios"
+                                                append-icon="mdi mdi-account">
+                                            </v-autocomplete>
+                                        </v-col>
+                                    </v-row>
+                                    <v-row>
+                                        <v-col cols="6" class="pr-1 pb-0">
+                                            <v-autocomplete
+                                                v-model="paqueteTabla.tipo_equipo"
+                                                :items="tiposEquipo"
+                                                item-text="tipo"
+                                                label="Tipo de equipo"
+                                                filled
+                                                required
+                                                return-object
+                                                no-data-text="Sin tipo de equipos"
+                                                append-icon="mdi-devices"
+                                                :rules="campoRules">
+                                            </v-autocomplete>
+                                        </v-col>
+                                        <v-col cols="6" class="pl-1 pb-0">
+                                            <v-text-field
+                                                v-model="paqueteTabla.cantidad"
+                                                type="number"
+                                                min="1"
+                                                filled
+                                                label="Cantidad"
+                                                append-icon="mdi-plus"
+                                                :rules="numberRules"></v-text-field>
+                                        </v-col>
+                                    </v-row>
+                                    <v-row no-gutters>
+                                        <v-col cols="6" class="pr-1">
+                                            <v-menu
+                                                v-model="menu2"
+                                                :close-on-content-click="false"
+                                                :nudge-right="40"
+                                                transition="scale-transition"
+                                                offset-y
+                                                min-width="auto">
+                                                <template v-slot:activator="{ on, attrs }">
+                                                    <v-text-field
+                                                        v-model="paqueteTabla.fecha_inicio"
+                                                        filled
+                                                        label="Fecha de inicio"
+                                                        append-icon="mdi-calendar"
+                                                        readonly
+                                                        v-bind="attrs"
+                                                        v-on="on" :rules="campoRules"></v-text-field>
+                                                </template>
+                                                <v-date-picker
+                                                    v-model="paqueteTabla.fecha_inicio"
+                                                    @input="menu2 = false"
+                                                    color="orange white"
+                                                    header-color="#ffa726"
+                                                    locale="es">
+                                                </v-date-picker>
+                                            </v-menu>
+                                        </v-col>
+                                        <v-col cols="6" class="pl-1">
+                                            <v-select
+                                                required
+                                                v-model="paqueteTabla.hora_inicio"
+                                                filled
+                                                label="Hora inicio"
+                                                append-icon="mdi-timer-sand"
+                                                :items="horas" :rules="campoRules">
+                                            </v-select>
+                                        </v-col>
+                                    </v-row>
+                                    <v-row no-gutters>
+                                        <v-col cols="6" class="pr-1">
+                                            <v-menu
+                                                v-model="menu3"
+                                                :close-on-content-click="false"
+                                                :nudge-right="40"
+                                                transition="scale-transition"
+                                                offset-y
+                                                min-width="auto">
+                                                <template v-slot:activator="{ on, attrs }">
+                                                    <v-text-field
+                                                        v-model="paqueteTabla.fecha_fin"
+                                                        filled
+                                                        label="Fecha de fin"
+                                                        append-icon="mdi mdi-calendar-remove-outline"
+                                                        readonly
+                                                        v-bind="attrs"
+                                                        v-on="on" :rules="campoRules"></v-text-field>
+                                                </template>
+                                                <v-date-picker
+                                                    v-model="paqueteTabla.fecha_fin"
+                                                    @input="menu3 = false"
+                                                    color="orange white"
+                                                    header-color="#ffa726"
+                                                    locale="es">
+                                                </v-date-picker>
+                                            </v-menu>
+                                        </v-col>
+                                        <v-col cols="6" class="pl-1">
+                                            <v-select
+                                                required
+                                                v-model="paqueteTabla.hora_fin"
+                                                filled
+                                                label="Hora fin"
+                                                append-icon="mdi-timer-sand-complete"
+                                                :items="horas" :rules="campoRules">
+                                            </v-select>
+                                        </v-col>
+                                    </v-row>
+                                    <v-row justify="center" no-gutters class="mt-2">
+                                        <v-tooltip top>
                                             <template v-slot:activator="{ on, attrs }">
-                                                <v-text-field
-                                                    v-model="date"
-                                                    filled
-                                                    label="Fecha de inicio"
-                                                    append-icon="mdi-calendar"
-                                                    readonly
-                                                    v-bind="attrs"
-                                                    v-on="on"></v-text-field>
+                                                <v-btn
+                                                    color="#ffa726"
+                                                    class="py-4 px-2 btn-agregar"
+                                                    @click="agregarEquipo"
+                                                    v-bind="attrs" v-on="on">
+                                                    <v-icon dark>
+                                                        mdi-plus
+                                                    </v-icon>
+                                                </v-btn>
                                             </template>
-                                            <v-date-picker
-                                                v-model="date"
-                                                @input="menu2 = false"
-                                                color="orange white"
-                                                header-color="#ffa726"
-                                                locale="es">
-                                            </v-date-picker>
-                                        </v-menu>
-                                    </v-col>
-                                    <v-col cols="6" class="pl-1">
-                                        <v-select
-                                            required
-                                            v-model="sel"
-                                            filled
-                                            label="Hora inicio"
-                                            append-icon="mdi-timer-sand"
-                                            :items="horas">
-                                        </v-select>
-                                    </v-col>
-                                </v-row>
-                                <v-row no-gutters>
-                                    <v-col cols="6" class="pr-1">
-                                        <v-menu
-                                            v-model="menu3"
-                                            :close-on-content-click="false"
-                                            :nudge-right="40"
-                                            transition="scale-transition"
-                                            offset-y
-                                            min-width="auto">
-                                            <template v-slot:activator="{ on, attrs }">
-                                                <v-text-field
-                                                    v-model="date"
-                                                    filled
-                                                    label="Fecha de fin"
-                                                    append-icon="mdi-calendar"
-                                                    readonly
-                                                    v-bind="attrs"
-                                                    v-on="on"></v-text-field>
-                                            </template>
-                                            <v-date-picker
-                                                v-model="date"
-                                                @input="menu3 = false"
-                                                color="orange white"
-                                                header-color="#ffa726"
-                                                locale="es">
-                                            </v-date-picker>
-                                        </v-menu>
-                                    </v-col>
-                                    <v-col cols="6" class="pl-1">
-                                        <v-select
-                                            required
-                                            v-model="sel"
-                                            filled
-                                            label="Hora fin"
-                                            append-icon="mdi-timer-sand-complete"
-                                            :items="horas">
-
-                                        </v-select>
-                                    </v-col>
-                                </v-row>
-                                <v-row justify="center" no-gutters>
-                                    <v-btn
-                                        :disabled="!valid"
-                                        color="#ffa726"
-                                        class="py-4 px-2 btn-agregar"
-                                        @click="guardar()">
-                                        <v-icon dark>
-                                            mdi-plus
-                                        </v-icon>
-                                    </v-btn>
-                                </v-row>
+                                            <span>Agregar al préstamo</span>
+                                        </v-tooltip>
+                                    </v-row>
+                                </v-form>
                             </v-card-text>
                         </v-card>
                     </v-col>
                 </v-row>
-            </v-container>
-        </v-main>
-    </v-app>
+                <v-row class="flex-column mb-4" v-if="mostrarEquiposPrestamo">
+                    <v-data-table
+                        :headers="headersDetalle"
+                        :items="detallePrestamo"
+                        :footer-props="{
+                            'show-current-page': true,
+                            'items-per-page-options': [5, 10, 15],
+                            itemsPerPageText: 'Registros mostrados',
+                            pageText: '{0}-{1} de {2}',
+                            showFirstLastPage: true,
+                            firstIcon: 'mdi-arrow-collapse-left',
+                            lastIcon: 'mdi-arrow-collapse-right',
+                            prevIcon: 'mdi-minus',
+                            nextIcon: 'mdi-plus'
+                        }"
+                        class="elevation-1">
+                        <template v-slot:top>
+                            <v-toolbar
+                                flat>
+                                <v-toolbar-title>Detalle de equipos</v-toolbar-title>
+                                <v-divider
+                                    class="mx-4"
+                                    inset
+                                    vertical></v-divider>
+                                <v-row no-gutters class="flex-column" justify="center" align-content="end">
+                                    <v-btn color="error"
+                                        class="mr-2 btn-cancelar"
+                                        @click="cancelar" :disabled="disableBtnCancelar">Cancelar</v-btn>
+                                    <v-btn color="success"
+                                        class="btn-confirmar" :disabled="disableBtnConfirmar"
+                                        @click="confirmar">Confirmar</v-btn>
+                                </v-row>
+                            </v-toolbar>
+                        </template>
+                        <template slot="no-data">
+                            <p class="text-dark">Sin equipos disponibles</p>
+                        </template>
+                    </v-data-table>
+                </v-row>
+                <v-row class="flex-column mt-4">
+                    <v-data-table
+                        :headers="headersPrestamo"
+                        :items="itemsPrestamo"
+                        :footer-props="{
+                            'show-current-page': true,
+                            'items-per-page-options': [5, 10, 15],
+                            itemsPerPageText: 'Registros mostrados',
+                            pageText: '{0}-{1} de {2}',
+                            showFirstLastPage: true,
+                            firstIcon: 'mdi-arrow-collapse-left',
+                            lastIcon: 'mdi-arrow-collapse-right',
+                            prevIcon: 'mdi-minus',
+                            nextIcon: 'mdi-plus'
+                        }"
+                        class="elevation-1">
+                        <template v-slot:top>
+                            <v-toolbar
+                                flat>
+                                <v-toolbar-title>Equipos</v-toolbar-title>
+                                <v-divider
+                                    class="mx-4"
+                                    inset
+                                    vertical></v-divider>
+                                <v-row no-gutters class="flex-column" justify="center" align-content="end" v-if="itemsPrestamo.length > 0">
+                                    <v-btn color="success"
+                                        :disabled="disableBtn"
+                                        class="btn-prestar"
+                                        @click="prestar">Prestar</v-btn>
+                                </v-row>
+                            </v-toolbar>
+                        </template>
+                        <template v-slot:item.actions="{ index }">
+                            <v-tooltip top color="error">
+                                <template v-slot:activator="{ on, attrs }">
+                                    <v-icon
+                                        color="var(--c-orange)" v-bind="attrs" v-on="on" @click="eliminarEquipo(index)">
+                                        mdi-delete
+                                    </v-icon>
+                                </template>
+                                <span>Eliminar equipo</span>
+                            </v-tooltip>
+                        </template>
+                        <template slot="no-data">
+                            <p class="text-dark">Sin datos de equipos agregados</p>
+                        </template>
+                    </v-data-table>
+                </v-row>
+            </v-card-text>
+        </v-card>
+        <dialogMensaje :mostrar="dialogMsj" @cerrado="dialogMsj = false" :title="paqueteMsj.title" :body="paqueteMsj.body" :classTitle="paqueteMsj.classTitle" />
+    </v-container>
 </template>
 <script>
-import Header from '../components/core/Header.vue'
-import Sidebar from '../components/core/Sidebar.vue'
 import axios from "axios";
-
-
+import dialogMensaje from '../components/dialogMensaje.vue';
 export default {
-    components: { Header, Sidebar },
+    components: {
+        dialogMensaje
+    },
     data: () => ({
-        sel: null,
+        rutaBackend: `${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}`,
         horas: [],
+        mostrarEquiposPrestamo: false,
+        disableBtn: false,
+        disableBtnCancelar: false,
+        disableBtnConfirmar: false,
+        dialogMsj: false,
+        paqueteMsj: {
+            title: null,
+            body: null,
+            classTitle: 'green'
+        },
         value: 'recent',
-        date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().slice(0, 10),
         menu2: false,
         menu3: false,
-        dispositivosDisponibles: [],
-        cards: ['Today', 'Yesterday'],
+        usuarios: [],
+        tiposEquipo: [],
+        campoRules: [v => !!v || 'Campo requerido'],
+        numberRules: [v => !!v || 'Campo requerido',
+        v => parseInt(v) > 0 || 'Cantidad incorrecta'],
         drawer: true,
         valid: true,
-        campoRules: [(v) => ! !v || "Campo requerido",
-        ],
         select: null,
-        paquete: {
-            dispositivo: null,
-            fechaInicio: null,
-            fechaFin: null,
-            estado: 0,
+        idPrestamoProceso: null,
+        paqueteTabla: {
+            tipo_equipo: null,
+            cantidad: 1,
+            fecha_inicio: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().slice(0, 10),
+            hora_inicio: null,
+            fecha_fin: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().slice(0, 10),
+            hora_fin: null
         },
-
+        paquete: {
+            usuario: 1, //Id del usuario al que se le hace el préstamo
+            fecha_inicio: null,
+            fecha_fin: null,
+            detalle: [],
+        },
+        headersPrestamo: [{ text: 'Tipo equipo', value: 'equipo' },
+        { text: 'Cantidad', value: 'cantidad' },
+        { text: 'Fecha inicio', value: 'fecha_inicio' },
+        { text: 'Fecha fin', value: 'fecha_fin' },
+        { text: 'Acciones', value: 'actions', sortable: false }
+        ],
+        itemsPrestamo: [],
+        headersDetalle: [{ text: 'Tipo equipo', value: 'tipo_equipo' },
+        { text: 'Equipos', value: 'equipos' },
+        { text: 'Cantidad', value: 'cantidad' }],
+        detallePrestamo: [],
+        diasCalendario: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado']
     }),
     methods: {
-        async obtenerDispositivos(excluirId = 0) {
-            let url = `${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}/`;
-            return await axios.get(`${url}dispositivos?estado=Nuevo&serial_ne=${excluirId}`).then(response => {
-                console.log(response);
-                return response.data;
-            })
+        async obtenerUsuarios() {
+            await axios.get(`${this.rutaBackend}/usuario`).then(response => {
+                this.usuarios = response.data;
+            });
         },
-        /**
-         * 
-         * @param {Date} fechaInicio Fecha y hora inicio del préstamo
-         * @param {Date} fechaFin Fecha y hora fin del préstamo
-         * @param {Int} codDispositivo Código del dispositivo a prestar
-         * @param {String} tipoDisp Tipo de dispositivo a prestar portatil | video Beam | etc
-         * @return boolean, Si el dispositivo está disponible para reserva se retornará true, false en otros casos
-         */
-        async verDisponibilidad(fechaInicio = null, fechaFin = null, codDispositivo, /* tipoDisp = 'portatil' */) {
-            let disp = await this.obtenerPrestamosDispositivo(codDispositivo, false);
-            /* Primero validamos si ese dispositivo está reservado o prestado
-            * Si no está ahí se retorna true para proceder con el préstamo
-             */
-            let estaEnPrestamo = false;
-            for (const dispositivo of disp) {
-                if (dispositivo.dispositivo == codDispositivo) {
-                    estaEnPrestamo = true;
-                    break;
-                }
-            }
-            /*Si está en los dispositivos reservados o prestados
-            * Pasamos a validar fecha y hora
-            */
-            if (estaEnPrestamo) {
-                let fechaIni = new Date(fechaInicio);
-                let fechaF = new Date(fechaFin);
-                let fechaSinHora1 = `${fechaIni.getFullYear()}-${fechaIni.getMonth() + 1}-${fechaIni.getDate()}`;
-                let fechaSinHora2 = `${fechaF.getFullYear()}-${fechaF.getMonth() + 1}-${fechaF.getDate()}`;
-                //Validamos si las fechas sin horas son iguales(préstamo para el mismo día)
-                if (fechaSinHora1 == fechaSinHora2) {
-                    //Fecha y hora a reservar en milis
-                    let fechaHoraIni = new Date(fechaInicio);
-                    let prestarPorHora = false;
-                    for (const dispositivo of disp) {
-                        //Fecha y hora del dispositivo en milis
-                        let fechaDispIni = new Date(dispositivo.fechaInicio);
-                        let fechaSinHDispI = `${fechaDispIni.getFullYear()}-${fechaDispIni.getMonth() + 1}-${fechaDispIni.getDate()}`;
-                        let fechaDispFin = new Date(dispositivo.fechaFin);
-                        let fechaSinHDispF = `${fechaDispFin.getFullYear()}-${fechaDispFin.getMonth() + 1}-${fechaDispFin.getDate()}`;
-                        //let horaDispFin = `${new Date(dispositivo.fechaFin).getHours()}:${new Date(dispositivo.fechaFin).getMinutes()}`;
-                        /*Tiene un tema por resolver, hay que verificar que las fechas(Y-m-d) sean iguales
-                        * a la que se envía del formulario
-                        */
-                        //Validamos que las fechas del dispositivo en prestamo sean las mismas del dispositivo verificado
-                        if (dispositivo.dispositivo == codDispositivo && fechaSinHDispI == fechaSinHora1 && fechaSinHDispF == fechaSinHora2 && fechaHoraIni.getTime() >= fechaDispFin.getTime()) {
-                            prestarPorHora = true; //Sí se puede prestar
-                        }
-                        else if (dispositivo.dispositivo == codDispositivo) {
-                            prestarPorHora = false;
-                        }
-                    }
-                    console.log(prestarPorHora);
-                    return prestarPorHora;
-                }
-                else {
-                    let prestarPorDias = false;
-                    for (const dispositivo of disp) {
-                        //Fecha y hora del dispositivo en milis
-                        //let fechaDispIni = new Date(dispositivo.fechaInicio);
-                        //let fechaSinHDispI = `${fechaDispIni.getFullYear()}-${fechaDispIni.getMonth() + 1}-${fechaDispIni.getDate()}`;
-                        let fechaDispFin = new Date(dispositivo.fechaFin);
-                        //let fechaSinHDispF = `${fechaDispFin.getFullYear()}-${fechaDispFin.getMonth() + 1}-${fechaDispFin.getDate()}`;
-                        //let horaDispFin = `${new Date(dispositivo.fechaFin).getHours()}:${new Date(dispositivo.fechaFin).getMinutes()}`;
-                        /*Tiene un tema por resolver, hay que verificar que las fechas(Y-m-d) sean iguales
-                        * a la que se envía del formulario
-                        */
-                        //Validamos que las fechas del dispositivo en prestamo sean las mismas del dispositivo verificado
-                        if (dispositivo.dispositivo == codDispositivo && fechaIni.getTime() >= fechaDispFin.getTime()) {
-                            prestarPorDias = true; //Sí se puede prestar
-                        }
-                        else if (dispositivo.dispositivo == codDispositivo) {
-                            prestarPorDias = false;
-                        }
-                    }
-                    console.log(prestarPorDias);
-                    return prestarPorDias;
-                }
-
-            }
-            return true; //Se puede prestar
+        async obtenerTiposEquipo() {
+            await axios.get(`${this.rutaBackend}/tipo-equipo`).then(response => {
+                this.tiposEquipo = response.data;
+            });
         },
-        async obtenerPrestamosDispositivo(codDispositivo = null, traerTodos = false) {
-            /* Estados dispositivo:
-               * 1: Reservado
-               * 2: Prestado
-               * 3: Devuelto
-                */
-            let url = `${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}/`;
-            if (!traerTodos) {
-                return await axios.get(`${url}prestamos?estado=1&estado=2&dispositivo=${codDispositivo}`).then(response => {
-                    console.log(response);
-                    return response.data;
-                })
-            }
-            else {
-                //Traigo todos los dispositivos excepto el que ya verifique
-                return await axios.get(`${url}prestamos?estado=1&estado=2&dispositivo_ne=${codDispositivo}`).then(response => {
-                    console.log(response);
-                    return response.data;
-                })
-            }
-
-        },
-        async guardar() {
-            let url = `${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}/prestamos`;
-
+        agregarEquipo() {
             if (this.$refs.form.validate()) {
-                let dispPrestamo = await this.obtenerPrestamosDispositivo(this.paquete.dispositivo, false);
-                //Verificamos si no hay prestamos y mandamos a registrar el préstamo
-                if (dispPrestamo.length == 0) {
-                    this.paquete.estado = 1;
-                    axios.post(url, this.paquete).then(response => {
-                        console.log(response);
-                    })
-                } else {
-                    let dispNuevos = this.obtenerDispositivos(this.paquete.dispositivo);
-                    let sePuede = false;
-                    for (const i of dispNuevos) {
-
-                        if (this.verDisponibilidad(this.paquete.fechaInicio, this.paquete.fechaFin, i.codigo)) {
-                            sePuede = true;
-                            break;
-                        }
+                const fecha1 = new Date(`${this.paqueteTabla.fecha_inicio} ${this.paqueteTabla.hora_inicio < 10 ? '0' + this.paqueteTabla.hora_inicio : this.paqueteTabla.hora_inicio}:00`);
+                const fecha2 = new Date(`${this.paqueteTabla.fecha_fin} ${this.paqueteTabla.hora_fin < 10 ? '0' + this.paqueteTabla.hora_fin : this.paqueteTabla.hora_fin}:00`);
+                console.log(fecha1.getHours(), fecha2.getHours());
+                console.log(fecha1.getTime(), fecha2.getTime());
+                if (fecha1.getTime() < fecha2.getTime()) {
+                    if (!this.existEquipoAndUpdate(this.paqueteTabla)) {
+                        this.itemsPrestamo.push({
+                            equipo: this.paqueteTabla.tipo_equipo.tipo,
+                            detalle: this.paqueteTabla.tipo_equipo,
+                            cantidad: parseInt(this.paqueteTabla.cantidad),
+                            fecha_inicio: `${this.paqueteTabla.fecha_inicio} ${this.paqueteTabla.hora_inicio < 10 ? '0' + this.paqueteTabla.hora_inicio : this.paqueteTabla.hora_inicio}:00`,
+                            fecha_fin: `${this.paqueteTabla.fecha_fin} ${this.paqueteTabla.hora_fin < 10 ? '0' + this.paqueteTabla.hora_fin : this.paqueteTabla.hora_fin}:00`,
+                        });
+                        this.paqueteTabla.tipo_equipo = null;
+                        this.paqueteTabla.cantidad = 1;
                     }
-                    console.log(sePuede);
+                } else {
+                    alert('La fecha y hora final debe ser mayor a la fecha y hora de inicio')
                 }
+            }
+        },
+        existEquipoAndUpdate(equipo = {}) {
+            let exist = false;
+            this.itemsPrestamo = this.itemsPrestamo.map(item => {
+                if (item.detalle.id == equipo.tipo_equipo.id) {
+                    item.cantidad += parseInt(equipo.cantidad);
+                    exist = true;
+                }
+                return item;
+            });
+            return exist;
+        },
+        eliminarEquipo(index) {
+            this.itemsPrestamo.splice(index, 1);
+        },
+        async prestar() {
+            if (this.itemsPrestamo.length > 0) {
+                this.disableBtn = true;
+                let fecha_temp = this.itemsPrestamo[0].fecha_inicio.split(' ');
+                this.paquete.fecha_inicio = `${fecha_temp[0]}T${fecha_temp[1]}`;
+                fecha_temp = this.itemsPrestamo[0].fecha_fin.split(' ');
+                this.paquete.fecha_fin = `${fecha_temp[0]}T${fecha_temp[1]}`;
+                const detalles = this.itemsPrestamo.map(item => {
+                    return {
+                        tipo_equipo: item.detalle.id,
+                        cantidad: item.cantidad
+                    }
+                }); this.itemsPrestamo[0].fecha_fin
+                this.paquete.detalle = detalles;
+                let codigos;
+                await axios.post(`${this.rutaBackend}/prestamo/crear`, this.paquete).then(response => {
+                    if (response.data.length > 1) {
+                        for (let index = 0; index < response.data.length - 1; index++) {
+                            const detalle = response.data[index];
+                            codigos = "";
+                            if (detalle.prestado) {
+                                detalle.equipos.forEach((equipo, index) => {
+                                    codigos += (index < detalle.equipos.length - 1) ? equipo.codigo + ', ' : equipo.codigo;
+                                });
+                                this.detallePrestamo.push({
+                                    tipo_equipo: this.itemsPrestamo[detalle.indexPrestamo].equipo,
+                                    equipos: codigos,
+                                    cantidad: detalle.cantPrestados
+                                });
+                            } else {
+                                this.detallePrestamo.push({
+                                    tipo_equipo: this.itemsPrestamo[detalle.indexPrestamo].equipo,
+                                    equipos: detalle.message,
+                                    cantidad: detalle.cantPrestados
+                                });
+                            }
+                        }
+                    } else {
+                        console.log(response.data);
+                        /* this.detallePrestamo.push({
+                            tipo_equipo: this.itemsPrestamo[detalle.indexPrestamo].equipo,
+                            equipos: detalle.message,
+                            cantidad: 0
+                        }); */
+                    }
+                    this.idPrestamoProceso = response.data[response.data.length - 1].idPrestamo;
+                }).catch(error => {
+                    console.log('Error', error);
+                });
+                this.disableBtn = false;
+                this.mostrarEquiposPrestamo = true;
+            }
+        },
+        async confirmar() {
+            if (this.idPrestamoProceso) {
+                this.disableBtn = true, this.disableBtnCancelar = true, this.disableBtnConfirmar = true;
+                await axios.put(`${this.rutaBackend}/prestamo/confirmar/${this.idPrestamoProceso}`).then(response => {
+                    console.log(response);
+                    this.paqueteMsj.title = 'Confirmar';
+                    this.paqueteMsj.body = 'Préstamo confirmado con éxito';
+                    this.paqueteMsj.classTitle = 'green';
+                    this.idPrestamoProceso = null;
+                }).catch(error => {
+                    console.log(error);
+                    this.paqueteMsj.title = 'Confirmar';
+                    this.paqueteMsj.body = 'No se pudo confirmar el préstamo, intenta nuevamente o contacta con soporte';
+                    this.paqueteMsj.classTitle = 'error';
+                });
+                this.itemsPrestamo = [];
+                this.mostrarEquiposPrestamo = false;
+                this.detallePrestamo = [];
+                this.dialogMsj = true;
+                this.disableBtn = false, this.disableBtnCancelar = false, this.disableBtnConfirmar = false;
+            }
+        },
+        async cancelar() {
+            if (this.idPrestamoProceso) {
+                this.disableBtn = true, this.disableBtnConfirmar = true, this.disableBtnCancelar = true;
+                await axios.delete(`${this.rutaBackend}/prestamo/${this.idPrestamoProceso}`).then(() => {
+                    this.paqueteMsj.title = 'Cancelar';
+                    this.paqueteMsj.body = 'Préstamo cancelado con éxito';
+                    this.paqueteMsj.classTitle = 'green';
+                    this.idPrestamoProceso = null;
+                }).catch(error => {
+                    this.paqueteMsj.title = 'Cancelar';
+                    this.paqueteMsj.body = 'No se pudo cancelar el préstamo';
+                    this.paqueteMsj.classTitle = 'error';
+                    console.log(error);
+                });
+                this.itemsPrestamo = [];
+                this.mostrarEquiposPrestamo = false;
+                this.detallePrestamo = [];
+                this.dialogMsj = true;
+                this.disableBtn = false, this.disableBtnCancelar = false, this.disableBtnConfirmar = false;
             }
         },
         actualiza() {
@@ -416,36 +567,24 @@ export default {
             this.drawer = !this.drawer;
         }
     },
-    mounted() {
-        let url = `${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}/${process.env.VUE_APP_API_DISPOSITIVOS}?estado=Nuevo&tipo=Portatil`;
-        axios.get(url).then((response) => {
-            console.log('bien');
-            console.log(response.data);
-            this.dispositivosDisponibles = response.data;
-        }).catch(function (error) {
-            // handle error
-            console.log(error);
-        }).finally(function () {
-            this.$refs.form.reset();
-            // always executed
-        });
+    created() {
+        this.obtenerTiposEquipo();
+        this.obtenerUsuarios();
         for (let i = 6; i <= 21; i++) {
             this.horas.push(i);
         }
         let hora = new Date().getHours();
-        this.sel = 6;
-        if (hora >= 6 && hora <= 21) {
-            this.sel = hora;
+        this.paqueteTabla.hora_inicio = 6;
+        if (hora >= 6 && hora < 21) {
+            this.paqueteTabla.hora_inicio = hora;
+            this.paqueteTabla.hora_fin = this.paqueteTabla.hora_inicio + 1;
         }
     },
 }
 </script>
 <style>
-#inspire {
-    background-image: url("../assets/fondo.png");
-    background-size: 100% 100%;
-    background-attachment: fixed;
-    margin: 0;
+.v-application .primary--text {
+    color: orange !important;
 }
 
 .v-item-group.v-bottom-navigation .v-btn {
