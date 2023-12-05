@@ -63,6 +63,12 @@ const routes = [{
                         path: '/dashboard/ManagerView/CableHdmi',
                         component: () =>
                             import ('../views/dispositivos/CableHdmi')
+                    },
+                    {
+                        name: 'Nuevo equipo',
+                        path: '/dashboard/ManagerView/nuevo',
+                        component: () =>
+                            import ('../views/dispositivos/Nuevo')
                     }
                 ]
             },
@@ -89,9 +95,16 @@ const routes = [{
                 name: 'Configprestamo',
                 component: () =>
                     import ('../views/configPrestamo.vue')
+            },
+            {
+                name: ' Devolucion',
+                path: '/dashboard/devolucion',
+                component: () =>
+                    import ('../views/devolucion.vue')
             }
         ],
     },
+
 
 ]
 

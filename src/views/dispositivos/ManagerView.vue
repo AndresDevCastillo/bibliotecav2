@@ -77,14 +77,18 @@ export default {
     },
     watch: {
         select() {
-            let comparar1, comparar2;
+            let comparar1, comparar2, coinc = false;
             this.items.filter(item => {
                 comparar1 = item.tipo.toLocaleLowerCase();
                 comparar2 = this.select.tipo.toLocaleLowerCase();
                 if (comparar1 === comparar2) {
+                    coinc = true;
                     this.$router.push(item.ruta);
                 }
             });
+            if (!coinc) {
+                this.$router.push('/dashboard/ManagerView/nuevo');
+            }
         }
     },
     created() {

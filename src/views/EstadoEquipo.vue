@@ -240,7 +240,6 @@ export default {
             this.loadTabla = true;
             await axios.get(`${this.rutaBackend}/estado-equipo`).then(response => {
                 this.items = response.data;
-                console.log(response.data);
             }).catch(error => {
                 this.detalleMsj.title = "Obtener estados de equipo";
                 this.detalleMsj.body = "No se pudo obtener los estados de equipo, contacta con soporte";
@@ -253,7 +252,6 @@ export default {
             this.loadTablaTipo = true;
             await axios.get(`${this.rutaBackend}/tipo-equipo`).then(response => {
                 this.itemsTipo = response.data;
-                console.log(response.data);
             }).catch(error => {
                 this.detalleMsj.title = "Obtener tipos de equipo";
                 this.detalleMsj.body = "No se pudo obtener los tipos de equipo, contacta con soporte";

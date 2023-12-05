@@ -25,9 +25,6 @@
               label="Serial"
               required :rules="campoRules"></v-text-field>
           </v-col>
-          <v-col cols="6">
-            <EstadoEquipo @selectEstado="guardarEstadoSeleccionado" />
-          </v-col>
         </v-row>
         <v-btn
           :disabled="!valid"
@@ -45,10 +42,9 @@
 
 <script>
 import axios from "axios";
-import EstadoEquipo from "../../components/EstadoEquipo.vue";
 import dialogMensaje from '../../components/dialogMensaje.vue';
 export default {
-  components: { EstadoEquipo, dialogMensaje },
+  components: { dialogMensaje },
   data: () => ({
     rutaBackend: `${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}`,
     valid: true,
@@ -56,7 +52,6 @@ export default {
       codigo: null,
       referencia: null,
       serial: null,
-      estado_equipo: null,//Aquí va el id del estado de equipo, valor emitido desde EstadoEquipoComponent
       tipo_equipo: "Portatil", //Aquí va el id del tipo de equipo, se carga automático
     },
     campoRules: [

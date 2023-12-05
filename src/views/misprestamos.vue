@@ -63,10 +63,11 @@
                     transition="dialog-bottom-transition"
                     max-width="600" v-model="dialogDetalleEquipos">
                     <v-card>
-                        <v-card-text>
+                        <v-card-text class="px-1">
                             <v-data-table
                                 :headers="headers"
                                 :items="itemsPrestamoEquipos"
+                                locale="es-es"
                                 :footer-props="{
                                     'show-current-page': true,
                                     'items-per-page-options': [5, 10, 15],
@@ -78,7 +79,7 @@
                                     prevIcon: 'mdi-minus',
                                     nextIcon: 'mdi-plus'
                                 }"
-                                item-key="codigo"
+                                item-key="index"
                                 sort-by="tipo_equipo"
                                 group-by="tipo_equipo"
                                 show-group-by
@@ -159,7 +160,8 @@ export default {
                 text: 'Código', value: 'codigo', groupable: false
             },
             { text: 'Referencia', value: 'referencia', groupable: false },
-            { text: 'Serial', value: 'serial', groupable: false, }
+            { text: 'Serial', value: 'serial', groupable: false, },
+            { text: '', value: 'tipo_equipo', align: 'right', sortable: false },
         ],
         desserts: [
             {
@@ -237,7 +239,6 @@ export default {
             this.loadTabla = false;
         },
         verEquipos(index) {
-            console.log(this.itemsPrestamo[index]);
             this.itemsPrestamoEquipos = this.itemsPrestamo[index].detalle.map(detalle => {
                 return {
                     codigo: detalle.equipo.codigo,
@@ -246,7 +247,6 @@ export default {
                     tipo_equipo: detalle.equipo.tipo_equipo.tipo
                 }
             });
-            console.log(this.itemsPrestamoEquipos);
             this.dialogDetalleEquipos = true;
         },
         fechaConHora(fecha = null) {

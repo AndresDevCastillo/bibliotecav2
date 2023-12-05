@@ -133,7 +133,7 @@
                                                 v-model="paquete.usuario"
                                                 :items="usuarios"
                                                 :item-text="(usuario) => { return `${usuario.nombre} ${usuario.apellido}` }"
-                                                item-value="id"
+                                                item-value="cedula"
                                                 label="Usuario"
                                                 filled
                                                 required

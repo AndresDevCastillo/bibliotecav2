@@ -1,21 +1,24 @@
 <template>
     <v-select
-        v-model="estado"
+        v-model="estadoSelect"
         :items="items"
         item-text="estado"
         item-value="id"
         return-object
+        filled
         :rules="[(v) => !!v || 'Estado es requerido']"
         label="Estado"
-        required></v-select>
+        required @change="estadoSeleccionado"></v-select>
 </template>
 <script>
 import axios from 'axios'
 export default {
-    name:'EstadoEquipo',
+    props: ['estado'],
+    name: 'EstadoEquipo',
     data: () => ({
         rutaBackend: `${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}`,
-        estado: null,
+        estadoSelect: null,
+        pos: null,
         items: [],
     }),
     methods: {
@@ -23,15 +26,21 @@ export default {
             await axios.get(`${this.rutaBackend}/estado-equipo`).then(response => {
                 this.items = response.data;
             });
+        },
+        estadoSeleccionado() {
+            this.$emit('selectEstado', { estado: this.estadoSelect, posicion: this.pos });
         }
-    },
-    mounted() {
-        this.obtenerEstadosEquipo();
     },
     watch: {
         estado() {
-            this.$emit('selectEstado', this.estado);
+            console.log(this.$props.estado);
+            this.estadoSelect = this.$props.estado.value;
+            this.pos = this.$props.estado.index;
         }
-    }
+    },
+    created() {
+        this.obtenerEstadosEquipo();
+    },
+
 }
 </script>

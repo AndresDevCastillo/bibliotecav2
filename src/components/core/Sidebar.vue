@@ -104,7 +104,13 @@ export default {
                         title: 'Nuevo préstamo',
                         icon: 'mdi mdi-book-plus-multiple',
                         href: '/dashboard/prestamo'
-                    }, {
+                    },
+                    {
+                        title: 'Devolución de préstamo',
+                        icon: 'mdi mdi-lan-check',
+                        href: '/dashboard/devolucion'
+                    },
+                    {
                         title: 'Mis préstamos',
                         icon: 'mdi mdi-file-eye-outline',
                         href: '/dashboard/miprestamo'
