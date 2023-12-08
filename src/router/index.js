@@ -20,11 +20,7 @@ const routes = [
         path: "/dashboard/welcome",
         component: () => import("../views/welcome.vue"),
       },
-      {
-        name: "ManagerView",
-        path: "/dashboard/ManagerView",
-        component: () => import("../views/dispositivos/ManagerView"),
-      },
+
       {
         name: "DashboarCrearEquipo",
         path: "/dashboard/CrearEquipo",
@@ -44,6 +40,16 @@ const routes = [
         name: "registrarprestamo",
         path: "/dashboard/registrarprestamo",
         component: () => import("../views/Prestamo"),
+      },
+      {
+        name: "prestamo",
+        path: "/dashboard/prestamo",
+        component: () => import("../views/Prestamo"),
+      },
+      {
+        name: "devolucion",
+        path: "/dashboard/devolucion",
+        component: () => import("../views/Devolucion"),
       },
     ],
   },

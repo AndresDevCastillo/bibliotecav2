@@ -94,7 +94,7 @@ export default {
         icon: "far fa-calendar-plus",
         child: [
           {
-            href: "/dashboard/ManagerView",
+            href: "/dashboard/EstadoEquipo",
             title: "Estado Equipo",
             color: "red",
           },
@@ -109,6 +109,21 @@ export default {
           {
             href: "",
             title: "Registrar equipo",
+          },
+        ],
+      },
+      {
+        title: "Biblioteca",
+        icon: "fas fa-book",
+        child: [
+          {
+            href: "/dashboard/Devolucion",
+            title: "Devolucion",
+            color: "red",
+          },
+          {
+            href: "/dashboard/Entregar",
+            title: "Entrega",
           },
         ],
       },
