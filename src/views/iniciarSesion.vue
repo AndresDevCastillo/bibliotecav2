@@ -64,7 +64,12 @@
           </v-card>
         </v-col>
         <v-col cols="4">
-          <v-card :loading="loading" class="mx-auto my-12" max-width="374" height="550">
+          <v-card
+            :loading="loading"
+            class="mx-auto my-12"
+            max-width="374"
+            height="550"
+          >
             <v-img
               cover
               height="250"
@@ -75,7 +80,7 @@
             </v-card-item>
             <v-card-text>
               <div>
-                La Biblioteca SENAAAA garantiza la recuperación, preservación y
+                La Biblioteca SENA garantiza la recuperación, preservación y
                 acceso a la memoria colectiva del país, representada por el
                 patrimonio bibliográfico y hemerográfico en cualquier soporte
                 físico. En su trabajo, se guía por el reconocimiento de la
@@ -95,7 +100,7 @@
             </v-card-item>
             <v-card-text>
               <div>
-                Nuestra visión para el año 2022 es lograr contar en el futuro
+                Nuestra visión para el año 2023 es lograr contar en el futuro
                 con la infraestructura necesaria para la conservación a largo
                 plazo de las colecciones, con tecnología de punta para el
                 desarrollo de nuestros procesos misionales y mantener una red de
@@ -188,14 +193,21 @@
         </div>
       </v-dialog>
     </v-main>
-    <v-footer padless >
-      <v-card flat tile height="100%" width="100%" class="mt-0 orange  lighten-1 white--text text-center">
+    <v-footer padless>
+      <v-card
+        flat
+        tile
+        height="100%"
+        width="100%"
+        class="mt-0 orange lighten-1 white--text text-center"
+      >
         <v-card-text>
           <v-btn
-            v-for="icon in icons"
+            v-for="(icon, index) in icons"
             :key="icon"
             class="mx-4 white--text"
             icon
+            :href="iconsN[index].url"
           >
             <v-icon size="24px">
               {{ icon }}
@@ -243,6 +255,24 @@ export default {
       },
     ],
     icons: ["mdi-facebook", "mdi-twitter", "mdi-linkedin", "mdi-instagram"],
+    iconsN: [
+      {
+        icon: "mdi-facebook",
+        url: "https://web.facebook.com/SENACordoba/?_rdc=1&_rdr",
+      },
+      {
+        icon: "mdi-twitter",
+        url: "https://twitter.com/senaencordoba?lang=es",
+      },
+      {
+        icon: "mdi-linkedin",
+        url: "https://www.linkedin.com/school/servicio-nacional-de-aprendizaje-sena-/?originalSubdomain=co",
+      },
+      {
+        icon: "mdi-instagram",
+        url: "https://www.instagram.com/senacomunica/?hl=es-la",
+      },
+    ],
   }),
   methods: {
     login() {

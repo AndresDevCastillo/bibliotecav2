@@ -20,8 +20,6 @@
             item-value="cedula"
             v-model="paquetePrestamo.usuario"
           ></v-select>
-          {{ paquetePrestamo }}
-          {{ tipoEquipoArray }}
         </v-col>
       </v-row>
       <!-- Fecha Inicial y Hora Inicial -->
