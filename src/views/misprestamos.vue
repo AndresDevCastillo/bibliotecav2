@@ -163,64 +163,13 @@ export default {
             { text: 'Serial', value: 'serial', groupable: false, },
             { text: '', value: 'tipo_equipo', align: 'right', sortable: false },
         ],
-        desserts: [
-            {
-                name: 'Frozen Yogurt',
-                category: 'Ice cream',
-                dairy: 'Yes',
-            },
-            {
-                name: 'Ice cream sandwich',
-                category: 'Ice cream',
-                dairy: 'Yes',
-            },
-            {
-                name: 'Eclair',
-                category: 'Cookie',
-                dairy: 'Yes',
-            },
-            {
-                name: 'Cupcake',
-                category: 'Pastry',
-                dairy: 'Yes',
-            },
-            {
-                name: 'Gingerbread',
-                category: 'Cookie',
-                dairy: 'No',
-            },
-            {
-                name: 'Jelly bean',
-                category: 'Candy',
-                dairy: 'No',
-            },
-            {
-                name: 'Lollipop',
-                category: 'Candy',
-                dairy: 'No',
-            },
-            {
-                name: 'Honeycomb',
-                category: 'Toffee',
-                dairy: 'No',
-            },
-            {
-                name: 'Donut',
-                category: 'Pastry',
-                dairy: 'Yes',
-            },
-            {
-                name: 'KitKat',
-                category: 'Candy',
-                dairy: 'Yes',
-            },
-        ],
-        itemsPrestamoEquipos: []
+        itemsPrestamoEquipos: [],
+        idUsuario: 123456 //Id usuario logueado
     }),
     methods: {
         async getPrestamos() {
             this.loadTabla = true;
-            await axios.get(`${this.rutaBackend}/prestamo/usuario/1`).then(response => {
+            await axios.get(`${this.rutaBackend}/prestamo/usuario/${this.idUsuario}`).then(response => {
                 this.itemsPrestamo = response.data;
                 this.itemsPrestamoTabla = response.data.map(prestamo => {
                     let fechas = ["", ""];

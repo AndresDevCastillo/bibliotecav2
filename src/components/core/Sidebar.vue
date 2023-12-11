@@ -119,6 +119,11 @@ export default {
                         title: 'Configurar préstamo',
                         icon: 'mdi mdi-format-list-bulleted-type',
                         href: '/dashboard/configprestamo'
+                    },
+                    {
+                        title: 'Configurar préstamo 2',
+                        icon: 'mdi mdi-format-list-bulleted-type',
+                        href: '/dashboard/prestamo2'
                     }
                 ]
             }

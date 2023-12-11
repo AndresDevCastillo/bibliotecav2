@@ -101,6 +101,11 @@ const routes = [{
                 path: '/dashboard/devolucion',
                 component: () =>
                     import ('../views/devolucion.vue')
+            }, {
+                name: 'Prestamo2',
+                path: '/dashboard/prestamo2',
+                component: () =>
+                    import ('../views/Prestamo2.vue')
             }
         ],
     },

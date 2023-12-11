@@ -77,6 +77,10 @@ export default {
   color: rgb(0, 0, 0);
 }
 
+div.v-application .primary--text {
+  color: orange !important;
+}
+
 .v-sidebar-menu .vsm-link {
   background-color: orange !important;
 }
@@ -144,7 +148,7 @@ export default {
 .text-error {
   color: #E539 !important;
 }
-.text-success{
+
+.text-success {
   color: #43A0 !important;
-}
-</style>
+}</style>
