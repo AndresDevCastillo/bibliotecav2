@@ -19,8 +19,7 @@
               prevIcon: 'mdi-minus',
               nextIcon: 'mdi-plus',
             }"
-            class="elevation-1"
-          >
+            class="elevation-1">
             <template v-slot:top>
               <v-toolbar flat>
                 <v-toolbar-title>Mis préstamos</v-toolbar-title>
@@ -30,14 +29,12 @@
             <template v-slot:item.estado="{ item }">
               <v-chip
                 class="ma-2"
-                :color="
-                  item.estado.id == 1
-                    ? 'primary'
-                    : item.estado.id == 2
+                :color="item.estado.id == 1
+                  ? 'primary'
+                  : item.estado.id == 2
                     ? 'orange'
                     : 'success'
-                "
-              >
+                  ">
                 {{ item.estado.estado }}
               </v-chip>
             </template>
@@ -48,8 +45,7 @@
                     color="var(--c-orange)"
                     v-bind="attrs"
                     v-on="on"
-                    @click="verEquipos(index)"
-                  >
+                    @click="verEquipos(index)">
                     mdi-eye
                   </v-icon>
                 </template>
@@ -68,8 +64,7 @@
         <v-dialog
           transition="dialog-bottom-transition"
           max-width="600"
-          v-model="dialogDetalleEquipos"
-        >
+          v-model="dialogDetalleEquipos">
           <v-card>
             <v-card-text class="px-1">
               <v-data-table
@@ -91,8 +86,7 @@
                 sort-by="tipo_equipo"
                 group-by="tipo_equipo"
                 show-group-by
-                class="elevation-1"
-              >
+                class="elevation-1">
                 <template v-slot:top>
                   <v-toolbar flat>
                     <v-toolbar-title>Equipos prestados</v-toolbar-title>
@@ -102,9 +96,7 @@
               </v-data-table>
             </v-card-text>
             <v-card-actions class="justify-end">
-              <v-btn color="green" dark @click="dialogDetalleEquipos = false"
-                >Cerrar</v-btn
-              >
+              <v-btn color="green" dark @click="dialogDetalleEquipos = false">Cerrar</v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -179,7 +171,7 @@ export default {
       { text: "", value: "tipo_equipo", align: "right", sortable: false },
     ],
     itemsPrestamoEquipos: [],
-    idUsuario: 123, //Id usuario logueado
+    idUsuario: 123456, //Id usuario logueado
   }),
   methods: {
     async getPrestamos() {
@@ -226,21 +218,18 @@ export default {
         fecha = new Date(fecha);
         dia = fecha.getDate() < 10 ? "0" + fecha.getDate() : fecha.getDate();
         mes =
-          fecha.getMonth() + 1 < 10
-            ? "0" + fecha.getMonth() + 1
-            : fecha.getMonth() + 1;
-        return `${fecha.getFullYear()}-${mes}-${dia} ${fecha.getHours()}:${
-          (fecha.getMinutes() < 10 ? "0" : "") + fecha.getMinutes()
-        }`;
+          ((fecha.getMonth() + 1) < 10
+            ? "0" : "") + (fecha.getMonth() + 1);
+        return `${fecha.getFullYear()}-${mes}-${dia} ${(fecha.getHours() < 10 ? "0" : "") + fecha.getHours()}:${(fecha.getMinutes() < 10 ? "0" : "") + fecha.getMinutes()
+          }`;
       }
       return "Fecha inválida";
     },
     fechaSinHora(fecha = null) {
       if (fecha) {
         fecha = new Date(fecha);
-        return `${fecha.getHours()}:${
-          (fecha.getMinutes() < 10 ? "0" : "") + fecha.getMinutes()
-        }`;
+        return `${fecha.getHours()}:${(fecha.getMinutes() < 10 ? "0" : "") + fecha.getMinutes()
+          }`;
       }
       return "Fecha inválida";
     },

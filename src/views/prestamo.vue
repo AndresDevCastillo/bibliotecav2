@@ -129,18 +129,16 @@
                       <v-autocomplete
                         v-model="paquete.usuario"
                         :items="usuarios"
-                        :item-text="
-                          (usuario) => {
+                        :item-text="(usuario) => {
                             return `${usuario.nombre} ${usuario.apellido}`;
                           }
-                        "
+                          "
                         item-value="cedula"
                         label="Usuario"
                         filled
                         required
                         no-data-text="Sin usuarios"
-                        append-icon="mdi mdi-account"
-                      >
+                        append-icon="mdi mdi-account">
                       </v-autocomplete>
                     </v-col>
                   </v-row>
@@ -156,8 +154,7 @@
                         return-object
                         no-data-text="Sin tipo de equipos"
                         append-icon="mdi-devices"
-                        :rules="campoRules"
-                      >
+                        :rules="campoRules">
                       </v-autocomplete>
                     </v-col>
                     <v-col cols="6" class="pl-1 pb-0">
@@ -168,8 +165,7 @@
                         filled
                         label="Cantidad"
                         append-icon="mdi-plus"
-                        :rules="numberRules"
-                      ></v-text-field>
+                        :rules="numberRules"></v-text-field>
                     </v-col>
                   </v-row>
                   <v-row no-gutters>
@@ -180,8 +176,7 @@
                         :nudge-right="40"
                         transition="scale-transition"
                         offset-y
-                        min-width="auto"
-                      >
+                        min-width="auto">
                         <template v-slot:activator="{ on, attrs }">
                           <v-text-field
                             v-model="paqueteTabla.fecha_inicio"
@@ -191,16 +186,14 @@
                             readonly
                             v-bind="attrs"
                             v-on="on"
-                            :rules="campoRules"
-                          ></v-text-field>
+                            :rules="campoRules"></v-text-field>
                         </template>
                         <v-date-picker
                           v-model="paqueteTabla.fecha_inicio"
                           @input="menu2 = false"
                           color="orange white"
                           header-color="#ffa726"
-                          locale="es"
-                        >
+                          locale="es">
                         </v-date-picker>
                       </v-menu>
                     </v-col>
@@ -212,8 +205,7 @@
                         label="Hora inicio"
                         append-icon="mdi-timer-sand"
                         :items="horas"
-                        :rules="campoRules"
-                      >
+                        :rules="campoRules">
                       </v-select>
                     </v-col>
                   </v-row>
@@ -225,8 +217,7 @@
                         :nudge-right="40"
                         transition="scale-transition"
                         offset-y
-                        min-width="auto"
-                      >
+                        min-width="auto">
                         <template v-slot:activator="{ on, attrs }">
                           <v-text-field
                             v-model="paqueteTabla.fecha_fin"
@@ -236,16 +227,14 @@
                             readonly
                             v-bind="attrs"
                             v-on="on"
-                            :rules="campoRules"
-                          ></v-text-field>
+                            :rules="campoRules"></v-text-field>
                         </template>
                         <v-date-picker
                           v-model="paqueteTabla.fecha_fin"
                           @input="menu3 = false"
                           color="orange white"
                           header-color="#ffa726"
-                          locale="es"
-                        >
+                          locale="es">
                         </v-date-picker>
                       </v-menu>
                     </v-col>
@@ -257,8 +246,7 @@
                         label="Hora fin"
                         append-icon="mdi-timer-sand-complete"
                         :items="horas"
-                        :rules="campoRules"
-                      >
+                        :rules="campoRules">
                       </v-select>
                     </v-col>
                   </v-row>
@@ -270,8 +258,7 @@
                           class="py-4 px-2 btn-agregar"
                           @click="agregarEquipo"
                           v-bind="attrs"
-                          v-on="on"
-                        >
+                          v-on="on">
                           <v-icon dark> mdi-plus </v-icon>
                         </v-btn>
                       </template>
@@ -298,8 +285,7 @@
               prevIcon: 'mdi-minus',
               nextIcon: 'mdi-plus',
             }"
-            class="elevation-1"
-          >
+            class="elevation-1">
             <template v-slot:top>
               <v-toolbar flat>
                 <v-toolbar-title>Detalle de equipos</v-toolbar-title>
@@ -308,22 +294,17 @@
                   no-gutters
                   class="flex-column"
                   justify="center"
-                  align-content="end"
-                >
+                  align-content="end">
                   <v-btn
                     color="error"
                     class="mr-2 btn-cancelar"
                     @click="cancelar"
-                    :disabled="disableBtnCancelar"
-                    >Cancelar</v-btn
-                  >
+                    :disabled="disableBtnCancelar">Cancelar</v-btn>
                   <v-btn
                     color="success"
                     class="btn-confirmar"
                     :disabled="disableBtnConfirmar"
-                    @click="confirmar"
-                    >Confirmar</v-btn
-                  >
+                    @click="confirmar">Confirmar</v-btn>
                 </v-row>
               </v-toolbar>
             </template>
@@ -347,8 +328,7 @@
               prevIcon: 'mdi-minus',
               nextIcon: 'mdi-plus',
             }"
-            class="elevation-1"
-          >
+            class="elevation-1">
             <template v-slot:top>
               <v-toolbar flat>
                 <v-toolbar-title>Equipos</v-toolbar-title>
@@ -358,15 +338,12 @@
                   class="flex-column"
                   justify="center"
                   align-content="end"
-                  v-if="itemsPrestamo.length > 0"
-                >
+                  v-if="itemsPrestamo.length > 0">
                   <v-btn
                     color="success"
                     :disabled="disableBtn"
                     class="btn-prestar"
-                    @click="prestar"
-                    >Prestar</v-btn
-                  >
+                    @click="prestar">Prestar</v-btn>
                 </v-row>
               </v-toolbar>
             </template>
@@ -377,8 +354,7 @@
                     color="var(--c-orange)"
                     v-bind="attrs"
                     v-on="on"
-                    @click="eliminarEquipo(index)"
-                  >
+                    @click="eliminarEquipo(index)">
                     mdi-delete
                   </v-icon>
                 </template>
@@ -397,8 +373,7 @@
       @cerrado="dialogMsj = false"
       :title="paqueteMsj.title"
       :body="paqueteMsj.body"
-      :classTitle="paqueteMsj.classTitle"
-    />
+      :classTitle="paqueteMsj.classTitle" />
   </v-container>
 </template>
 <script>
@@ -493,17 +468,15 @@ export default {
     agregarEquipo() {
       if (this.$refs.form.validate()) {
         const fecha1 = new Date(
-          `${this.paqueteTabla.fecha_inicio} ${
-            this.paqueteTabla.hora_inicio < 10
-              ? "0" + this.paqueteTabla.hora_inicio
-              : this.paqueteTabla.hora_inicio
+          `${this.paqueteTabla.fecha_inicio} ${this.paqueteTabla.hora_inicio < 10
+            ? "0" + this.paqueteTabla.hora_inicio
+            : this.paqueteTabla.hora_inicio
           }:00`
         );
         const fecha2 = new Date(
-          `${this.paqueteTabla.fecha_fin} ${
-            this.paqueteTabla.hora_fin < 10
-              ? "0" + this.paqueteTabla.hora_fin
-              : this.paqueteTabla.hora_fin
+          `${this.paqueteTabla.fecha_fin} ${this.paqueteTabla.hora_fin < 10
+            ? "0" + this.paqueteTabla.hora_fin
+            : this.paqueteTabla.hora_fin
           }:00`
         );
         console.log(fecha1.getHours(), fecha2.getHours());
@@ -514,16 +487,14 @@ export default {
               equipo: this.paqueteTabla.tipo_equipo.tipo,
               detalle: this.paqueteTabla.tipo_equipo,
               cantidad: parseInt(this.paqueteTabla.cantidad),
-              fecha_inicio: `${this.paqueteTabla.fecha_inicio} ${
-                this.paqueteTabla.hora_inicio < 10
+              fecha_inicio: `${this.paqueteTabla.fecha_inicio} ${this.paqueteTabla.hora_inicio < 10
                   ? "0" + this.paqueteTabla.hora_inicio
                   : this.paqueteTabla.hora_inicio
-              }:00`,
-              fecha_fin: `${this.paqueteTabla.fecha_fin} ${
-                this.paqueteTabla.hora_fin < 10
+                }:00`,
+              fecha_fin: `${this.paqueteTabla.fecha_fin} ${this.paqueteTabla.hora_fin < 10
                   ? "0" + this.paqueteTabla.hora_fin
                   : this.paqueteTabla.hora_fin
-              }:00`,
+                }:00`,
             });
             this.paqueteTabla.tipo_equipo = null;
             this.paqueteTabla.cantidad = 1;
@@ -617,27 +588,10 @@ export default {
         (this.disableBtn = true),
           (this.disableBtnCancelar = true),
           (this.disableBtnConfirmar = true);
-        await axios
-          .put(
-            `${this.rutaBackend}/prestamo/confirmar/${this.idPrestamoProceso}`
-          )
-          .then((response) => {
-            console.log(response);
-            this.paqueteMsj.title = "Confirmar";
-            this.paqueteMsj.body = "Préstamo confirmado con éxito";
-            this.paqueteMsj.classTitle = "green";
-            this.idPrestamoProceso = null;
-          })
-          .catch((error) => {
-            console.log(error);
-            this.paqueteMsj.title = "Confirmar";
-            this.paqueteMsj.body =
-              "No se pudo confirmar el préstamo, intenta nuevamente o contacta con soporte";
-            this.paqueteMsj.classTitle = "error";
-          });
         this.itemsPrestamo = [];
         this.mostrarEquiposPrestamo = false;
         this.detallePrestamo = [];
+        this.idPrestamoProceso=null;
         this.dialogMsj = true;
         (this.disableBtn = false),
           (this.disableBtnCancelar = false),

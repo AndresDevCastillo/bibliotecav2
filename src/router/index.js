@@ -97,7 +97,13 @@ const routes = [{
                     import ('../views/configPrestamo.vue')
             },
             {
-                name: ' Devolucion',
+                name: 'Entrega de equipos',
+                path: '/dashboard/entrega',
+                component: () =>
+                    import ('../views/entrega.vue')
+            },
+            {
+                name: 'Devolucion',
                 path: '/dashboard/devolucion',
                 component: () =>
                     import ('../views/devolucion.vue')
