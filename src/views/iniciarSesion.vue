@@ -39,7 +39,7 @@
           transition="fade-transition"
         ></v-carousel-item>
       </v-carousel>
-      <v-row justify-xl="left" align-content-xl="start">
+      <v-row>
         <v-col cols="4">
           <v-card class="mx-auto my-12" max-width="374" height="550">
             <v-img
@@ -138,7 +138,7 @@
                       type="text"
                       name=""
                       class="form-control input_user"
-                      placeholder="Username"
+                      placeholder="Cédula"
                     />
                   </div>
                   <div class="input-group mb-2">
@@ -229,10 +229,13 @@
   </v-app>
 </template>
 <script>
+import axios from "axios";
+
 export default {
   name: "App",
   data: () => ({
     active: "home",
+    rutaBackend: `${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}`,
     dialog: false,
     usuario: "",
     noti: null,
@@ -275,8 +278,22 @@ export default {
     ],
   }),
   methods: {
-    login() {
-      this.$router.push("dashboard/welcome");
+    async login() {
+      await axios
+        .post(`${this.rutaBackend}/auth/login`, {
+          cedula: this.usuario,
+          password: this.contrasena,
+        })
+        .then((response) => {
+          if (response.data.access_token) {
+            this.$store.commit("setusuario", response.data);
+            this.$router.push("dashboard/welcome");
+          }
+        })
+        .catch((error) => {
+          console.log("Error login: " + error);
+          alert(error.message);
+        });
     },
   },
 };

@@ -1,7 +1,11 @@
 <template>
   <v-card width="500px" class="mx-auto">
     <v-card-title> Video Beam </v-card-title>
-    <v-img height="297px" lazy-src="../../assets/images/Vdbeam.jpeg" src="../../assets/images/Vdbeam.jpeg"></v-img>
+    <v-img
+      height="297px"
+      lazy-src="../../assets/images/Vdbeam.jpeg"
+      src="../../assets/images/Vdbeam.jpeg"
+    ></v-img>
     <v-card-text>
       <v-form ref="form" v-model="valid" lazy-validation>
         <v-row>
@@ -10,30 +14,26 @@
               v-model="paquete.codigo"
               :rules="campoRules"
               label="Código"
-              required></v-text-field>
+              required
+            ></v-text-field>
           </v-col>
           <v-col cols="6">
             <v-text-field
               v-model="paquete.referencia"
               :rules="campoRules"
               label="Referencia"
-              required></v-text-field>
+              required
+            ></v-text-field>
           </v-col>
           <v-col cols="6">
             <v-text-field
               v-model="paquete.serial"
               label="Serial"
-              required></v-text-field>
-          </v-col>
-          <v-col cols="6">
-            <EstadoEquipo @selectEstado="guardarEstadoSeleccionado" />
+              required
+            ></v-text-field>
           </v-col>
         </v-row>
-        <v-btn
-          :disabled="!valid"
-          color="success"
-          class="mr-4"
-          @click="guardar">
+        <v-btn :disabled="!valid" color="success" class="mr-4" @click="guardar">
           Guardar
         </v-btn>
       </v-form>
@@ -62,23 +62,24 @@ export default {
   }),
   methods: {
     guardarEstadoSeleccionado(estado) {
-      if (typeof estado == 'object' && estado) {
+      if (typeof estado == "object" && estado) {
         this.paquete.estado_equipo = estado.id;
       }
     },
     async guardar() {
       if (this.$refs.form.validate()) {
         this.valid = false;
-        await axios.post(`${this.rutaBackend}/equipo/crear`, this.paquete)
-          .then(response => {
+        await axios
+          .post(`${this.rutaBackend}/equipo/crear`, this.paquete)
+          .then((response) => {
             console.log(response);
             this.paquete.estado_equipo = null;
             this.$refs.form.reset();
           })
-          .catch(error => {
+          .catch((error) => {
             // handle error
             console.log(error);
-            alert('No se pudo guardar');
+            alert("No se pudo guardar");
           });
         this.valid = true;
       }
@@ -86,11 +87,13 @@ export default {
   },
   async created() {
     //Buscar el id del tipo de equipo VideoBeam
-    await axios.get(`${this.rutaBackend}/tipo-equipo/tipo/VideoBeam`).then(response => {
-      if (response.data.length == 1) {
-        this.paquete.tipo_equipo = response.data[0].id;
-      }
-    });
+    await axios
+      .get(`${this.rutaBackend}/tipo-equipo/tipo/VideoBeam`)
+      .then((response) => {
+        if (response.data.length == 1) {
+          this.paquete.tipo_equipo = response.data[0].id;
+        }
+      });
   },
 };
 </script>

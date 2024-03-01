@@ -28,7 +28,7 @@
 <script>
 import { SidebarMenu } from "vue-sidebar-menu";
 import vuescroll from "vuescroll";
-
+import { menuRoles } from "@/js/menu";
 export default {
   components: {
     SidebarMenu,
@@ -76,64 +76,7 @@ export default {
       ["mdi-delete", "Trash"],
       ["mdi-alert-octagon", "Spam"],
     ],
-    menu: [
-      {
-        header: "Navegación principal",
-        hiddenOnCollapse: true,
-      },
-      {
-        href: "/dashboard/welcome",
-        title: "Inicio",
-        icon: "fa fa-home",
-      },
-      {
-        title: "Equipo",
-        icon: "mdi mdi-devices",
-        child: [
-          {
-            href: "/dashboard/ManagerView",
-            title: "Administrar equipos",
-            icon: "mdi mdi-plus",
-          },
-          {
-            href: "/dashboard/estadoEquipo",
-            title: "Configuración para equipos",
-            icon: "mdi mdi-format-list-bulleted-type",
-          },
-        ],
-      },
-      {
-        title: "Préstamo",
-        icon: "mdi mdi-package-variant-closed-check",
-        child: [
-          {
-            title: "Nuevo préstamo Luis",
-            icon: "mdi mdi-book-plus-multiple",
-            href: "/dashboard/prestamo",
-          },
-          {
-            title: "Configurar préstamo Cata",
-            icon: "mdi mdi-format-list-bulleted-type",
-            href: "/dashboard/prestamo2",
-          },
-          {
-            title: "Mis préstamos",
-            icon: "mdi mdi-file-eye-outline",
-            href: "/dashboard/miprestamo",
-          },
-          {
-            title: "Devolución de préstamo",
-            icon: "mdi mdi-lan-check",
-            href: "/dashboard/devolucion",
-          },
-          {
-            title: "Configurar préstamo",
-            icon: "mdi mdi-format-list-bulleted-type",
-            href: "/dashboard/configprestamo",
-          },
-        ],
-      },
-    ],
+    menu: [],
     menu2: [
       { title: "Inicio", icon: "mdi-view-dashboard", ruta: "djhfbcjdfsc" },
       { title: "Cuenta", icon: "mdi-account-box" },
@@ -153,7 +96,13 @@ export default {
     ],
   }),
   mounted() {
-    this.menu = this.$store.state.userData.menu;
+    const rol = this.$store.getters.getUsuario.rol.descripcion.toLowerCase();
+    const indexRol = menuRoles.findIndex(
+      (item) => item.rol.toLowerCase() == rol
+    );
+    if (indexRol != -1) {
+      this.menu = menuRoles[indexRol].menu;
+    }
   },
   methods: {
     prestamo() {

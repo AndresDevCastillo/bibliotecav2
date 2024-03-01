@@ -23,7 +23,11 @@
       </template>
       <v-list dense>
         <v-list-item-group v-model="selectedItem" color="primary">
-          <v-list-item v-for="(item, i) in items" :key="i">
+          <v-list-item
+            v-for="(item, i) in items"
+            :key="i"
+            @click="action(item.action)"
+          >
             <v-list-item-icon>
               <v-icon v-text="item.icon"></v-icon>
             </v-list-item-icon>
@@ -43,7 +47,7 @@ export default {
     return {
       items: [
         { text: "Perfil", icon: "mdi-clock" },
-        { text: "Salir", icon: "mdi-account" },
+        { text: "Salir", icon: "mdi-account", action: "salir" },
       ],
     };
   },
@@ -51,6 +55,14 @@ export default {
     procesa() {
       console.log("generado");
       this.$emit("handrawer");
+    },
+    action(action) {
+      switch (action.toLowerCase()) {
+        case "salir":
+          this.$store.commit("setusuario", null);
+          this.$router.push("/");
+          break;
+      }
     },
   },
 };

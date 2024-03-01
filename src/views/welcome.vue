@@ -24,7 +24,13 @@
     </v-row>
   </v-container>
 </template>
-
+<script>
+export default{
+  mounted(){
+    console.log('Datos usuariolog: ', this.$store.getters.getUsuario);
+  }
+}
+</script>
 <style scoped>
 .row {
   align-items: center;

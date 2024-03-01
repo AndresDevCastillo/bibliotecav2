@@ -124,7 +124,7 @@
               <v-card-title> PRESTAR EQUIPO </v-card-title>
               <v-card-text>
                 <v-form ref="form" v-model="valid" lazy-validation>
-                  <v-row no-gutters>
+                  <!--<v-row no-gutters>
                     <v-col cols="12" class="pr-0 pb-0">
                       <v-autocomplete
                         v-model="paquete.usuario"
@@ -143,7 +143,7 @@
                       >
                       </v-autocomplete>
                     </v-col>
-                  </v-row>
+                  </v-row>-->
                   <v-row>
                     <v-col cols="6" class="pr-1 pb-0">
                       <v-autocomplete
@@ -689,6 +689,7 @@ export default {
       this.paqueteTabla.hora_inicio = hora;
       this.paqueteTabla.hora_fin = this.paqueteTabla.hora_inicio + 1;
     }
+    this.paquete.usuario = this.$store.getters.getUsuario.cedula;
   },
 };
 </script>
