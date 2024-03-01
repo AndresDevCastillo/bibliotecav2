@@ -42,9 +42,7 @@
 
 <script>
 import axios from "axios";
-import dialogMensaje from '../../components/dialogMensaje.vue';
 export default {
-  components: { dialogMensaje },
   data: () => ({
     rutaBackend: `${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}`,
     valid: true,

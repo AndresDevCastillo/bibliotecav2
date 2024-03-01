@@ -16,19 +16,17 @@
                       <v-autocomplete
                         v-model="paquete.cedula"
                         :items="usuarios"
-                        :item-text="
-                          (usuario) => {
-                            return `${usuario.cedula} - ${usuario.nombre} ${usuario.apellido}`;
-                          }
-                        "
+                        :item-text="(usuario) => {
+                          return `${usuario.cedula} - ${usuario.nombre} ${usuario.apellido}`;
+                        }
+                          "
                         item-value="cedula"
                         label="Cédula"
                         :rules="campoRules"
                         filled
                         required
                         no-data-text="Sin usuarios"
-                        append-icon="mdi mdi-account"
-                      >
+                        append-icon="mdi mdi-account">
                       </v-autocomplete>
                     </v-col>
                   </v-row>
@@ -38,8 +36,7 @@
                 <v-btn
                   color="#ffa726"
                   class="py-4 px-2"
-                  @click="buscarPrestamos"
-                >
+                  @click="buscarPrestamos">
                   <v-icon dark> mdi mdi-account-search-outline </v-icon>
                 </v-btn>
               </v-card-actions>
@@ -61,8 +58,7 @@
               prevIcon: 'mdi-minus',
               nextIcon: 'mdi-plus',
             }"
-            class="elevation-1"
-          >
+            class="elevation-1">
             <template v-slot:top>
               <v-toolbar flat>
                 <v-toolbar-title>Préstamos</v-toolbar-title>
@@ -75,8 +71,7 @@
                     color="var(--c-orange)"
                     v-bind="attrs"
                     v-on="on"
-                    @click="verDetalles(index)"
-                  >
+                    @click="verDetalles(index)">
                     mdi mdi-eye
                   </v-icon>
                 </template>
@@ -95,8 +90,7 @@
         <v-dialog
           transition="dialog-bottom-transition"
           max-width="900"
-          v-model="dialogDetalle"
-        >
+          v-model="dialogDetalle">
           <v-card>
             <v-card-title>Equipos</v-card-title>
             <v-card-text>
@@ -114,13 +108,10 @@
                   prevIcon: 'mdi-minus',
                   nextIcon: 'mdi-plus',
                 }"
-                class="elevation-1"
-              >
+                class="elevation-1">
                 <template v-slot:top>
                   <v-row justify="end" class="pa-4">
-                    <v-btn color="green" dark @click="entregar"
-                      >Entregar equipos</v-btn
-                    >
+                    <v-btn color="green" dark @click="devolucion">Devolver equipos</v-btn>
                   </v-row>
                 </template>
                 <template v-slot:item.estado="{ index }">
@@ -133,8 +124,7 @@
                     :rules="[(v) => !!v || 'Estado es requerido']"
                     label="Estado"
                     return-object
-                    required
-                  ></v-select>
+                    required></v-select>
                 </template>
                 <template v-slot:item.observacion="{ index }">
                   <v-textarea
@@ -144,8 +134,7 @@
                     no-resize
                     v-model="observaciones[index]"
                     filled
-                    label="Observación"
-                  ></v-textarea>
+                    label="Observación"></v-textarea>
                 </template>
                 <template slot="no-data">
                   <p class="text-dark">Sin equipos</p>
@@ -153,9 +142,7 @@
               </v-data-table>
             </v-card-text>
             <v-card-actions class="justify-end">
-              <v-btn color="error" tonal dark @click="dialogDetalle = false"
-                >Cerrar</v-btn
-              >
+              <v-btn color="error" tonal dark @click="dialogDetalle = false">Cerrar</v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -166,8 +153,7 @@
       @cerrado="dialogMsj = false"
       :title="paqueteMsj.title"
       :body="paqueteMsj.body"
-      :classTitle="paqueteMsj.classTitle"
-    />
+      :classTitle="paqueteMsj.classTitle" />
   </v-container>
 </template>
 <script>
@@ -269,6 +255,7 @@ export default {
           .get(`${this.rutaBackend}/prestamo/usuario/${this.paquete.cedula}`)
           .then((response) => {
             this.itemsPrestamo = response.data;
+            this.prestamosTabla = [];
             this.itemsPrestamo.forEach((prestamo) => {
               //Dividir la fecha de inicio por - para obtener el año y el mes, index 0 y 1
               const p1 = prestamo.detalle[0].fecha_inicio.toString().split("-");
@@ -303,16 +290,12 @@ export default {
               );
               this.prestamosTabla.push({
                 id: prestamo.id,
-                fecha_inicio: `${f1.getFullYear()}-${
-                  (f1.getMonth() < 10 ? "0" : "") + f1.getMonth()
-                }-${(f1.getDate() < 10 ? "0" : "") + f1.getDate()} ${
-                  (f1.getHours() < 10 ? "0" : "") + f1.getHours()
-                }:00`,
-                fecha_fin: `${f2.getFullYear()}-${
-                  (f2.getMonth() < 10 ? "0" : "") + f2.getMonth()
-                }-${(f2.getDate() < 10 ? "0" : "") + f2.getDate()} ${
-                  (f2.getHours() < 10 ? "0" : "") + f2.getHours()
-                }:00`,
+                fecha_inicio: `${f1.getFullYear()}-${(f1.getMonth() < 10 ? "0" : "") + (f1.getMonth() + 1)
+                  }-${(f1.getDate() < 10 ? "0" : "") + f1.getDate()} ${(f1.getHours() < 10 ? "0" : "") + f1.getHours()
+                  }:00`,
+                fecha_fin: `${f2.getFullYear()}-${(f2.getMonth() < 10 ? "0" : "") + (f2.getMonth() + 1)
+                  }-${(f2.getDate() < 10 ? "0" : "") + f2.getDate()} ${(f2.getHours() < 10 ? "0" : "") + f2.getHours()
+                  }:00`,
               });
             });
           })
@@ -334,7 +317,7 @@ export default {
     eliminarEquipo(index) {
       this.itemsPrestamo.splice(index, 1);
     },
-    async entregar() {
+    async devolucion() {
       if (this.validarEstados()) {
         const paquete = {
           idPrestamo: this.itemsPrestamo[this.indexSelecionado].id,
@@ -349,12 +332,25 @@ export default {
           ),
         };
         await axios
-          .post(`${this.rutaBackend}/prestamo/entregar`, paquete)
+          .post(`${this.rutaBackend}/prestamo/devolucion`, paquete)
           .then((response) => {
             console.log(response);
+            if (response.data) {
+              this.itemsDetalle = [];
+              this.indexSelecionado = null;
+              this.dialogDetalle = false;
+            }
+            this.paqueteMsj.title = "Devolución de equipos";
+            this.paqueteMsj.body = response.data ? "Equipos devueltos correctamente" : "No se pudieron devolver los equipos";
+            this.paqueteMsj.classTitle = response.data ? "success" : "error";
+            this.dialogMsj = true;
           })
           .catch((error) => {
             console.log(error);
+            this.paqueteMsj.title = "Devolución de equipos";
+            this.paqueteMsj.body = "No se pudieron devolver los equipos";
+            this.paqueteMsj.classTitle = "error";
+            this.dialogMsj = true;
           });
       }
     },

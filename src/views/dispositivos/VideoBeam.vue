@@ -43,10 +43,8 @@
 
 <script>
 import axios from "axios";
-import EstadoEquipo from "../../components/EstadoEquipo.vue";
 
 export default {
-  components: { EstadoEquipo },
   data: () => ({
     rutaBackend: `${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}`,
     valid: true,
@@ -54,7 +52,6 @@ export default {
       codigo: null,
       referencia: null,
       serial: null,
-      estado_equipo: null,
       tipo_equipo: "Video Beam",
     },
     campoRules: [(v) => !!v || "Campo requerido"],

@@ -25,9 +25,6 @@
               label="Serial"
               required></v-text-field>
           </v-col>
-          <v-col cols="6">
-            <EstadoEquipo @selectEstado="guardarEstadoSeleccionado" />
-          </v-col>
         </v-row>
         <v-btn
           :disabled="!valid"
@@ -43,9 +40,7 @@
 
 <script>
 import axios from "axios";
-import EstadoEquipo from "../../components/EstadoEquipo.vue";
 export default {
-  components: { EstadoEquipo },
   data: () => ({
     rutaBackend: `${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}`,
     valid: true,
@@ -53,7 +48,6 @@ export default {
       codigo: null,
       referencia: null,
       serial: null,
-      estado_equipo: null, //Desde components EstadoEquipoComponent
       tipo_equipo: "Mouse", //Autoload
     },
     campoRules: [
