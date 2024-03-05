@@ -5,14 +5,12 @@
         <v-col class="logo" cols="3">
           <img
             src="../assets/logos/TAlogin.png"
-            style="max-height: 100px; max-width: 150px"
-          />
+            style="max-height: 100px; max-width: 150px" />
         </v-col>
         <v-col cols="6" class="text-center">
           <img
             src="../assets/logos/title.png"
-            style="max-height: 300px; max-width: 600px"
-          />
+            style="max-height: 300px; max-width: 600px" />
         </v-col>
         <v-col cols="3">
           <vs-button
@@ -23,9 +21,7 @@
               font-size: 16px;
               font-weight: bold;
             "
-            @click="dialog = true"
-            >Iniciar Sesión</vs-button
-          >
+            @click="dialog = true">Iniciar Sesión</vs-button>
         </v-col>
       </v-row>
     </v-app-bar>
@@ -36,8 +32,7 @@
           :key="i"
           :src="item.src"
           reverse-transition="fade-transition"
-          transition="fade-transition"
-        ></v-carousel-item>
+          transition="fade-transition"></v-carousel-item>
       </v-carousel>
       <v-row>
         <v-col cols="4">
@@ -45,8 +40,7 @@
             <v-img
               cover
               height="250"
-              src="https://thumbs.dreamstime.com/b/computadora-port%C3%A1til-de-la-biblioteca-de-universidad-26745944.jpg"
-            ></v-img>
+              src="https://thumbs.dreamstime.com/b/computadora-port%C3%A1til-de-la-biblioteca-de-universidad-26745944.jpg"></v-img>
             <v-card-item>
               <v-card-title>¿Quienes Somos?</v-card-title>
             </v-card-item>
@@ -68,13 +62,11 @@
             :loading="loading"
             class="mx-auto my-12"
             max-width="374"
-            height="550"
-          >
+            height="550">
             <v-img
               cover
               height="250"
-              src="https://lanoticia.com/wp-content/uploads/2019/10/Buncombe-bibliotecas-ofrecen-programas-computadoras-.jpg"
-            ></v-img>
+              src="https://lanoticia.com/wp-content/uploads/2019/10/Buncombe-bibliotecas-ofrecen-programas-computadoras-.jpg"></v-img>
             <v-card-item>
               <v-card-title>Misión</v-card-title>
             </v-card-item>
@@ -121,52 +113,41 @@
                   <img
                     src="../assets/logos/TAlogin.png"
                     class="brand_logo"
-                    alt="Logo"
-                  />
+                    alt="Logo" />
                 </div>
               </div>
               <div class="d-flex justify-content-center form_container">
                 <form v-on:submit.prevent>
                   <div class="input-group mb-3">
                     <div class="input-group-append">
-                      <span class="input-group-text"
-                        ><i class="fas fa-user"></i
-                      ></span>
+                      <span class="input-group-text"><i class="fas fa-user"></i></span>
                     </div>
                     <input
                       v-model="usuario"
                       type="text"
                       name=""
                       class="form-control input_user"
-                      placeholder="Cédula"
-                    />
+                      placeholder="Cédula" />
                   </div>
                   <div class="input-group mb-2">
                     <div class="input-group-append">
-                      <span class="input-group-text"
-                        ><i class="fas fa-key"></i
-                      ></span>
+                      <span class="input-group-text"><i class="fas fa-key"></i></span>
                     </div>
                     <input
                       v-model="contrasena"
                       type="password"
                       name=""
                       class="form-control input_pass"
-                      placeholder="Password"
-                    />
+                      placeholder="Contraseña" />
                   </div>
                   <div
                     class="d-flex justify-content-center mt-3 login_container"
-                    v-if="prueba == 0"
-                  >
-                    <vs-button dark class="btn login_btn" @click="login"
-                      >Iniciar Sesión</vs-button
-                    >
+                    v-if="prueba == 0">
+                    <vs-button dark class="btn login_btn" @click="login">Iniciar Sesión</vs-button>
                   </div>
                   <div
                     class="d-flex justify-content-center mt-3 login_container"
-                    v-if="prueba == 1"
-                  >
+                    v-if="prueba == 1">
                     <vs-button class="btn login_btn" loading dark>
                       Iniciar Sesión
                     </vs-button>
@@ -176,8 +157,7 @@
                     :timeout="2000"
                     absolute
                     bottom
-                    color="red"
-                  >
+                    color="red">
                     {{ msg }}
                   </v-snackbar>
                 </form>
@@ -199,16 +179,14 @@
         tile
         height="100%"
         width="100%"
-        class="mt-0 orange lighten-1 white--text text-center"
-      >
+        class="mt-0 orange lighten-1 white--text text-center">
         <v-card-text>
           <v-btn
             v-for="(icon, index) in icons"
             :key="icon"
             class="mx-4 white--text"
             icon
-            :href="iconsN[index].url"
-          >
+            :href="iconsN[index].url">
             <v-icon size="24px">
               {{ icon }}
             </v-icon>
@@ -302,6 +280,7 @@ export default {
 .margen {
   margin-top: 150px;
 }
+
 .fondo {
   background-image: url("../assets/fondologin2.png");
   background-size: 100% 100%;
@@ -310,6 +289,7 @@ export default {
   height: 120vh;
   margin: 0;
 }
+
 .fondo2 {
   background-image: url("../assets/fondoTimeLine.png");
   background-size: 100% 100%;
@@ -318,6 +298,7 @@ export default {
   height: 100%;
   margin: 0;
 }
+
 .fondoGeneral {
   background-image: url(../assets/fondo.png);
   background-size: 100% 100%;
@@ -345,6 +326,7 @@ export default {
 }
 
 @import url("https://fonts.googleapis.com/css?family=Mystery+Quest");
+
 .user_card {
   height: 500px;
   width: 350px;
@@ -416,15 +398,18 @@ export default {
   outline: 0px !important;
 }
 
-.custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
+.custom-checkbox .custom-control-input:checked~.custom-control-label::before {
   background-color: #c0392b !important;
 }
+
 .vs-button {
   margin-top: 25px;
 }
+
 .logo {
   margin-top: 10px;
 }
+
 .text-center {
   margin-top: 10px;
 }

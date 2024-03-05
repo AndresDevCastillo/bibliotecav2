@@ -221,7 +221,7 @@ export default {
         async buscarPrestamos() {
             if (this.$refs.form.validate()) {
                 await axios
-                    .get(`${this.rutaBackend}/prestamo/usuario/${this.paquete.cedula}`)
+                    .get(`${this.rutaBackend}/prestamo/usuario/${this.paquete.cedula}/all`)
                     .then((response) => {
                         this.itemsPrestamo = response.data;
                         this.prestamosTabla = [];
@@ -273,8 +273,8 @@ export default {
                     });
             }
         },
-        async obtenerUsuarios() {
-            await axios.get(`${this.rutaBackend}/usuario`).then((response) => {
+        async getInstructores() {
+            await axios.get(`${this.rutaBackend}/usuario/instructor`).then((response) => {
                 this.usuarios = response.data;
             });
         },
@@ -293,7 +293,6 @@ export default {
                 await axios
                     .put(`${this.rutaBackend}/prestamo/entregar/${idPrestamo}`)
                     .then((response) => {
-                        console.log(response);
                         if (response.data) {
                             this.itemsDetalle = [];
                             this.indexSelecionado = null;
@@ -331,7 +330,7 @@ export default {
         },
     },
     created() {
-        this.obtenerUsuarios();
+        this.getInstructores();
     },
 };
 </script>

@@ -22,7 +22,7 @@
             class="elevation-1">
             <template v-slot:top>
               <v-toolbar flat>
-                <v-toolbar-title>Mis préstamos</v-toolbar-title>
+                <v-toolbar-title>{{ $store.getters.getUsuario.rol.descripcion.toLowerCase() == "instructor" ? "Mis préstamos" : "Préstamos" }}</v-toolbar-title>
                 <v-divider class="mx-4" inset vertical></v-divider>
               </v-toolbar>
             </template>
@@ -177,7 +177,31 @@ export default {
     async getPrestamos() {
       this.loadTabla = true;
       await axios
-        .get(`${this.rutaBackend}/prestamo/usuario/${this.idUsuario}`)
+        .get(`${this.rutaBackend}/prestamo`)
+        .then((response) => {
+          this.itemsPrestamo = response.data;
+          this.itemsPrestamoTabla = response.data.map((prestamo) => {
+            let fechas = ["", ""];
+            if (prestamo.detalle.length > 0) {
+              fechas = [
+                this.fechaConHora(prestamo.detalle[0].fecha_inicio),
+                this.fechaConHora(prestamo.detalle[0].fecha_fin),
+              ];
+            }
+            return {
+              cantidad: prestamo.detalle.length,
+              fecha_inicio: fechas[0],
+              fecha_fin: fechas[1],
+              estado: prestamo.estado_prestamo,
+            };
+          });
+        });
+      this.loadTabla = false;
+    },
+    async getMisPrestamos() {
+      this.loadTabla = true;
+      await axios
+        .get(`${this.rutaBackend}/prestamo/usuario/${this.idUsuario}/all`)
         .then((response) => {
           this.itemsPrestamo = response.data;
           this.itemsPrestamoTabla = response.data.map((prestamo) => {
@@ -235,7 +259,14 @@ export default {
     },
   },
   created() {
-    this.getPrestamos();
+    const usuario = this.$store.getters.getUsuario;
+    if (usuario.rol.descripcion.toLowerCase() == "instructor") {
+      this.idUsuario = this.$store.getters.getUsuario.cedula;
+      this.getMisPrestamos();
+    } else {
+      this.getPrestamos();
+    }
+
   },
 };
 </script>

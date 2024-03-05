@@ -120,18 +120,18 @@
                                 </v-btn>
                             </v-row>
                         </v-bottom-navigation> -->
-            <v-card width="500px" class="mx-auto mt-2">
+            <v-card class="mx-auto mt-2">
               <v-card-title> PRESTAR EQUIPO </v-card-title>
               <v-card-text>
                 <v-form ref="form" v-model="valid" lazy-validation>
-                  <!--<v-row no-gutters>
+                  <v-row no-gutters v-if="this.$store.getters.getUsuario.rol.descripcion.toLowerCase() != 'instructor'">
                     <v-col cols="12" class="pr-0 pb-0">
                       <v-autocomplete
                         v-model="paquete.usuario"
                         :items="usuarios"
                         :item-text="(usuario) => {
-                            return `${usuario.nombre} ${usuario.apellido}`;
-                          }
+                          return `${usuario.nombre} ${usuario.apellido}`;
+                        }
                           "
                         item-value="cedula"
                         label="Usuario"
@@ -141,7 +141,7 @@
                         append-icon="mdi mdi-account">
                       </v-autocomplete>
                     </v-col>
-                  </v-row>-->
+                  </v-row>
                   <v-row>
                     <v-col cols="6" class="pr-1 pb-0">
                       <v-autocomplete
@@ -198,15 +198,26 @@
                       </v-menu>
                     </v-col>
                     <v-col cols="6" class="pl-1">
-                      <v-select
-                        required
-                        v-model="paqueteTabla.hora_inicio"
-                        filled
-                        label="Hora inicio"
-                        append-icon="mdi-timer-sand"
-                        :items="horas"
-                        :rules="campoRules">
-                      </v-select>
+                      <v-row no-gutters class="flex-nowrap">
+                        <v-select
+                          required
+                          v-model="paqueteTabla.hora_inicio"
+                          filled
+                          label="Hora inicio"
+                          append-icon="mdi-timer-sand"
+                          :items="horas"
+                          :rules="campoRules">
+                        </v-select>
+                        <v-select
+                          required
+                          v-model="paqueteTabla.minuto_inicio"
+                          filled
+                          label="Minuto"
+                          append-icon="mdi mdi-timer-play-outline"
+                          :items="minutos"
+                          :rules="campoRules">
+                        </v-select>
+                      </v-row>
                     </v-col>
                   </v-row>
                   <v-row no-gutters>
@@ -239,15 +250,26 @@
                       </v-menu>
                     </v-col>
                     <v-col cols="6" class="pl-1">
-                      <v-select
-                        required
-                        v-model="paqueteTabla.hora_fin"
-                        filled
-                        label="Hora fin"
-                        append-icon="mdi-timer-sand-complete"
-                        :items="horas"
-                        :rules="campoRules">
-                      </v-select>
+                      <v-row no-gutters class="flex-nowrap">
+                        <v-select
+                          required
+                          v-model="paqueteTabla.hora_fin"
+                          filled
+                          label="Hora fin"
+                          append-icon="mdi-timer-sand-complete"
+                          :items="horas"
+                          :rules="campoRules">
+                        </v-select>
+                        <v-select
+                          required
+                          v-model="paqueteTabla.minuto_fin"
+                          filled
+                          label="Minuto"
+                          append-icon="mdi mdi-timer-pause-outline"
+                          :items="minutos"
+                          :rules="campoRules">
+                        </v-select>
+                      </v-row>
                     </v-col>
                   </v-row>
                   <v-row justify="center" no-gutters class="mt-2">
@@ -386,6 +408,7 @@ export default {
   data: () => ({
     rutaBackend: `${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}`,
     horas: [],
+    minutos: [],
     mostrarEquiposPrestamo: false,
     disableBtn: false,
     disableBtnCancelar: false,
@@ -419,10 +442,12 @@ export default {
         .toISOString()
         .slice(0, 10),
       hora_inicio: null,
+      minuto_inicio: "00",
       fecha_fin: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
         .toISOString()
         .slice(0, 10),
       hora_fin: null,
+      minuto_fin: "00"
     },
     paquete: {
       usuario: 1, //Id del usuario al que se le hace el préstamo
@@ -471,13 +496,13 @@ export default {
           `${this.paqueteTabla.fecha_inicio} ${this.paqueteTabla.hora_inicio < 10
             ? "0" + this.paqueteTabla.hora_inicio
             : this.paqueteTabla.hora_inicio
-          }:00`
+          }:${this.paqueteTabla.minuto_inicio}`
         );
         const fecha2 = new Date(
           `${this.paqueteTabla.fecha_fin} ${this.paqueteTabla.hora_fin < 10
             ? "0" + this.paqueteTabla.hora_fin
             : this.paqueteTabla.hora_fin
-          }:00`
+          }:${this.paqueteTabla.minuto_fin}`
         );
         console.log(fecha1.getHours(), fecha2.getHours());
         console.log(fecha1.getTime(), fecha2.getTime());
@@ -488,13 +513,13 @@ export default {
               detalle: this.paqueteTabla.tipo_equipo,
               cantidad: parseInt(this.paqueteTabla.cantidad),
               fecha_inicio: `${this.paqueteTabla.fecha_inicio} ${this.paqueteTabla.hora_inicio < 10
-                  ? "0" + this.paqueteTabla.hora_inicio
-                  : this.paqueteTabla.hora_inicio
-                }:00`,
+                ? "0" + this.paqueteTabla.hora_inicio
+                : this.paqueteTabla.hora_inicio
+                }:${this.paqueteTabla.minuto_inicio}`,
               fecha_fin: `${this.paqueteTabla.fecha_fin} ${this.paqueteTabla.hora_fin < 10
-                  ? "0" + this.paqueteTabla.hora_fin
-                  : this.paqueteTabla.hora_fin
-                }:00`,
+                ? "0" + this.paqueteTabla.hora_fin
+                : this.paqueteTabla.hora_fin
+                }:${this.paqueteTabla.minuto_fin}`,
             });
             this.paqueteTabla.tipo_equipo = null;
             this.paqueteTabla.cantidad = 1;
@@ -524,9 +549,9 @@ export default {
       if (this.itemsPrestamo.length > 0) {
         this.disableBtn = true;
         let fecha_temp = this.itemsPrestamo[0].fecha_inicio.split(" ");
-        this.paquete.fecha_inicio = `${fecha_temp[0]}T${fecha_temp[1]}`;
+        this.paquete.fecha_inicio = `${fecha_temp[0]}T${fecha_temp[1]}:00`;
         fecha_temp = this.itemsPrestamo[0].fecha_fin.split(" ");
-        this.paquete.fecha_fin = `${fecha_temp[0]}T${fecha_temp[1]}`;
+        this.paquete.fecha_fin = `${fecha_temp[0]}T${fecha_temp[1]}:00`;
         const detalles = this.itemsPrestamo.map((item) => {
           return {
             tipo_equipo: item.detalle.id,
@@ -591,7 +616,7 @@ export default {
         this.itemsPrestamo = [];
         this.mostrarEquiposPrestamo = false;
         this.detallePrestamo = [];
-        this.idPrestamoProceso=null;
+        this.idPrestamoProceso = null;
         this.dialogMsj = true;
         (this.disableBtn = false),
           (this.disableBtnCancelar = false),
@@ -643,6 +668,7 @@ export default {
       this.paqueteTabla.hora_inicio = hora;
       this.paqueteTabla.hora_fin = this.paqueteTabla.hora_inicio + 1;
     }
+    this.minutos = Array(6).fill(0).map((min, index) => `${(index) > 0 ? (10 * index) : ('0' + index)}`);
     this.paquete.usuario = this.$store.getters.getUsuario.cedula;
   },
 };

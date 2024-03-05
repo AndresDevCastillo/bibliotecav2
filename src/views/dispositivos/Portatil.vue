@@ -42,7 +42,11 @@
 
 <script>
 import axios from "axios";
+import dialogMensaje from '../../components/dialogMensaje.vue';
 export default {
+  components: {
+    dialogMensaje
+  },
   data: () => ({
     rutaBackend: `${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}`,
     valid: true,
@@ -50,7 +54,7 @@ export default {
       codigo: null,
       referencia: null,
       serial: null,
-      tipo_equipo: "Portatil", //Aquí va el id del tipo de equipo, se carga automático
+      tipo_equipo: "Portátil", //Aquí va el id del tipo de equipo, se carga automático
     },
     campoRules: [
       (v) => !!v || "Campo requerido",
@@ -98,7 +102,7 @@ export default {
   },
   async created() {
     //Buscar el id del tipo de equipo Portatil
-    await axios.get(`${this.rutaBackend}/tipo-equipo/tipo/Portatil`).then(response => {
+    await axios.get(`${this.rutaBackend}/tipo-equipo/tipo/Portátil`).then(response => {
       if (response.data.length == 1) {
         this.paquete.tipo_equipo = response.data[0].id;
       }

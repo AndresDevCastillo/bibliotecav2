@@ -48,22 +48,23 @@
             :headers="headersPrestamo"
             :items="prestamosTabla"
             :footer-props="{
-              'show-current-page': true,
-              'items-per-page-options': [5, 10, 15],
-              itemsPerPageText: 'Registros mostrados',
-              pageText: '{0}-{1} de {2}',
-              showFirstLastPage: true,
-              firstIcon: 'mdi-arrow-collapse-left',
-              lastIcon: 'mdi-arrow-collapse-right',
-              prevIcon: 'mdi-minus',
-              nextIcon: 'mdi-plus',
-            }"
+                          'show-current-page': true,
+                          'items-per-page-options': [5, 10, 15],
+                          itemsPerPageText: 'Registros mostrados',
+                          pageText: '{0}-{1} de {2}',
+                          showFirstLastPage: true,
+                          firstIcon: 'mdi-arrow-collapse-left',
+                          lastIcon: 'mdi-arrow-collapse-right',
+                          prevIcon: 'mdi-minus',
+                          nextIcon: 'mdi-plus',
+                        }"
             class="elevation-1">
             <template v-slot:top>
               <v-toolbar flat>
                 <v-toolbar-title>Préstamos</v-toolbar-title>
               </v-toolbar>
             </template>
+
             <template v-slot:item.actions="{ index }">
               <v-tooltip top color="info">
                 <template v-slot:activator="{ on, attrs }">
@@ -78,6 +79,7 @@
                 <span>Ver equipos</span>
               </v-tooltip>
             </template>
+
             <template slot="no-data">
               <p class="text-dark">Sin préstamos</p>
             </template>
@@ -98,22 +100,24 @@
                 :headers="headersDetalle"
                 :items="itemsDetalle"
                 :footer-props="{
-                  'show-current-page': true,
-                  'items-per-page-options': [5, 10, 15],
-                  itemsPerPageText: 'Registros mostrados',
-                  pageText: '{0}-{1} de {2}',
-                  showFirstLastPage: true,
-                  firstIcon: 'mdi-arrow-collapse-left',
-                  lastIcon: 'mdi-arrow-collapse-right',
-                  prevIcon: 'mdi-minus',
-                  nextIcon: 'mdi-plus',
-                }"
+                          'show-current-page': true,
+                          'items-per-page-options': [5, 10, 15],
+                          itemsPerPageText: 'Registros mostrados',
+                          pageText: '{0}-{1} de {2}',
+                          showFirstLastPage: true,
+                          firstIcon: 'mdi-arrow-collapse-left',
+                          lastIcon: 'mdi-arrow-collapse-right',
+                          prevIcon: 'mdi-minus',
+                          nextIcon: 'mdi-plus',
+                        }"
                 class="elevation-1">
+
                 <template v-slot:top>
                   <v-row justify="end" class="pa-4">
                     <v-btn color="green" dark @click="devolucion">Devolver equipos</v-btn>
                   </v-row>
                 </template>
+
                 <template v-slot:item.estado="{ index }">
                   <v-select
                     v-model="estadosSeleccionados[index]"
@@ -126,6 +130,7 @@
                     return-object
                     required></v-select>
                 </template>
+
                 <template v-slot:item.observacion="{ index }">
                   <v-textarea
                     clearable
@@ -136,6 +141,7 @@
                     filled
                     label="Observación"></v-textarea>
                 </template>
+
                 <template slot="no-data">
                   <p class="text-dark">Sin equipos</p>
                 </template>
@@ -156,6 +162,7 @@
       :classTitle="paqueteMsj.classTitle" />
   </v-container>
 </template>
+
 <script>
 import axios from "axios";
 import dialogMensaje from "../components/dialogMensaje.vue";
@@ -252,7 +259,7 @@ export default {
     async buscarPrestamos() {
       if (this.$refs.form.validate()) {
         await axios
-          .get(`${this.rutaBackend}/prestamo/usuario/${this.paquete.cedula}`)
+          .get(`${this.rutaBackend}/prestamo/usuario/${this.paquete.cedula}/devolucion`)
           .then((response) => {
             this.itemsPrestamo = response.data;
             this.prestamosTabla = [];
@@ -305,7 +312,7 @@ export default {
       }
     },
     async obtenerUsuarios() {
-      await axios.get(`${this.rutaBackend}/usuario`).then((response) => {
+      await axios.get(`${this.rutaBackend}/usuario/instructor`).then((response) => {
         this.usuarios = response.data;
       });
     },
@@ -336,6 +343,7 @@ export default {
           .then((response) => {
             console.log(response);
             if (response.data) {
+              this.buscarPrestamos();
               this.itemsDetalle = [];
               this.indexSelecionado = null;
               this.dialogDetalle = false;
