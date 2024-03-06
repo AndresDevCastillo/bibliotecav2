@@ -326,6 +326,7 @@ export default {
     },
     async devolucion() {
       if (this.validarEstados()) {
+        this.$emit('loading', 'Buscando préstamos, espere un momento...');
         const paquete = {
           idPrestamo: this.itemsPrestamo[this.indexSelecionado].id,
           equipos: this.itemsPrestamo[this.indexSelecionado].detalle.map(
@@ -360,6 +361,7 @@ export default {
             this.paqueteMsj.classTitle = "error";
             this.dialogMsj = true;
           });
+        this.$emit('close');
       }
     },
     validarEstados() {

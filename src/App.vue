@@ -1,21 +1,24 @@
-<template >
+<template>
   <v-app id="inspire">
     <div class="app-container">
-
-      <router-view />
-
+      <router-view @loading="(data) => { msgOverlay = data; overlay = true }" @close="() => { msgOverlay = 'Procesando, por favor espere...'; overlay = false }" />
     </div>
+    <v-overlay :value="overlay">
+      <v-progress-circular
+        indeterminate
+        size="64" color="orange" />
+      <p class="m-0 font-weight-bold">{{ msgOverlay }}</p>
+    </v-overlay>
   </v-app>
 </template>
+
 <script>
-const default_layout = "default";
 
 export default {
-  computed: {
-    layout() {
-      return (this.$route.meta.layout || default_layout) + '-layout';
-    }
-  }
+  data: () => ({
+    overlay: false,
+    msgOverlay: "Procesando, por favor espere...",
+  })
 }
 </script>
 
@@ -151,4 +154,5 @@ div.v-application .primary--text {
 
 .text-success {
   color: #43A0 !important;
-}</style>
+}
+</style>

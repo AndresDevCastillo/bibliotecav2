@@ -28,7 +28,7 @@ export const menuRoles = [{
                 title: "Préstamo",
                 icon: "mdi mdi-package-variant-closed-check",
                 child: [{
-                        title: "Prestamos",
+                        title: "Préstamos",
                         icon: "mdi mdi-file-eye-outline",
                         href: "/dashboard/miprestamo",
                     },

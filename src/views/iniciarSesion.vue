@@ -59,7 +59,6 @@
         </v-col>
         <v-col cols="4">
           <v-card
-            :loading="loading"
             class="mx-auto my-12"
             max-width="374"
             height="550">
@@ -117,7 +116,7 @@
                 </div>
               </div>
               <div class="d-flex justify-content-center form_container">
-                <form v-on:submit.prevent>
+                <form v-on:submit.prevent ref="formSesion">
                   <div class="input-group mb-3">
                     <div class="input-group-append">
                       <span class="input-group-text"><i class="fas fa-user"></i></span>
@@ -127,7 +126,7 @@
                       type="text"
                       name=""
                       class="form-control input_user"
-                      placeholder="Cédula" />
+                      placeholder="Cédula" :rules="numberRules" />
                   </div>
                   <div class="input-group mb-2">
                     <div class="input-group-append">
@@ -138,28 +137,13 @@
                       type="password"
                       name=""
                       class="form-control input_pass"
-                      placeholder="Contraseña" />
+                      placeholder="Contraseña"
+                      :rules="campoRules" />
                   </div>
                   <div
-                    class="d-flex justify-content-center mt-3 login_container"
-                    v-if="prueba == 0">
+                    class="d-flex justify-content-center mt-3 login_container">
                     <vs-button dark class="btn login_btn" @click="login">Iniciar Sesión</vs-button>
                   </div>
-                  <div
-                    class="d-flex justify-content-center mt-3 login_container"
-                    v-if="prueba == 1">
-                    <vs-button class="btn login_btn" loading dark>
-                      Iniciar Sesión
-                    </vs-button>
-                  </div>
-                  <v-snackbar
-                    v-model="isBusy"
-                    :timeout="2000"
-                    absolute
-                    bottom
-                    color="red">
-                    {{ msg }}
-                  </v-snackbar>
                 </form>
               </div>
 
@@ -204,24 +188,40 @@
         </v-card-text>
       </v-card>
     </v-footer>
+    <dialogMensaje
+      :mostrar="dialogMsj"
+      @cerrado="dialogMsj = false"
+      :title="paqueteMsj.title"
+      :body="paqueteMsj.body"
+      :classTitle="paqueteMsj.classTitle" />
   </v-app>
 </template>
+
 <script>
 import axios from "axios";
-
+import dialogMensaje from "../components/dialogMensaje.vue";
+dialogMensaje
 export default {
   name: "App",
+  components: {
+    dialogMensaje,
+  },
   data: () => ({
     active: "home",
     rutaBackend: `${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}`,
     dialog: false,
+    dialogMsj: false,
+    paqueteMsj: {
+      title: '',
+      body: '',
+      classTitle: 'error'
+    },
     usuario: "",
     noti: null,
     contrasena: "",
     error: false,
     msg: "",
     isBusy: false,
-    prueba: 0,
     array: [],
     rolMenu: [],
     items: [
@@ -254,28 +254,50 @@ export default {
         url: "https://www.instagram.com/senacomunica/?hl=es-la",
       },
     ],
+    campoRules: [(v) => !!v || "Campo requerido"],
+    numberRules: [
+      (v) => !!v || "Campo requerido",
+      (v) => parseInt(v) > 0 || "Debe ser valor númerico",
+    ],
   }),
   methods: {
     async login() {
+      this.$emit('loading', 'Verificando credenciales, espere un momento...');
       await axios
         .post(`${this.rutaBackend}/auth/login`, {
-          cedula: this.usuario,
+          cedula: parseInt(this.usuario),
           password: this.contrasena,
         })
         .then((response) => {
+          this.$emit('close');
           if (response.data.access_token) {
+            this.paqueteMsj.title = "Iniciar sesión";
+            this.paqueteMsj.body = "Se inició sesión correctamente";
+            this.paqueteMsj.classTitle = response.data ? "success" : "error";
+            this.dialogMsj = true;
             this.$store.commit("setusuario", response.data);
             this.$router.push("dashboard/welcome");
+          } else {
+            this.paqueteMsj.title = "Iniciar sesión";
+            this.paqueteMsj.body = "No se pudo iniciar sesión";
+            this.paqueteMsj.classTitle = "error";
+            this.dialogMsj = true;
           }
         })
         .catch((error) => {
+          this.$emit('close');
           console.log("Error login: " + error);
-          alert(error.message);
+          this.paqueteMsj.title = "Iniciar sesión";
+          this.paqueteMsj.body = "Ocurrió un problema, no se pudo iniciar sesión";
+          this.paqueteMsj.classTitle = "error";
+          this.dialogMsj = true;
         });
+
     },
   },
 };
 </script>
+
 <style scoped>
 .margen {
   margin-top: 150px;
