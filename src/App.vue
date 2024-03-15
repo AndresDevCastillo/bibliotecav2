@@ -155,4 +155,12 @@ div.v-application .primary--text {
 .text-success {
   color: #43A0 !important;
 }
+
+
+.v-overlay>.v-overlay__content {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 4px !important;
+  align-items: center !important;
+}
 </style>

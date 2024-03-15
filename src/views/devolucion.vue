@@ -280,7 +280,7 @@ export default {
                   parseInt(p1[1]) - 1,
                   parseInt(m1[0]),
                   m1[1].slice(0, 2),
-                  0,
+                  m1[1].slice(3, 5),
                   0
                 )
               );
@@ -291,7 +291,7 @@ export default {
                   parseInt(p2[1]) - 1,
                   parseInt(m2[0]),
                   m2[1].slice(0, 2),
-                  0,
+                  m2[1].slice(3, 5),
                   0
                 )
               );
@@ -299,10 +299,10 @@ export default {
                 id: prestamo.id,
                 fecha_inicio: `${f1.getFullYear()}-${(f1.getMonth() < 10 ? "0" : "") + (f1.getMonth() + 1)
                   }-${(f1.getDate() < 10 ? "0" : "") + f1.getDate()} ${(f1.getHours() < 10 ? "0" : "") + f1.getHours()
-                  }:00`,
+                  }:${f1.getMinutes().toString().padStart(2, '0')}`,
                 fecha_fin: `${f2.getFullYear()}-${(f2.getMonth() < 10 ? "0" : "") + (f2.getMonth() + 1)
                   }-${(f2.getDate() < 10 ? "0" : "") + f2.getDate()} ${(f2.getHours() < 10 ? "0" : "") + f2.getHours()
-                  }:00`,
+                  }:${f2.getMinutes().toString().padStart(2, '0')}`,
               });
             });
           })

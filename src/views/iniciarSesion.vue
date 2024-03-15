@@ -41,9 +41,7 @@
               cover
               height="250"
               src="https://thumbs.dreamstime.com/b/computadora-port%C3%A1til-de-la-biblioteca-de-universidad-26745944.jpg"></v-img>
-            <v-card-item>
-              <v-card-title>¿Quienes Somos?</v-card-title>
-            </v-card-item>
+            <v-card-title>¿Quiénes somos?</v-card-title>
             <v-card-text>
               <div>
                 Somos una entidad encargada de preservar y catalogar el
@@ -66,9 +64,7 @@
               cover
               height="250"
               src="https://lanoticia.com/wp-content/uploads/2019/10/Buncombe-bibliotecas-ofrecen-programas-computadoras-.jpg"></v-img>
-            <v-card-item>
-              <v-card-title>Misión</v-card-title>
-            </v-card-item>
+            <v-card-title>Misión</v-card-title>
             <v-card-text>
               <div>
                 La Biblioteca SENA garantiza la recuperación, preservación y
@@ -86,9 +82,7 @@
         <v-col cols="4">
           <v-card class="mx-auto my-12" max-width="374" height="550">
             <v-img cover height="250" src="../assets/estudiantes.jpeg"></v-img>
-            <v-card-item>
-              <v-card-title>Visión</v-card-title>
-            </v-card-item>
+            <v-card-title>Visión</v-card-title>
             <v-card-text>
               <div>
                 Nuestra visión para el año 2023 es lograr contar en el futuro
@@ -288,7 +282,7 @@ export default {
           this.$emit('close');
           console.log("Error login: " + error);
           this.paqueteMsj.title = "Iniciar sesión";
-          this.paqueteMsj.body = "Ocurrió un problema, no se pudo iniciar sesión";
+          this.paqueteMsj.body = error.response.data.message;
           this.paqueteMsj.classTitle = "error";
           this.dialogMsj = true;
         });
@@ -434,5 +428,10 @@ export default {
 
 .text-center {
   margin-top: 10px;
+}
+</style>
+<style>
+.v-dialog {
+  box-shadow: none !important;
 }
 </style>
