@@ -32,7 +32,7 @@ const routes = [{
                     import ("../views/dispositivos/ManagerView"),
                 children: [{
                         name: "EquposView",
-                        path: "/dashboard/ManagerView/",
+                        path: "/dashboard/ManagerView/equipos",
                         component: () =>
                             import ("../components/Equipo.vue"),
                         beforeEnter: (to, from, next) => {

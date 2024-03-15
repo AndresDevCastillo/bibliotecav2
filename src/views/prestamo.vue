@@ -484,7 +484,7 @@ export default {
     itemsPrestamo: [],
     headersDetalle: [
       { text: "Tipo equipo", value: "tipo_equipo" },
-      { text: "Equipos", value: "equipos" },
+      { text: "Seriales", value: "equipos" },
       { text: "Cantidad", value: "cantidad" },
     ],
     detallePrestamo: [],
@@ -615,8 +615,8 @@ export default {
                     detalle.equipos.forEach((equipo, index) => {
                       codigos +=
                         index < detalle.equipos.length - 1
-                          ? equipo.codigo + ", "
-                          : equipo.codigo;
+                          ? equipo.serial.split("-")[0] + ", "
+                          : equipo.serial.split("-")[0];
                     });
                     this.detallePrestamo.push({
                       tipo_equipo:
@@ -659,6 +659,9 @@ export default {
         this.mostrarEquiposPrestamo = false;
         this.detallePrestamo = [];
         this.idPrestamoProceso = null;
+        this.paqueteMsj.title = "Confirmar";
+        this.paqueteMsj.body = "Préstamo confirmado con éxito";
+        this.paqueteMsj.classTitle = "green";
         this.dialogMsj = true;
         (this.disableBtn = false),
           (this.disableBtnCancelar = false),

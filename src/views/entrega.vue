@@ -114,7 +114,12 @@
                                         <v-btn color="green" dark @click="entregar">Entregar equipos</v-btn>
                                     </v-row>
                                 </template>
-
+                                <template v-slot:item.serial="{ item }">
+                                    {{ item.serial.split("-")[0] }}
+                                </template>
+                                <template v-slot:item.codigo_telefonica="{ item }">
+                                    {{ item.codigo_telefonica == null ? '' : item.codigo_telefonica }}
+                                </template>
                                 <template slot="no-data">
                                     <p class="text-dark">Sin equipos</p>
                                 </template>
@@ -189,7 +194,6 @@ export default {
             cedula: null, //Id del usuario al que se le hace el préstamo
         },
         headersPrestamo: [
-            { text: "Código", value: "id" },
             { text: "Fecha inicio", value: "fecha_inicio" },
             { text: "Fecha fin", value: "fecha_fin" },
             { text: "Acciones", value: "actions", sortable: false },
@@ -199,8 +203,8 @@ export default {
         headersDetalle: [
             { text: "Tipo equipo", value: "tipo_equipo", sortable: false },
             { text: "Serial", value: "serial", sortable: false },
-            { text: "Código", value: "codigo", sortable: false },
-            { text: "Referencia", value: "referencia", sortable: false },
+            { text: "Código telefónica", value: "codigo_telefonica", sortable: false },
+            { text: "Marca", value: "marca", sortable: false },
         ],
         observaciones: [],
         estadosSeleccionados: [],
@@ -216,8 +220,8 @@ export default {
                     return {
                         tipo_equipo: detalle.equipo.tipo_equipo.tipo,
                         serial: detalle.equipo.serial,
-                        codigo: detalle.equipo.codigo,
-                        referencia: detalle.equipo.referencia
+                        codigo_telefonica: detalle.equipo.codigo_telefonica,
+                        marca: detalle.equipo.marca
                     };
                 });
                 this.dialogDetalle = true;
@@ -240,7 +244,7 @@ export default {
                             const p2 = prestamo.detalle[0].fecha_fin.toString().split("-");
                             //En la posición 2 de p2 queda el día junto con la hora, dividimos por la T para obtener el día y las horas, index 0 y 1
                             const m2 = p2[2].split("T");
-
+                            console.log(m1);
                             //Fecha de inicio formateada
                             const f1 = new Date(
                                 Date.UTC(
@@ -248,7 +252,7 @@ export default {
                                     parseInt(p1[1]) - 1,
                                     parseInt(m1[0]),
                                     m1[1].slice(0, 2),
-                                    0,
+                                    m1[1].slice(3, 5),
                                     0
                                 )
                             );
@@ -259,7 +263,7 @@ export default {
                                     parseInt(p2[1]) - 1,
                                     parseInt(m2[0]),
                                     m2[1].slice(0, 2),
-                                    0,
+                                    m2[1].slice(3, 5),
                                     0
                                 )
                             );
@@ -267,10 +271,10 @@ export default {
                                 id: prestamo.id,
                                 fecha_inicio: `${f1.getFullYear()}-${(f1.getMonth() < 10 ? "0" : "") + (f1.getMonth() + 1)
                                     }-${(f1.getDate() < 10 ? "0" : "") + f1.getDate()} ${(f1.getHours() < 10 ? "0" : "") + f1.getHours()
-                                    }:00`,
+                                    }:${f1.getMinutes().toString().padStart(2, '0')}`,
                                 fecha_fin: `${f2.getFullYear()}-${(f2.getMonth() < 10 ? "0" : "") + (f2.getMonth() + 1)
                                     }-${(f2.getDate() < 10 ? "0" : "") + f2.getDate()} ${(f2.getHours() < 10 ? "0" : "") + f2.getHours()
-                                    }:00`,
+                                    }:${f2.getMinutes().toString().padStart(2, '0')}`,
                             });
                         });
                     })
@@ -301,6 +305,7 @@ export default {
                     .put(`${this.rutaBackend}/prestamo/entregar/${idPrestamo}`)
                     .then((response) => {
                         if (response.data) {
+                            this.buscarPrestamos();
                             this.itemsDetalle = [];
                             this.indexSelecionado = null;
                             this.dialogDetalle = false;

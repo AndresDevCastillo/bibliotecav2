@@ -7,6 +7,8 @@
             :headers="headersPrestamo"
             :items="itemsPrestamoTabla"
             :loading="loadTabla"
+            sort-by="fecha_inicio"
+            :sort-desc="false"
             loading-text="Cargando, por favor espere..."
             :footer-props="{
               'show-current-page': true,
@@ -30,11 +32,11 @@
               <v-chip
                 class="ma-2"
                 :color="item.estado.id == 1
-                  ? 'primary'
-                  : item.estado.id == 2
-                    ? 'orange'
-                    : 'success'
-                  ">
+              ? 'primary'
+              : item.estado.id == 2
+                ? 'orange'
+                : 'success'
+              ">
                 {{ item.estado.estado }}
               </v-chip>
             </template>
@@ -72,16 +74,16 @@
                 :items="itemsPrestamoEquipos"
                 locale="es-es"
                 :footer-props="{
-                  'show-current-page': true,
-                  'items-per-page-options': [5, 10, 15],
-                  itemsPerPageText: 'Registros mostrados',
-                  pageText: '{0}-{1} de {2}',
-                  showFirstLastPage: true,
-                  firstIcon: 'mdi-arrow-collapse-left',
-                  lastIcon: 'mdi-arrow-collapse-right',
-                  prevIcon: 'mdi-minus',
-                  nextIcon: 'mdi-plus',
-                }"
+              'show-current-page': true,
+              'items-per-page-options': [5, 10, 15],
+              itemsPerPageText: 'Registros mostrados',
+              pageText: '{0}-{1} de {2}',
+              showFirstLastPage: true,
+              firstIcon: 'mdi-arrow-collapse-left',
+              lastIcon: 'mdi-arrow-collapse-right',
+              prevIcon: 'mdi-minus',
+              nextIcon: 'mdi-plus',
+            }"
                 item-key="index"
                 sort-by="tipo_equipo"
                 group-by="tipo_equipo"

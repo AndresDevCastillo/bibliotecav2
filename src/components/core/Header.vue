@@ -6,8 +6,7 @@
     <v-app-bar-nav-icon
       class="btn"
       dark
-      @click="procesa()"
-    ></v-app-bar-nav-icon>
+      @click="procesa()"></v-app-bar-nav-icon>
 
     <v-toolbar-title class="letra">SISTEMA DE BIBLIOTECAS</v-toolbar-title>
 
@@ -26,8 +25,7 @@
           <v-list-item
             v-for="(item, i) in items"
             :key="i"
-            @click="action(item.action)"
-          >
+            @click="action(item.action)">
             <v-list-item-icon>
               <v-icon v-text="item.icon"></v-icon>
             </v-list-item-icon>
@@ -45,8 +43,9 @@
 export default {
   data() {
     return {
+      selectedItem: null,
       items: [
-        { text: "Perfil", icon: "mdi-clock" },
+        { text: "Perfil", icon: "mdi-clock", action: 'perfil' },
         { text: "Salir", icon: "mdi-account", action: "salir" },
       ],
     };

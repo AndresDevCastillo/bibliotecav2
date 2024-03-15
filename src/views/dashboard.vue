@@ -2,8 +2,6 @@
   <v-app id="inspire">
     <Header @handrawer="actualiza()" />
     <Sidebar :drawer="drawer" />
-
-
     <v-main>
       <v-container
         class="py-5 "
@@ -16,10 +14,10 @@
         </v-row>
       </v-container>
     </v-main>
-    <v-overlay :value="overlay">
+    <v-overlay :value="overlay" class="overlayDashboard">
       <v-progress-circular
         indeterminate
-        size="64" color="orange" />
+        size="50" color="orange" />
       <p class="m-0 font-weight-bold">{{ msgOverlay }}</p>
     </v-overlay>
   </v-app>
@@ -34,7 +32,7 @@ export default {
     cards: ['Today', 'Yesterday'],
     drawer: true,
     overlay: false,
-    msgOverlay: "Procesando, por favor espere..."
+    msgOverlay: "Procesando, por favor espere...",
   }),
   methods: {
     actualiza() {
@@ -52,15 +50,9 @@ export default {
   background-attachment: fixed;
   margin: 0;
 }
-
-.v-overlay {
-  z-index: 9 !important;
-}
-
-.v-overlay>.v-overlay__content {
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 4px !important;
-  align-items: center !important;
+</style>
+<style scoped>
+.overlayDashboard {
+  z-index: 203 !important;
 }
 </style>

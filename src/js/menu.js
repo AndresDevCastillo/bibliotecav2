@@ -13,7 +13,7 @@ export const menuRoles = [{
                 title: "Equipo",
                 icon: "mdi mdi-devices",
                 child: [{
-                        href: "/dashboard/ManagerView",
+                        href: "/dashboard/ManagerView/equipos",
                         title: "Administrar equipos",
                         icon: "mdi mdi-plus",
                     },

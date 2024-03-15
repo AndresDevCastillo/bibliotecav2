@@ -20,7 +20,7 @@
                 </v-bottom-navigation>
             </v-card-title>
             <v-card-text>
-                <router-view></router-view>
+                <router-view @loadingManager="(data) => { msgOverlay = data; overlayManager = true; }" @closeManager="() => { msgOverlay = 'Procesando, por favor espere...'; overlayManager = false; }" />
             </v-card-text>
         </v-card>
 
@@ -32,6 +32,12 @@
 
                 </v-card-text>
             </v-card> -->
+        <v-overlay :value="overlayManager" class="overlayManager">
+            <v-progress-circular
+                indeterminate
+                size="50" color="orange" />
+            <p class="m-0 font-weight-bold">{{ msgOverlay }}</p>
+        </v-overlay>
     </v-row>
 </template>
 
@@ -40,6 +46,8 @@ import axios from 'axios';
 export default {
     data: () => ({
         rutaBackend: `${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}`,
+        overlayManager: false,
+        msgOverlay: 'Procesando, por favor espere...',
         value: 1,
         select: { tipo: null, ruta: null },
         itemsSelect: [],
@@ -96,3 +104,8 @@ export default {
     }
 }
 </script>
+<style scoped>
+.overlayManager {
+    z-index: 203 !important;
+}
+</style>
