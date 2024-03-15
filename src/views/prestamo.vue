@@ -126,13 +126,12 @@
               <v-card-text>
                 <v-form ref="form" v-model="valid" lazy-validation>
                   <v-row no-gutters>
-                    <v-col
-                      cols="6" class="pr-1">
+                    <v-col cols="6" class="pr-1">
                       <v-dialog
                         v-model="modalFechaInicio"
                         persistent
-                        width="290px">
-
+                        width="290px"
+                      >
                         <template v-slot:activator="{ on, attrs }">
                           <v-text-field
                             v-model="paqueteTabla.fecha_inicio"
@@ -142,14 +141,16 @@
                             readonly
                             v-bind="attrs"
                             v-on="on"
-                            :rules="campoRules"></v-text-field>
+                            :rules="campoRules"
+                          ></v-text-field>
                         </template>
                         <v-date-picker
                           v-model="paqueteTabla.fecha_inicio"
                           @input="validarFechas"
                           color="orange white"
                           header-color="#ffa726"
-                          locale="es" />
+                          locale="es"
+                        />
                       </v-dialog>
                     </v-col>
                     <v-col cols="6" class="pl-1">
@@ -161,7 +162,9 @@
                           label="Hora inicio"
                           append-icon="mdi-timer-sand"
                           :items="horas"
-                          :rules="campoRules" @change="validarFechas">
+                          :rules="campoRules"
+                          @change="validarFechas"
+                        >
                         </v-select>
                         <v-select
                           required
@@ -170,19 +173,20 @@
                           label="Minuto"
                           append-icon="mdi mdi-timer-play-outline"
                           :items="minutos"
-                          :rules="campoRules" @change="validarFechas">
+                          :rules="campoRules"
+                          @change="validarFechas"
+                        >
                         </v-select>
                       </v-row>
                     </v-col>
                   </v-row>
                   <v-row no-gutters>
-                    <v-col
-                      cols="6" class="pr-1">
+                    <v-col cols="6" class="pr-1">
                       <v-dialog
                         v-model="modalFechaFin"
                         persistent
-                        width="290px">
-
+                        width="290px"
+                      >
                         <template v-slot:activator="{ on, attrs }">
                           <v-text-field
                             v-model="paqueteTabla.fecha_fin"
@@ -192,14 +196,16 @@
                             readonly
                             v-bind="attrs"
                             v-on="on"
-                            :rules="campoRules"></v-text-field>
+                            :rules="campoRules"
+                          ></v-text-field>
                         </template>
                         <v-date-picker
                           v-model="paqueteTabla.fecha_fin"
                           @input="validarFechas"
                           color="orange white"
                           header-color="#ffa726"
-                          locale="es" />
+                          locale="es"
+                        />
                       </v-dialog>
                     </v-col>
                     <!-- <v-col cols="6" class="pr-1">
@@ -240,7 +246,9 @@
                           label="Hora fin"
                           append-icon="mdi-timer-sand-complete"
                           :items="horas"
-                          :rules="campoRules" @change="validarFechas">
+                          :rules="campoRules"
+                          @change="validarFechas"
+                        >
                         </v-select>
                         <v-select
                           required
@@ -249,7 +257,9 @@
                           label="Minuto"
                           append-icon="mdi mdi-timer-pause-outline"
                           :items="minutos"
-                          :rules="campoRules" @change="validarFechas">
+                          :rules="campoRules"
+                          @change="validarFechas"
+                        >
                         </v-select>
                       </v-row>
                     </v-col>
@@ -266,7 +276,8 @@
                         return-object
                         no-data-text="Sin tipo de equipos"
                         append-icon="mdi-devices"
-                        :rules="campoRules">
+                        :rules="campoRules"
+                      >
                       </v-autocomplete>
                     </v-col>
                     <v-col cols="6" class="pl-1 pb-0">
@@ -277,19 +288,20 @@
                         filled
                         label="Cantidad"
                         append-icon="mdi-plus"
-                        :rules="numberRules"></v-text-field>
+                        :rules="numberRules"
+                      ></v-text-field>
                     </v-col>
                   </v-row>
                   <v-row justify="center" no-gutters class="mt-2">
                     <v-tooltip top>
-
                       <template v-slot:activator="{ on, attrs }">
                         <v-btn
                           color="#ffa726"
                           class="py-4 px-2 btn-agregar"
                           @click="agregarEquipo"
                           v-bind="attrs"
-                          v-on="on">
+                          v-on="on"
+                        >
                           <v-icon dark> mdi-plus </v-icon>
                         </v-btn>
                       </template>
@@ -306,18 +318,18 @@
             :headers="headersDetalle"
             :items="detallePrestamo"
             :footer-props="{
-                  'show-current-page': true,
-                  'items-per-page-options': [5, 10, 15],
-                  itemsPerPageText: 'Registros mostrados',
-                  pageText: '{0}-{1} de {2}',
-                  showFirstLastPage: true,
-                  firstIcon: 'mdi-arrow-collapse-left',
-                  lastIcon: 'mdi-arrow-collapse-right',
-                  prevIcon: 'mdi-minus',
-                  nextIcon: 'mdi-plus',
-                }"
-            class="elevation-1">
-
+              'show-current-page': true,
+              'items-per-page-options': [5, 10, 15],
+              itemsPerPageText: 'Registros mostrados',
+              pageText: '{0}-{1} de {2}',
+              showFirstLastPage: true,
+              firstIcon: 'mdi-arrow-collapse-left',
+              lastIcon: 'mdi-arrow-collapse-right',
+              prevIcon: 'mdi-minus',
+              nextIcon: 'mdi-plus',
+            }"
+            class="elevation-1"
+          >
             <template v-slot:top>
               <v-toolbar flat>
                 <v-toolbar-title>Detalle de equipos</v-toolbar-title>
@@ -326,17 +338,22 @@
                   no-gutters
                   class="flex-column"
                   justify="center"
-                  align-content="end">
+                  align-content="end"
+                >
                   <v-btn
                     color="error"
                     class="mr-2 btn-cancelar"
                     @click="cancelar"
-                    :disabled="disableBtnCancelar">Cancelar</v-btn>
+                    :disabled="disableBtnCancelar"
+                    >Cancelar</v-btn
+                  >
                   <v-btn
                     color="success"
                     class="btn-confirmar"
                     :disabled="disableBtnConfirmar"
-                    @click="confirmar">Confirmar</v-btn>
+                    @click="confirmar"
+                    >Confirmar</v-btn
+                  >
                 </v-row>
               </v-toolbar>
             </template>
@@ -351,18 +368,18 @@
             :headers="headersPrestamo"
             :items="itemsPrestamo"
             :footer-props="{
-                  'show-current-page': true,
-                  'items-per-page-options': [5, 10, 15],
-                  itemsPerPageText: 'Registros mostrados',
-                  pageText: '{0}-{1} de {2}',
-                  showFirstLastPage: true,
-                  firstIcon: 'mdi-arrow-collapse-left',
-                  lastIcon: 'mdi-arrow-collapse-right',
-                  prevIcon: 'mdi-minus',
-                  nextIcon: 'mdi-plus',
-                }"
-            class="elevation-1">
-
+              'show-current-page': true,
+              'items-per-page-options': [5, 10, 15],
+              itemsPerPageText: 'Registros mostrados',
+              pageText: '{0}-{1} de {2}',
+              showFirstLastPage: true,
+              firstIcon: 'mdi-arrow-collapse-left',
+              lastIcon: 'mdi-arrow-collapse-right',
+              prevIcon: 'mdi-minus',
+              nextIcon: 'mdi-plus',
+            }"
+            class="elevation-1"
+          >
             <template v-slot:top>
               <v-toolbar flat>
                 <v-toolbar-title>Equipos</v-toolbar-title>
@@ -371,17 +388,40 @@
                   no-gutters
                   justify="end"
                   class="align-items-center"
-                  align-content="end">
+                  align-content="end"
+                >
                   <div class="lapso pr-2">
                     <!--eslint-disable-next-line-->
-                    <p class="m-0"><strong>{{ paqueteTabla.fecha_inicio }} {{ `${(paqueteTabla.hora_inicio < 10 ? '0' : '') + paqueteTabla.hora_inicio}` }}:{{ paqueteTabla.minuto_inicio }}</strong> - <strong>{{ paqueteTabla.fecha_fin }} {{ `${(paqueteTabla.hora_fin < 10 ? '0' : '') + paqueteTabla.hora_fin}` }}:{{ paqueteTabla.minuto_fin }}</strong>
+                    <p class="m-0">
+                      <strong
+                        >{{ paqueteTabla.fecha_inicio }}
+                        {{
+                          `${
+                            (paqueteTabla.hora_inicio <10 ? "0" : "") +
+                            paqueteTabla.hora_inicio
+                          }`
+                        }}:{{ paqueteTabla.minuto_inicio }}</strong
+                      >
+                      -
+                      <strong
+                        >{{ paqueteTabla.fecha_fin }}
+                        {{
+                          `${
+                            (paqueteTabla.hora_fin < 10 ? "0" : "") +
+                            paqueteTabla.hora_fin
+                          }`
+                        }}:{{ paqueteTabla.minuto_fin }}</strong
+                      >
                     </p>
                   </div>
-                  <v-btn v-if="itemsPrestamo.length > 0"
+                  <v-btn
+                    v-if="itemsPrestamo.length > 0"
                     color="success"
                     :disabled="disableBtn"
                     class="btn-prestar"
-                    @click="prestar">Prestar</v-btn>
+                    @click="prestar"
+                    >Prestar</v-btn
+                  >
                 </v-row>
               </v-toolbar>
             </template>
@@ -393,7 +433,8 @@
                     color="var(--c-orange)"
                     v-bind="attrs"
                     v-on="on"
-                    @click="eliminarEquipo(index)">
+                    @click="eliminarEquipo(index)"
+                  >
                     mdi-delete
                   </v-icon>
                 </template>
@@ -413,7 +454,8 @@
       @cerrado="dialogMsj = false"
       :title="paqueteMsj.title"
       :body="paqueteMsj.body"
-      :classTitle="paqueteMsj.classTitle" />
+      :classTitle="paqueteMsj.classTitle"
+    />
   </v-container>
 </template>
 
@@ -468,7 +510,7 @@ export default {
         .toISOString()
         .slice(0, 10),
       hora_fin: null,
-      minuto_fin: "00"
+      minuto_fin: "00",
     },
     paquete: {
       usuario: 1, //Id del usuario al que se le hace el préstamo
@@ -511,7 +553,9 @@ export default {
     },
     agregarEquipo() {
       if (this.paqueteTabla.tipo_equipo != null) {
-        const c = isNaN(this.paqueteTabla.cantidad) ? 0 : parseInt(this.paqueteTabla.cantidad);
+        const c = isNaN(this.paqueteTabla.cantidad)
+          ? 0
+          : parseInt(this.paqueteTabla.cantidad);
         if (c > 0) {
           if (!this.existEquipoAndUpdate(this.paqueteTabla)) {
             this.itemsPrestamo.push({
@@ -592,10 +636,16 @@ export default {
       if (this.itemsPrestamo.length > 0) {
         this.disableBtn = true;
         if (this.validarFechas()) {
-          this.$emit('loading', 'Creando préstamo, espere un momento...');//Mostrar overlay
-          this.paquete.fecha_inicio = `${this.paqueteTabla.fecha_fin}T${(this.paqueteTabla.hora_inicio < 10 ? '0' : '') + this.paqueteTabla.hora_inicio}:${this.paqueteTabla.minuto_inicio}`;
+          this.$emit("loading", "Creando préstamo, espere un momento..."); //Mostrar overlay
+          this.paquete.fecha_inicio = `${this.paqueteTabla.fecha_fin}T${
+            (this.paqueteTabla.hora_inicio < 10 ? "0" : "") +
+            this.paqueteTabla.hora_inicio
+          }:${this.paqueteTabla.minuto_inicio}`;
 
-          this.paquete.fecha_fin = `${this.paqueteTabla.fecha_fin}T${(this.paqueteTabla.hora_fin < 10 ? '0' : '') + this.paqueteTabla.hora_fin}:${this.paqueteTabla.minuto_fin}`;
+          this.paquete.fecha_fin = `${this.paqueteTabla.fecha_fin}T${
+            (this.paqueteTabla.hora_fin < 10 ? "0" : "") +
+            this.paqueteTabla.hora_fin
+          }:${this.paqueteTabla.minuto_fin}`;
           const detalles = this.itemsPrestamo.map((item) => {
             return {
               tipo_equipo: item.detalle.id,
@@ -646,12 +696,12 @@ export default {
         } else {
           this.disableBtn = false;
         }
-        this.$emit('close'); //Ocultar overlay
+        this.$emit("close"); //Ocultar overlay
       }
     },
     async confirmar() {
       if (this.idPrestamoProceso) {
-        this.$emit('loading', 'Guardando préstamo, espere un momento...');//Mostrar overlay
+        this.$emit("loading", "Guardando préstamo, espere un momento..."); //Mostrar overlay
         (this.disableBtn = true),
           (this.disableBtnCancelar = true),
           (this.disableBtnConfirmar = true);
@@ -663,12 +713,12 @@ export default {
         (this.disableBtn = false),
           (this.disableBtnCancelar = false),
           (this.disableBtnConfirmar = false);
-        this.$emit('close'); //Ocultar overlay
+        this.$emit("close"); //Ocultar overlay
       }
     },
     async cancelar() {
       if (this.idPrestamoProceso) {
-        this.$emit('loading', 'Cancelando préstamo, espere un momento...'); //Ocultar overlay
+        this.$emit("loading", "Cancelando préstamo, espere un momento..."); //Ocultar overlay
         (this.disableBtn = true),
           (this.disableBtnConfirmar = true),
           (this.disableBtnCancelar = true);
@@ -693,7 +743,7 @@ export default {
         (this.disableBtn = false),
           (this.disableBtnCancelar = false),
           (this.disableBtnConfirmar = false);
-        this.$emit('close'); //Ocultar overlay
+        this.$emit("close"); //Ocultar overlay
       }
     },
     actualiza() {
@@ -702,27 +752,32 @@ export default {
     },
     validarFechas() {
       const fecha1 = new Date(
-        `${this.paqueteTabla.fecha_inicio} ${this.paqueteTabla.hora_inicio < 10
-          ? "0" + this.paqueteTabla.hora_inicio
-          : this.paqueteTabla.hora_inicio
-        }:${this.paqueteTabla.minuto_inicio}`);
+        `${this.paqueteTabla.fecha_inicio} ${
+          this.paqueteTabla.hora_inicio < 10
+            ? "0" + this.paqueteTabla.hora_inicio
+            : this.paqueteTabla.hora_inicio
+        }:${this.paqueteTabla.minuto_inicio}`
+      );
       const fecha2 = new Date(
-        `${this.paqueteTabla.fecha_fin} ${this.paqueteTabla.hora_fin < 10
-          ? "0" + this.paqueteTabla.hora_fin
-          : this.paqueteTabla.hora_fin
-        }:${this.paqueteTabla.minuto_fin}`);
+        `${this.paqueteTabla.fecha_fin} ${
+          this.paqueteTabla.hora_fin < 10
+            ? "0" + this.paqueteTabla.hora_fin
+            : this.paqueteTabla.hora_fin
+        }:${this.paqueteTabla.minuto_fin}`
+      );
       if (fecha1.getTime() < fecha2.getTime()) {
         this.modalFechaFin = false;
         this.modalFechaInicio = false;
         return true;
       } else {
         this.paqueteMsj.title = "Fechas";
-        this.paqueteMsj.body = "La fecha inicial debe ser menor a la fecha final";
+        this.paqueteMsj.body =
+          "La fecha inicial debe ser menor a la fecha final";
         this.paqueteMsj.classTitle = "error";
         this.dialogMsj = true;
       }
       return false;
-    }
+    },
   },
   created() {
     this.obtenerTiposEquipo();
@@ -736,7 +791,9 @@ export default {
       this.paqueteTabla.hora_inicio = hora;
       this.paqueteTabla.hora_fin = this.paqueteTabla.hora_inicio + 1;
     }
-    this.minutos = Array(6).fill(0).map((min, index) => `${(index) > 0 ? (10 * index) : ('0' + index)}`);
+    this.minutos = Array(6)
+      .fill(0)
+      .map((min, index) => `${index > 0 ? 10 * index : "0" + index}`);
     this.paquete.usuario = this.$store.getters.getUsuario.cedula;
   },
 };

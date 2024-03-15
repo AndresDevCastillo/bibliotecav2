@@ -69,9 +69,12 @@ export default {
 </script>
 <style lang="scss" scoped>
 .letra {
-  color: #000000;
-  font-size: 30px;
-  font-family: "montserrat";
-  font-weight: 500;
+  color: white;
+  font-size: 36px;
+  font-family: "arial", cursive;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
+  transition: color 0.3s ease;
 }
 </style>
