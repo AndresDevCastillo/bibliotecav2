@@ -393,25 +393,11 @@
                   <div class="lapso pr-2">
                     <!--eslint-disable-next-line-->
                     <p class="m-0">
-                      <strong
-                        >{{ paqueteTabla.fecha_inicio }}
-                        {{
-                          `${
-                            (paqueteTabla.hora_inicio <10 ? "0" : "") +
-                            paqueteTabla.hora_inicio
-                          }`
-                        }}:{{ paqueteTabla.minuto_inicio }}</strong
-                      >
-                      -
-                      <strong
-                        >{{ paqueteTabla.fecha_fin }}
-                        {{
-                          `${
-                            (paqueteTabla.hora_fin < 10 ? "0" : "") +
-                            paqueteTabla.hora_fin
-                          }`
-                        }}:{{ paqueteTabla.minuto_fin }}</strong
-                      >
+                      <strong>{{ paqueteTabla.fecha_inicio }}
+                        {{  paqueteTabla.hora_inicio.toString().padStart(2,"0") }}:{{ paqueteTabla.minuto_inicio.toString().padStart(2,"0") }}
+                        </strong>
+                        -
+                      <strong>{{ paqueteTabla.fecha_fin }} {{ paqueteTabla.hora_fin.toString().padStart(2,"0")}}:{{ paqueteTabla.minuto_fin.toString().padStart(2,"0") }}</strong>
                     </p>
                   </div>
                   <v-btn
@@ -777,6 +763,8 @@ export default {
         this.paqueteMsj.body =
           "La fecha inicial debe ser menor a la fecha final";
         this.paqueteMsj.classTitle = "error";
+        this.modalFechaFin = false;
+        this.modalFechaInicio = false;
         this.dialogMsj = true;
       }
       return false;
